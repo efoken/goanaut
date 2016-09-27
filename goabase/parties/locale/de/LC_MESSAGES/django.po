@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-27 15:24+0200\n"
+"PO-Revision-Date: 2016-09-27 15:27+0200\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: Eike Foken <e.foken@abian.de>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.9\n"
+
+#: models.py:6
+msgid "name"
+msgstr "Name"
+
+#: models.py:7
+msgid "start date"
+msgstr "Startdatum"
+
+#: models.py:8
+msgid "end date"
+msgstr "Enddatum"
+
+#: models.py:11
+msgid "Festival"
+msgstr "Festival"
+
+#: models.py:12
+msgid "Open air"
+msgstr "Open-Air"
+
+#: models.py:13
+msgid "Indoor"
+msgstr "Indoor"
+
+#: models.py:14
+msgid "Club"
+msgstr "Club"
+
+#: models.py:15
+msgid "In- and outdoor"
+msgstr "In- und Outdoor"
+
+#: models.py:17
+msgid "type"
+msgstr "Typ"
+
+#: models.py:19
+msgid "town"
+msgstr "Stadt"
+
+#: models.py:20
+msgid "location"
+msgstr "Standort"
+
+#: models.py:21
+msgid "lineup"
+msgstr "Lineup"
+
+#: models.py:22
+msgid "decoration"
+msgstr "Dekoration"
+
+#: models.py:23
+msgid "entry fee"
+msgstr "Eintrittspreis"
+
+#: models.py:24
+msgid "more"
+msgstr "Mehr"
+
+#: models.py:25
+msgid "organizer name"
+msgstr "Veranstalter-Name"
+
+#: models.py:26
+msgid "organizer text"
+msgstr "Veranstalter-Text"
+
+#: models.py:27
+msgid "organizer URL"
+msgstr "Veranstalter-URL"
+
+#: models.py:28
+msgid "image"
+msgstr "Bild"
+
+#: models.py:33
+msgid "Scheduled"
+msgstr "Planmäßig"
+
+#: models.py:34
+msgid "Cancelled"
+msgstr "Abgesagt"
+
+#: models.py:35
+msgid "Postponed"
+msgstr "Verschoben"
+
+#: models.py:36
+msgid "Moved"
+msgstr "Umgezogen"
+
+#: models.py:38
+msgid "status"
+msgstr "Status"
+
+#: models.py:42
+msgid "party"
+msgstr "Party"
+
+#: models.py:43
+msgid "parties"
+msgstr "Partys"

@@ -1,0 +1,15 @@
+{
+  "context": "goabase/static",
+  "entry": {
+    "main": [
+      "./scripts/main.js",
+      "./styles/main.sss"
+    ]
+  },
+  "output": {
+    "path": "goabase/.tmp",
+    "publicPath": "/static/"
+  },
+  "devUrl": "http://localhost",
+  "devPort": 8000
+}
