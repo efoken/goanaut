@@ -1,22 +1,20 @@
 const autoprefixer = require('autoprefixer');
 const BundleTracker = require('webpack-bundle-tracker');
-const Clean = require('clean-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
 const easyImport = require('postcss-easy-import');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const precss = require('precss');
-const sugarss = require('sugarss');
 const webpack = require('webpack');
 
 module.exports = {
     context: path.join(__dirname, 'goabase'),
     entry: [
         './static/scripts/main.js',
-        './static/styles/main.sss',
+        './static/styles/main.scss',
     ],
     output: {
         path: path.resolve('./goabase/static/bundles/'),
-        filename: '[name]-[hash].js',
+        filename: '[name]-[hash:8].js',
     },
     module: {
         preLoaders: [
@@ -29,14 +27,15 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                loaders: [`babel?presets[]=${path.resolve('./node_modules/babel-preset-es2015')}`],
+                exclude: /node_modules(?![/|\\]bootstrap)/,
+                loaders: [`babel?presets[]=${path.resolve('./node_modules/babel-preset-es2015')}&cacheDirectory`],
             },
             {
-                test: /\.[cs]ss$/,
+                test: /\.scss$/,
                 loader: ExtractTextPlugin.extract('style', [
-                    'css?sourceMap',
+                    'css?+sourceMap',
                     'postcss',
+                    'sass?+sourceMap',
                 ]),
             },
         ],
@@ -49,33 +48,32 @@ module.exports = {
         new BundleTracker({
             filename: './webpack-stats.json'
         }),
-        new Clean(['./goabase/static/bundles/']),
-        new ExtractTextPlugin('[name]-[hash].css', {
+        new CleanPlugin(['./goabase/static/bundles/']),
+        new ExtractTextPlugin('[name]-[hash:8].css', {
             allChunks: true,
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
+                drop_debugger: true,
                 warnings: false,
             },
-            output: {
-                comments: false,
-            },
+            comments: false,
         }),
     ],
     postcss() {
         return {
             plugins: [
-                easyImport({extensions: ['.sss']}),
+                easyImport({extensions: ['.scss']}),
                 autoprefixer({
                     browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'],
                 }),
-                precss,
             ],
-            parser: sugarss,
         };
     },
-    eslint: {
-        failOnWarning: false,
-        failOnError: true,
+    eslint() {
+        return {
+            failOnWarning: false,
+            failOnError: true,
+        };
     },
 };
