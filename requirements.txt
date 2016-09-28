@@ -1,3 +1,4 @@
 Django==1.10.1
+django-webpack-loader==0.3.3
 Pillow==3.3.1
 pycountry==1.20
