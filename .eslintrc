@@ -1,11 +1,11 @@
 {
   "root": true,
-  "extends": "eslint:recommended",
+  "extends": "airbnb",
   "env": {
+    "amd": true,
     "browser": true,
     "jquery": true,
-    "node": true,
-    "amd": true
+    "node": true
   },
   "parser": "babel-eslint",
   "rules": {

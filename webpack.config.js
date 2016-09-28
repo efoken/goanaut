@@ -19,16 +19,16 @@ module.exports = {
     module: {
         preLoaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 include: path.resolve('./static/'),
                 loader: 'eslint-loader',
             },
         ],
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules(?![/|\\]bootstrap)/,
-                loaders: [`babel?presets[]=${path.resolve('./node_modules/babel-preset-es2015')}&cacheDirectory`],
+                loaders: [`babel?presets[]=${path.resolve('./node_modules/babel-preset-airbnb')}&cacheDirectory`],
             },
             {
                 test: /\.scss$/,
@@ -41,7 +41,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['', '.js', '.json'],
+        extensions: ['', '.js', '.jsx', '.json'],
         modulesDirectories: ['node_modules'],
     },
     plugins: [
@@ -51,6 +51,13 @@ module.exports = {
         new CleanPlugin(['./goabase/static/bundles/']),
         new ExtractTextPlugin('[name]-[hash:8].css', {
             allChunks: true,
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            _: 'underscore',
+            'window._': 'underscore',
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
