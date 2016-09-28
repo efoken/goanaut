@@ -1,40 +1,58 @@
-// External dependencies
 const autoprefixer = require('autoprefixer');
+const BundleTracker = require('webpack-bundle-tracker');
+const Clean = require('clean-webpack-plugin');
+const easyImport = require('postcss-easy-import');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
+const precss = require('precss');
 const sugarss = require('sugarss');
 const webpack = require('webpack');
 
-// Internal dependencies
-const config = require('./goabase/static/config');
-
 module.exports = {
-    context: path.resolve(config.context),
-    entry: config.entry,
+    context: path.join(__dirname, 'goabase'),
+    entry: [
+        './static/scripts/main.js',
+        './static/styles/main.sss',
+    ],
     output: {
-        path: path.join(__dirname, config.output.path),
-        publicPath: config.output.publicPath,
-        filename: 'app.bundle.js',
+        path: path.resolve('./goabase/static/bundles/'),
+        filename: '[name]-[hash].js',
     },
     module: {
-        preLoaders: [{
-            test: /\.js$/,
-            include: path.resolve('goabase/static'),
-            loader: 'eslint-loader',
-        }],
+        preLoaders: [
+            {
+                test: /\.js$/,
+                include: path.resolve('./static/'),
+                loader: 'eslint-loader',
+            },
+        ],
         loaders: [
             {
-                test: /\.js?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
+                loaders: [`babel?presets[]=${path.resolve('./node_modules/babel-preset-es2015')}`],
             },
             {
                 test: /\.[cs]ss$/,
-                loader: 'css-loader!postcss-loader',
+                loader: ExtractTextPlugin.extract('style', [
+                    'css?sourceMap',
+                    'postcss',
+                ]),
             },
         ],
     },
+    resolve: {
+        extensions: ['', '.js', '.json'],
+        modulesDirectories: ['node_modules'],
+    },
     plugins: [
+        new BundleTracker({
+            filename: './webpack-stats.json'
+        }),
+        new Clean(['./goabase/static/bundles/']),
+        new ExtractTextPlugin('[name]-[hash].css', {
+            allChunks: true,
+        }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -44,14 +62,16 @@ module.exports = {
             },
         }),
     ],
-    postcss: () => {
+    postcss() {
         return {
             plugins: [
+                easyImport({extensions: ['.sss']}),
                 autoprefixer({
-                    browsers: ['last 2 versions', 'android 4', 'opera 12', 'ff esr'],
+                    browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'],
                 }),
+                precss,
             ],
-            syntax: sugarss,
+            parser: sugarss,
         };
     },
     eslint: {

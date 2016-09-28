@@ -1,4 +1,6 @@
 __pycache__/
+bundles/
 env/
 node_modules/
 db.sqlite3
+webpack-stats.json
