@@ -38,6 +38,8 @@ class Party(models.Model):
     status = models.CharField(_('status'), max_length=9, choices=STATUS_CHOICES,
                               default='scheduled')
 
+    objects = models.GeoManager()
+
     class Meta:
         verbose_name = _('party')
         verbose_name_plural = _('parties')

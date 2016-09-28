@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from goabase.countries.models import Country
+
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    pass
