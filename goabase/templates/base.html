@@ -7,9 +7,31 @@
         {% render_bundle 'main' 'css' %}
     </head>
     <body>
-        <header class="Header">
-            <div class="Container">
-            </div>
+        <header class="navbar navbar-light bg-faded" role="banner">
+            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#header-collapse" aria-controls="header-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                &#9776;
+            </button>
+            <nav class="collapse navbar-toggleable-xs" id="header-collapse">
+                <a class="navbar-brand" href="#">GoaBase</a>
+                <form class="form-inline pull-xs-left">
+                    <input class="form-control" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <ul class="nav navbar-nav pull-xs-right">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </nav>
         </header>
         {% render_bundle 'main' 'js' %}
     </body>
