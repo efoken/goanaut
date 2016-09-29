@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from goabase.parties.models import Party
+from goabase.modules.parties.models import Party
 
 
 @admin.register(Party)

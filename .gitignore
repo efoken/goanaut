@@ -3,5 +3,6 @@ bundles/
 env/
 node_modules/
 db.sqlite3
+items.jsonl
 npm-debug.log
 webpack-stats.json

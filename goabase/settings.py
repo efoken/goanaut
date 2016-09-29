@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'webpack_loader',
-    'goabase.countries',
-    'goabase.parties',
+    'goabase.modules.countries',
+    'goabase.modules.parties',
 ]
 
 MIDDLEWARE_CLASSES = [

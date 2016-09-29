@@ -1,5 +1,10 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
+from scrapy_djangoitem import DjangoItem
+
+
+class Source(models.Model):
+    name = models.CharField(_('name'), max_length=50)
 
 
 class Party(models.Model):
@@ -25,7 +30,8 @@ class Party(models.Model):
     organizer_name = models.CharField(_('organizer name'), max_length=255)
     organizer_text = models.TextField(_('organizer text'))
     organizer_url = models.TextField(_('organizer URL'))
-    image = models.ImageField(_('image'), upload_to='uploads/%Y/%m/%d/')
+    image = models.ImageField(_('image'), upload_to='uploads/%Y/%m/%d/',
+                              null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -46,3 +52,7 @@ class Party(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PartyItem(DjangoItem):
+    django_model = Party

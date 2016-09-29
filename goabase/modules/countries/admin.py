@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from goabase.countries.models import Country
+from goabase.modules.countries.models import Country
 
 
 @admin.register(Country)
