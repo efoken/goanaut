@@ -19,7 +19,8 @@ class Party(models.Model):
         ('club', _('Club')),
         ('indoor_outdoor', _('In- and outdoor')),
     )
-    type = models.CharField(_('type'), max_length=14, default='indoor')
+    type = models.CharField(_('type'), max_length=14, choices=TYPE_CHOICES,
+                            default='indoor')
 
     town = models.CharField(_('town'), max_length=100)
     location = models.PointField(_('location'))
