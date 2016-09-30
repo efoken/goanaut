@@ -63,8 +63,16 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'goabase.scraper.pipelines.JsonWriterPipeline': 300,
-    'goabase.scraper.pipelines.DjangoWriterPipeline': 600,
+    'goabase.scraper.pipelines.DjangoImagesPipeline': 200,
+    'goabase.scraper.pipelines.DuplicationPipeline': 400,
+    'goabase.scraper.pipelines.JsonWriterPipeline': 800,
+    # 'goabase.scraper.pipelines.DjangoWriterPipeline': 600,
+}
+
+IMAGES_STORE = os.path.join(PROJECT_DIR, '../thumbnails')
+
+IMAGES_THUMBS = {
+    'small': (170, 170),
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
