@@ -1,7 +1,6 @@
 from django.contrib.gis.utils import LayerMapping
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as _
 
 from goabase.modules.countries.models import Country, country_mapping
 

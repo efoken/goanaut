@@ -1,9 +1,8 @@
 import re
 
 from dateutil import parser
-from django.contrib.gis.geos import Point
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import Compose, Identity, MapCompose, TakeFirst
+from scrapy.loader.processors import Compose, MapCompose, TakeFirst
 
 
 def filter_type(value):

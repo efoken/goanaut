@@ -1,0 +1,19 @@
+{% extends "gis/admin/openlayers.html" %}
+{% block extrastyle %}{{ block.super }}
+<style type="text/css">
+    #{{ id }}_map { border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+    .aligned #{{ id }}_map label { float: inherit; }
+    #{{ id }}_map + a { display: inline-block; margin: 6px 0; font-size: 11px; line-height: 20px; }
+    .olControlLayerSwitcher input.olButton {
+        margin-top: 0;
+    }
+    .olControlLayerSwitcher label.olButton {
+        display: inline;
+        padding: 0;
+        margin-left: 4px;
+        color: inherit;
+        vertical-align: middle !important;
+    }
+</style>
+{% endblock %}
+{% block openlayers %}{% include "gis/admin/google.js" %}{% endblock %}

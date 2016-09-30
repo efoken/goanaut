@@ -17,8 +17,8 @@ class JsonWriterPipeline(object):
                 return serial
             raise TypeError('Type not serializable')
 
-        # line = json.dumps(dict(item), default=json_serial) + "\n"
-        line = str(dict(item)) + "\n"
+        line = json.dumps(dict(item), default=json_serial) + "\n"
+        # line = str(dict(item)) + "\n"
         self.file.write(line.encode())
         return item
 
