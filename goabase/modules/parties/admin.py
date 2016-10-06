@@ -1,6 +1,6 @@
 from django.contrib.gis import admin
 
-from goabase.core.admin import GoogleMapsGeoAdmin
+from goabase.admin.options import GoogleMapsGeoAdmin
 from goabase.modules.parties.models import Party
 
 

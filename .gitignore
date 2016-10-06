@@ -2,6 +2,7 @@ __pycache__/
 bundles/
 env/
 node_modules/
+.env
 db.sqlite3
 items.jsonl
 npm-debug.log

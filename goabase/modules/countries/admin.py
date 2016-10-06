@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 from django.contrib.humanize.templatetags.humanize import intcomma
 
-from goabase.core.admin import GoogleMapsGeoAdmin
+from goabase.admin.options import GoogleMapsGeoAdmin
 from goabase.modules.countries.models import Country
 
 
