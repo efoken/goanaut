@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "User" %}: {{ object.username }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ object.username }}</h2>
+            {% if object.get_full_name %}
+                <p>{{ object.get_full_name }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if object == request.user %}
+        <div class="row">
+            <div class="col-sm-12">
+                <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">{% trans "My info" %}</a>
+                <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">{% trans "Email" %}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
