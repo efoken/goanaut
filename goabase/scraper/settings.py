@@ -4,7 +4,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'goabase.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'goabase.conf.settings.production')
 django.setup()
 
 BOT_NAME = 'goabase'
