@@ -3,6 +3,7 @@ import hashlib
 import json
 import logging
 
+from django.db.models import Model
 from django.db.utils import IntegrityError
 from scrapy.exceptions import DropItem
 from scrapy.pipelines.images import ImagesPipeline
@@ -71,6 +72,8 @@ class JsonWriterPipeline(object):
             if isinstance(obj, datetime.datetime):
                 serial = obj.isoformat()
                 return serial
+            if isinstance(obj, Model):
+                return str(obj)
             raise TypeError('Type not serializable')
 
         line = json.dumps(dict(item), default=json_serial) + "\n"

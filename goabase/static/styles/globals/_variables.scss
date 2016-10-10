@@ -1,3 +1,29 @@
 $brand-primary: #563d7c;
+$brand-inverse: #0e0f11;
+
+// Options
 
 $enable-flex: true;
+$enable-rounded: false;
+
+
+// Typography
+
+$font-family-base: "Open Sans", sans-serif;
+$font-size-base: 0.875rem;
+$font-size-sm: 0.75rem;
+$line-height-base: 1.42857142857143;
+
+
+// Buttons
+
+$btn-line-height: $line-height-base;
+
+
+// Navbar
+
+$navbar-padding-x: 0;
+$navbar-padding-y: 0;
+
+$navbar-dark-color: #fff;
+$navbar-dark-hover-color: $brand-primary;

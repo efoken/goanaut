@@ -6,7 +6,11 @@
 
 .dashboard #content-related .module {
     background: #f8f8f8;
-    padding-bottom: 30px;
+    padding-bottom: 16px;
+}
+
+.dashboard #content-related .module > :last-child {
+    margin-bottom: 0;
 }
 
 .dashboard .module table th {

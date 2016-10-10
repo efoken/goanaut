@@ -4,6 +4,7 @@ django-allauth==0.27.0
 django-crispy-forms==1.6.0
 django-environ==0.4.0
 django-webpack-loader==0.3.3
+feedparser==5.2.1
 Pillow==3.4.1
 pycountry==1.20
 python-dateutil==2.5.3

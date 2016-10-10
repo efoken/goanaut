@@ -1,1 +1,39 @@
 {% extends "base.html" %}
+{% load i18n icon_helpers %}
+
+{% block content %}
+    <div class="sidebar bg-inverse" role="complementary">
+        <ul class="nav sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% icon 'large/party' %}
+                    {% trans "Party" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% icon 'large/festival' %}
+                    {% trans "Festival" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% icon 'large/open-air' %}
+                    {% trans "Open air" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% icon 'large/seasonal' %}
+                    {% trans "Seasonal" %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    {% blocktrans %}All<br>events{% endblocktrans %}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="map"></div>
+{% endblock %}

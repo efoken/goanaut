@@ -6,7 +6,7 @@ from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='inde.html'), name='index'),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^admin/', admin.site.urls),

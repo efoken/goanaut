@@ -32,6 +32,7 @@ class GoabaseSpider(scrapy.Spider):
             l.add_value('end_date', party['dateEnd'])
             l.add_value('type', party['nameType'])
             l.add_value('town', party['nameTown'])
+            l.add_value('country', party['isoCountry'])
             l.add_value('location', [party['geoLon'], party['geoLat']])
             l.add_value('lineup', party['textLineUp'])
             l.add_value('decoration', party['textDeco'])

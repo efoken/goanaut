@@ -4,7 +4,7 @@
   "description": "Platform for Goa and Psytrance parties and festivals",
   "main": "gulpfile.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -d --progress",
     "test": "eslint -c .eslintrc goabase/static/scripts webpack.config.js"
   },
   "author": "Eike Foken <kontakt@eikefoken.de>",
@@ -24,6 +24,8 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "imagemin-webpack-plugin": "^1.2.1",
     "node-sass": "^3.10.0",
     "postcss": "^5.2.2",
     "postcss-easy-import": "^1.0.1",

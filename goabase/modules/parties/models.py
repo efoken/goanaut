@@ -2,6 +2,8 @@ from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from scrapy_djangoitem import DjangoItem
 
+from goabase.modules.countries.models import Country
+
 
 class Source(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -23,6 +25,7 @@ class Party(models.Model):
                             default='indoor')
 
     town = models.CharField(_('town'), max_length=100)
+    country = models.ForeignKey(Country, verbose_name=_('country'))
     location = models.PointField(_('location'))
     lineup = models.TextField(_('lineup'))
     decoration = models.TextField(_('decoration'))

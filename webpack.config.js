@@ -3,6 +3,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const easyImport = require('postcss-easy-import');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const path = require('path');
 const webpack = require('webpack');
 
@@ -38,6 +39,11 @@ module.exports = {
                     'sass?+sourceMap',
                 ]),
             },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/,
+                include: path.resolve('./static/'),
+                loader: 'file-loader?name=[path][name].[ext]',
+            },
         ],
     },
     resolve: {
@@ -49,6 +55,23 @@ module.exports = {
             filename: './webpack-stats.json'
         }),
         new CleanPlugin(['./goabase/static/bundles/']),
+        new ImageminPlugin({
+            optipng: {
+                optimizationLevel: 7,
+            },
+            gifsicle: {
+                optimizationLevel: 3,
+            },
+            pngquant: {
+                quality: '65-90',
+                speed: 4,
+            },
+            svgo: {
+                removeUnknownsAndDefaults: false,
+                cleanupIDs: false,
+            },
+            jpegtran: null,
+        }),
         new ExtractTextPlugin('[name]-[hash:8].css', {
             allChunks: true,
         }),
@@ -56,6 +79,8 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
+            Tether: 'tether',
+            'window.Tether': 'tether',
             _: 'underscore',
             'window._': 'underscore',
         }),
@@ -76,6 +101,9 @@ module.exports = {
                 }),
             ],
         };
+    },
+    sassLoader: {
+        precision: 9,
     },
     eslint() {
         return {

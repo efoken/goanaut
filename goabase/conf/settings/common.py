@@ -13,7 +13,7 @@ env.read_env(env_file=BASE_DIR('.env'))
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', False)
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'webpack_loader',
+    'goabase.core',
     'goabase.modules.countries',
     'goabase.modules.parties',
     'goabase.modules.users',
@@ -62,6 +63,7 @@ TEMPLATES = [
             str(PROJECT_DIR.path('templates')),
         ],
         'OPTIONS': {
+            'debug': False,
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
@@ -86,14 +88,12 @@ SITE_ID = 1
 
 
 # Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        'NAME': str(BASE_DIR.path('db.sqlite3')),
-    }
+    'default': env.db('DATABASE_URL', default='spatialite:///db.sqlite3')
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 if platform.system() == 'Darwin':
     SPATIALITE_LIBRARY_PATH = '/usr/local/lib/mod_spatialite.dylib'
@@ -102,7 +102,7 @@ else:
 
 
 # Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,6 +118,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Authentication backends
+# See https://docs.djangoproject.com/en/dev/topics/auth/customizing/#authentication-backends
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -138,7 +142,7 @@ LOGIN_URL = 'account_login'
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
+# https://docs.djangoproject.com/en/dev/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -161,7 +165,7 @@ LOCALE_PATHS = (
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+# https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_ROOT = str(BASE_DIR.path('public/static'))
 

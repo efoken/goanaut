@@ -4,7 +4,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'goabase.conf.settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'goabase.conf.settings.local')
 django.setup()
 
 BOT_NAME = 'goabase'
@@ -63,10 +63,10 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'goabase.scraper.pipelines.DjangoImagesPipeline': 200,
+    # 'goabase.scraper.pipelines.DjangoImagesPipeline': 200,
     'goabase.scraper.pipelines.DuplicationPipeline': 400,
-    'goabase.scraper.pipelines.JsonWriterPipeline': 800,
-    # 'goabase.scraper.pipelines.DjangoWriterPipeline': 600,
+    # 'goabase.scraper.pipelines.JsonWriterPipeline': 800,
+    'goabase.scraper.pipelines.DjangoWriterPipeline': 600,
 }
 
 IMAGES_STORE = os.path.join(PROJECT_DIR, '../thumbnails')
