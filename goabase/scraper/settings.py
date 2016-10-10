@@ -56,9 +56,10 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#     'scrapy.extensions.telnet.TelnetConsole': None,
-# }
+EXTENSIONS = {
+    'scrapy.extensions.telnet.TelnetConsole': 500,
+    'scrapy.extensions.closespider.CloseSpider': 500,
+}
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
@@ -95,3 +96,10 @@ IMAGES_THUMBS = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Configure the CloseSpider extension
+# See https://doc.scrapy.org/en/1.2/topics/extensions.html#module-scrapy.extensions.closespider
+# CLOSESPIDER_TIMEOUT = 0
+CLOSESPIDER_ITEMCOUNT = 500
+# CLOSESPIDER_PAGECOUNT = 0
+# CLOSESPIDER_ERRORCOUNT = 0

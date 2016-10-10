@@ -16,10 +16,10 @@ class Party(models.Model):
 
     TYPE_CHOICES = (
         ('festival', _('Festival')),
-        ('openair', _('Open air')),
+        ('openair', _('Open Air')),
         ('indoor', _('Indoor')),
         ('club', _('Club')),
-        ('indoor_outdoor', _('In- and outdoor')),
+        ('indoor_outdoor', _('In- & Outdoor')),
     )
     type = models.CharField(_('type'), max_length=14, choices=TYPE_CHOICES,
                             default='indoor')

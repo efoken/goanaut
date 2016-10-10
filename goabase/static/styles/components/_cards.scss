@@ -1,0 +1,17 @@
+.party-card-deck {
+  flex-wrap: wrap;
+
+  .card {
+    margin: 0 10px 20px;
+    min-width: calc(50% - 20px);
+    width: calc(50% - 20px);
+  }
+}
+
+.party-card {
+  display: block;
+
+  .card-img-top {
+    width: 100%;
+  }
+}

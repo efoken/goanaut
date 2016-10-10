@@ -13,7 +13,7 @@ insert_final_newline = true
 [*.py]
 line_length = 120
 
-[*.{json,scss}]
+[*.{js,json,scss}]
 indent_size = 2
 
 [.eslintrc]

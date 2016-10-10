@@ -2,38 +2,70 @@
 {% load i18n icon_helpers %}
 
 {% block content %}
-    <div class="sidebar bg-inverse" role="complementary">
-        <ul class="nav sidebar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {% icon 'large/party' %}
-                    {% trans "Party" %}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {% icon 'large/festival' %}
-                    {% trans "Festival" %}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {% icon 'large/open-air' %}
-                    {% trans "Open air" %}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {% icon 'large/seasonal' %}
-                    {% trans "Seasonal" %}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {% blocktrans %}All<br>events{% endblocktrans %}
-                </a>
-            </li>
-        </ul>
+    <div class="map-search">
+        <div class="sidebar bg-inverse" role="complementary">
+            <ul class="nav sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% icon 'large/festival' %}
+                        {% trans "Festival" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% icon 'large/open-air' %}
+                        {% trans "Open Air" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% icon 'large/party' %}
+                        {% trans "Indoor" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% icon 'large/seasonal' %}
+                        {% trans "In- & Outdoor" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% icon 'large/club' %}
+                        {% trans "Club" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        {% blocktrans %}All<br>events{% endblocktrans %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="content-header"></div>
+            <div class="map-search-results">
+                <div class="parties-container">
+                    <div class="card-deck party-card-deck">
+                        {% for party in party_list %}
+                            <div class="card party-card" itemscope itemtype="http://schema.org/Event">
+                                <a href="{% url 'parties:detail' party.id %}">
+                                    <img class="card-img-top" src="https://unsplash.it/300/300?image={{ party.id }}" itemprop="image">
+                                </a>
+                                <div class="card-overlay-top-left"></div>
+                                <div class="card-overlay-top-right">
+                                    <a href="#">{% icon 'heart' %}</a>
+                                </div>
+                                <div class="card-block">
+                                    <h4 class="card-title" itemprop="name">{{ party.name }}</h4>
+                                    <p class="card-text text-muted party-type">{{ party.get_type_display }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map" class="map"></div>
     </div>
-    <div id="map"></div>
 {% endblock %}

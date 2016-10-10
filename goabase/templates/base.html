@@ -4,63 +4,67 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>GoaBase</title>
+        <title>Goanaut</title>
         {% render_bundle 'main' 'css' %}
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Unica+One" rel="stylesheet">
     </head>
-    <body>
+    <body class="page">
 
-        <header class="navbar navbar-dark bg-inverse" role="banner">
-            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#header-collapse" aria-controls="header-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                &#9776;
-            </button>
-            <nav class="collapse navbar-toggleable-xs" id="header-collapse">
-                <a class="navbar-brand" href="#"><b>&#2384;</b> GoaBase</a>
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {% icon 'star' %}
-                            {% trans "Events" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {% icon 'pencil' %}
-                            {% trans "Blog" %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            {% icon 'question-circle' %}
-                            {% trans "Help" %}
-                        </a>
-                    </li>
-                </ul>
-                <div class="navbar-right pull-xs-right">
-                    <div class="navbar-submit">
-                        <a class="btn btn-outline-navbar" href="#" role="button">Submit your event</a>
-                    </div>
+        <header id="header" class="header{% if user.is_authenticated %} header-logged-in{% endif %}" role="banner">
+            <div class="navbar navbar-dark bg-inverse">
+                <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#header-collapse" aria-controls="header-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    &#9776;
+                </button>
+                <nav class="collapse navbar-toggleable-xs" id="header-collapse">
+                    <a class="navbar-brand" href="#"><b>&#2384;</b> Goanaut</a>
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                {% icon 'lock' %}
-                                {% trans "My Account" %}
+                                {% icon 'star' %}
+                                {% trans "Events" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                {% icon 'pencil' %}
+                                {% trans "Blog" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                {% icon 'question-circle' %}
+                                {% trans "Help" %}
                             </a>
                         </li>
                     </ul>
-                    <form class="form-inline navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="input-group-btn">
-                                <button class="btn btn-outline-primary" type="submit">{% icon 'magnifier' %}</button>
-                            </span>
+                    <div class="navbar-right pull-xs-right">
+                        <div class="navbar-submit">
+                            <a class="btn btn-outline-navbar" href="#" role="button">{% trans "Submit your event" %}</a>
                         </div>
-                    </form>
-                </div>
-            </nav>
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    {% icon 'lock' %}
+                                    {% trans "My Account" %}
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="form-inline navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-outline-primary" type="submit">{% icon 'magnifier' %}</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </div>
         </header>
 
-        {% block content %}{% endblock %}
+        <div id="content" class="page-content">
+            {% block content %}{% endblock %}
+        </div>
 
         {% render_bundle 'main' 'js' %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ"></script>

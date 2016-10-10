@@ -1,17 +1,24 @@
 // import external dependencies
 import 'jquery';
-import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/dist/js/bootstrap';
 import 'tether';
 import 'react';
 import 'underscore';
 
-$(document).ready(() => {
-    $('.navbar-search .btn').on('click', () => {
-        $('.navbar-search').toggleClass('active');
-    });
+import mapStyles from './map-styles';
 
-    const map = new google.maps.Map($('#map')[0], {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
-    });
+$(document).ready(() => {
+  $('.navbar-search .btn').on('click', () => {
+    $('.navbar-search').toggleClass('active');
+  });
+
+  const map = new google.maps.Map($('#map')[0], {
+    center: {
+      lat: 52.3764090,
+      lng: 9.7540310,
+    },
+    zoom: 13,
+    styles: mapStyles,
+  });
+  console.log(map);
 });

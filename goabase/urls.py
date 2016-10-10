@@ -5,8 +5,10 @@ from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
 
+from goabase.modules.parties.views import PartyListView
+
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
+    url(r'^$', PartyListView.as_view(template_name='index.html', paginate_by=40), name='index'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^admin/', admin.site.urls),
@@ -14,6 +16,8 @@ urlpatterns = [
     # User management
     url(r'^users/', include('goabase.modules.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+
+    url(r'^parties/', include('goabase.modules.parties.urls', namespace='parties')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
