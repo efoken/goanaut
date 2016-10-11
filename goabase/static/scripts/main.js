@@ -1,7 +1,8 @@
 // import external dependencies
 import 'jquery';
-import 'bootstrap/dist/js/bootstrap';
 import 'tether';
+import 'bootstrap/dist/js/bootstrap';
+import 'bootstrap-slider';
 import 'react';
 import 'underscore';
 
@@ -10,6 +11,10 @@ import mapStyles from './map-styles';
 $(document).ready(() => {
   $('.navbar-search .btn').on('click', () => {
     $('.navbar-search').toggleClass('active');
+  });
+
+  $('.custom-slider input').slider({
+    tooltip: 'always',
   });
 
   const map = new google.maps.Map($('#map')[0], {

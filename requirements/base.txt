@@ -4,6 +4,7 @@ django-allauth==0.27.0
 django-crispy-forms==1.6.0
 django-el-pagination==3.0.1
 django-environ==0.4.0
+-e git+https://github.com/django-tastypie/django-tastypie.git@604e4ac97046773625c99ae43dd1c1df1b4d39af#egg=django_tastypie
 django-webpack-loader==0.3.3
 feedparser==5.2.1
 Pillow==3.4.1

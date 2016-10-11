@@ -8,22 +8,21 @@
   }
 }
 
+//
+// Parties
+//
+
 .party-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   display: block;
+  position: relative;
 
-  .card-overlay-top-left {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
-
-  .card-overlay-top-right {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  .card-img-overlay {
+    padding: 10px;
 
     a {
       color: #fff;
+      text-decoration: none;
     }
   }
 
@@ -32,6 +31,7 @@
   }
 }
 
+// Party images
 .party-card-img-wrapper {
   display: block;
   margin: -1px -1px 0;
@@ -49,8 +49,9 @@
 
 .party-card-date {
   @include size(50px);
-  background-color: rgba(0, 0, 0, 0.66);
+  background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
+  float: left;
   font-size: 20px;
   line-height: 25px;
   padding: 5px 0;
@@ -67,9 +68,9 @@
 
 .party-card-time {
   color: #fff;
-  left: 80px;
+  float: left;
   line-height: 15px;
-  position: absolute;
+  margin-left: 20px;
+  margin-top: 5px;
   text-transform: uppercase;
-  top: 15px;
 }

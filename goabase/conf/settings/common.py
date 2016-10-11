@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'el_pagination',
+    'tastypie',
     'webpack_loader',
     'goabase.core',
     'goabase.modules.countries',

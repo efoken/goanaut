@@ -1,8 +1,10 @@
 @import "globals/variables";
 
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-slider/src/sass/bootstrap-slider";
 
 @import "components/cards";
+@import "components/forms";
 @import "components/header";
 @import "components/icons";
 @import "components/pagination";
@@ -55,13 +57,13 @@
   .content-header {
     background-color: #fff;
     margin: -20px -20px 20px;
-    text-align: center;
 
     h2 {
       font-size: $font-size-base;
       font-weight: 700;
       line-height: 72px;
       margin-bottom: 0;
+      text-align: center;
       text-transform: uppercase;
     }
   }
@@ -77,4 +79,23 @@
 
 .map-search-results-footer {
   text-align: center;
+}
+
+.filters {
+  overflow: hidden;
+}
+
+.filters-section {
+  border-bottom: 1px solid #f2f2f2;
+  border-top: 1px solid #f2f2f2;
+  margin-bottom: -1px;
+  padding: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    color: #555;
+  }
 }

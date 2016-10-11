@@ -1,4 +1,7 @@
 // Colors
+$gray: #555;
+$gray-light: #828282;
+$gray-lighter: #e2e2e2;
 $brand-primary: #563d7c;
 $brand-inverse: #0e0f11;
 
@@ -22,6 +25,15 @@ $line-height-base: 1.42857142857143;
 // Buttons
 $btn-line-height: $line-height-base;
 
+// Forms
+$input-padding-x: 11px;
+$input-padding-y: 9px;
+$input-border-color: $gray-lighter;
+$input-height: 40px;
+
+// Custom forms
+$custom-control-indicator-bg: #fff;
+
 // Navbar
 $navbar-padding-x: 0;
 $navbar-padding-y: 0;
@@ -32,7 +44,7 @@ $navbar-dark-hover-color: $brand-primary;
 $pagination-padding-x: 11px;
 $pagination-padding-y: 9px;
 $pagination-color: #929292;
-$pagination-border-color: #e2e2e2;
+$pagination-border-color: $gray-lighter;
 $pagination-active-color: #828282;
 $pagination-active-bg: #fff;
 $pagination-active-border: #555;

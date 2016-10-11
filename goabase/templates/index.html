@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load el_pagination_tags i18n icon_helpers %}
+{% load el_pagination_tags i18n icon_helpers placeholder_helpers %}
 
 {% block content %}
     <div class="map-search">
@@ -45,6 +45,45 @@
         <div class="content">
             <div class="content-header">
                 <h2>{% trans "All events" %}</h2>
+                <form class="filters">
+                    <div class="filters-section form-group row">
+                        <label for="filter_type" class="col-sm-2 col-form-label">{% trans "Type" %}:</label>
+                        <div class="col-sm-10">
+                            <select class="custom-select" id="filter_type">
+                                <option>{% trans "Any type" %}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filters-section form-group row">
+                        <label for="filter_price" class="col-sm-2 col-form-label">{% trans "Price range" %}:</label>
+                        <div class="col-sm-10">
+                            <div class="custom-slider">
+                                <input type="text" class="custom-slider-input" id="filter_price" data-slider-id="filterPriceSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[5,25]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filters-section form-group row">
+                        <label for="filter_location" class="col-sm-2 col-form-label">{% trans "Location" %}:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="filter_location" placeholder="{% trans 'Enter location' %}">
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">{% trans "Near me" %}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filters-section form-group row">
+                        <label for="filter_order" class="col-sm-2 col-form-label">{% trans "Sorting by" %}:</label>
+                        <div class="col-sm-10">
+                            <select class="custom-select" id="filter_order">
+                                <option>{% trans "Popular" %}</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="map-search-results">
                 <div class="parties-container">
@@ -53,23 +92,23 @@
                         {% for party in party_list %}
                             <div class="card party-card" itemscope itemtype="http://schema.org/Event">
                                 <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.id %}">
-                                    {% with '1 2 3 4 5 6 7 8 9 10' as image_list %}
-                                        <img class="card-img" src="{{ MEDIA_URL }}{{ image_list.split|random }}.jpg" itemprop="image">
-                                    {% endwith %}
+                                    <img class="card-img" src="{% placeholder_image 'images/placeholders/' %}" alt="{{ party.name }}" itemprop="image">
                                 </a>
-                                <div class="card-overlay-top-left party-card-date">
-                                    <em>{{ party.start_date|date:"M" }}</em>
-                                    {{ party.start_date|date:"d" }}
-                                </div>
-                                {% if "days" not in party.end_date|timeuntil:party.start_date %}
-                                    <p class="party-card-time">{{ party.start_date|date:"H:i" }} - {{ party.end_date|date:"H:i" }}</p>
-                                {% endif %}
-                                <div class="card-overlay-top-right">
-                                    <a href="#">{% icon 'heart' %}</a>
+                                <div class="card-img-overlay">
+                                    <div class="party-card-date">
+                                        <em>{{ party.start_date|date:"M" }}</em>
+                                        {{ party.start_date|date:"d" }}
+                                    </div>
+                                    {% if "days" not in party.end_date|timeuntil:party.start_date %}
+                                        <p class="party-card-time">{{ party.start_date|date:"H:i" }} - {{ party.end_date|date:"H:i" }}</p>
+                                    {% endif %}
+                                    <div class="party-card-favorite pull-xs-right">
+                                        <a href="#">{% icon 'heart' %}</a>
+                                    </div>
                                 </div>
                                 <div class="card-block">
                                     <h4 class="card-title" itemprop="name">{{ party.name }}</h4>
-                                    <p class="card-text text-muted party-type">{{ party.get_type_display }}</p>
+                                    <p class="card-text text-muted party-card-type">{{ party.get_type_display }}</p>
                                 </div>
                             </div>
                         {% endfor %}

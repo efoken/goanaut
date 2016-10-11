@@ -4,11 +4,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
+from tastypie.api import Api
 
+from goabase.modules.parties.api import PartyResource
 from goabase.modules.parties.views import PartyListView
+
+v1_api = Api(api_name='v1')
+v1_api.register(PartyResource())
 
 urlpatterns = [
     url(r'^$', PartyListView.as_view(template_name='index.html'), name='index'),
+    url(r'^api/', include(v1_api.urls)),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^admin/', admin.site.urls),
