@@ -6,6 +6,10 @@ $brand-inverse: #0e0f11;
 $enable-flex: true;
 $enable-rounded: false;
 
+// Body
+$body-bg: #f8f8f8;
+$body-color: $brand-inverse;
+
 // Grid columns
 $grid-gutter-width-base: 20px;
 
@@ -23,3 +27,12 @@ $navbar-padding-x: 0;
 $navbar-padding-y: 0;
 $navbar-dark-color: #fff;
 $navbar-dark-hover-color: $brand-primary;
+
+// Pagination
+$pagination-padding-x: 11px;
+$pagination-padding-y: 9px;
+$pagination-color: #929292;
+$pagination-border-color: #e2e2e2;
+$pagination-active-color: #828282;
+$pagination-active-bg: #fff;
+$pagination-active-border: #555;

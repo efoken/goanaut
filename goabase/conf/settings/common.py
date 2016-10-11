@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
+    'el_pagination',
     'webpack_loader',
     'goabase.core',
     'goabase.modules.countries',
@@ -189,3 +190,9 @@ WEBPACK_LOADER = {
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
 }
+
+# Endless pagination configuration
+# https://django-el-pagination.readthedocs.io/en/latest/
+
+EL_PAGINATION_DEFAULT_CALLABLE_EXTREMES = 1
+EL_PAGINATION_DEFAULT_CALLABLE_AROUNDS = 2

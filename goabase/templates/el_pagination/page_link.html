@@ -1,0 +1,16 @@
+{% load i18n %}
+{% if page.label == '&lt;' %}
+    <a class="page-link" href="{{ page.path }}" aria-label="{% trans 'Previous' %}">
+        <span aria-hidden="true">&#9668;</span>
+        <span class="sr-only">{% trans "Previous" %}</span>
+    </a>
+{% elif page.label == '&gt;' %}
+    <a class="page-link" href="{{ page.path }}" aria-label="{% trans 'Next' %}">
+        <span aria-hidden="true">&#9656;</span>
+        <span class="sr-only">{% trans "Next" %}</span>
+    </a>
+{% else %}
+    <a class="page-link" href="{{ page.path }}" rel="{{ querystring_key }}{% if add_nofollow %} nofollow{% endif %}">
+        {{ page.label|safe }}
+    </a>
+{% endif %}

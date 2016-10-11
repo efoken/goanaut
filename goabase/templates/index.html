@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n icon_helpers %}
+{% load el_pagination_tags i18n icon_helpers %}
 
 {% block content %}
     <div class="map-search">
@@ -43,16 +43,27 @@
             </ul>
         </div>
         <div class="content">
-            <div class="content-header"></div>
+            <div class="content-header">
+                <h2>{% trans "All events" %}</h2>
+            </div>
             <div class="map-search-results">
                 <div class="parties-container">
                     <div class="card-deck party-card-deck">
+                        {% paginate 40 party_list %}
                         {% for party in party_list %}
                             <div class="card party-card" itemscope itemtype="http://schema.org/Event">
-                                <a href="{% url 'parties:detail' party.id %}">
-                                    <img class="card-img-top" src="https://unsplash.it/300/300?image={{ party.id }}" itemprop="image">
+                                <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.id %}">
+                                    {% with '1 2 3 4 5 6 7 8 9 10' as image_list %}
+                                        <img class="card-img" src="{{ MEDIA_URL }}{{ image_list.split|random }}.jpg" itemprop="image">
+                                    {% endwith %}
                                 </a>
-                                <div class="card-overlay-top-left"></div>
+                                <div class="card-overlay-top-left party-card-date">
+                                    <em>{{ party.start_date|date:"M" }}</em>
+                                    {{ party.start_date|date:"d" }}
+                                </div>
+                                {% if "days" not in party.end_date|timeuntil:party.start_date %}
+                                    <p class="party-card-time">{{ party.start_date|date:"H:i" }} - {{ party.end_date|date:"H:i" }}</p>
+                                {% endif %}
                                 <div class="card-overlay-top-right">
                                     <a href="#">{% icon 'heart' %}</a>
                                 </div>
@@ -63,6 +74,11 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
+                <div class="map-search-results-footer">
+                    <nav class="pagination-wrapper" aria-label="Search results pages">
+                        {% show_pages %}
+                    </nav>
                 </div>
             </div>
         </div>

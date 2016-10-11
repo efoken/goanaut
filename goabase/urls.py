@@ -8,7 +8,7 @@ from django.views.generic.base import TemplateView
 from goabase.modules.parties.views import PartyListView
 
 urlpatterns = [
-    url(r'^$', PartyListView.as_view(template_name='index.html', paginate_by=40), name='index'),
+    url(r'^$', PartyListView.as_view(template_name='index.html'), name='index'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^admin/', admin.site.urls),

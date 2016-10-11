@@ -1,0 +1,13 @@
+.page-link {
+  margin-left: 10px;
+  min-width: 40px;
+
+  @include hover-focus {
+    text-decoration: none;
+  }
+}
+
+.endless_separator {
+  float: left;
+  padding: 5px 0 0 10px;
+}

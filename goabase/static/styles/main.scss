@@ -5,6 +5,7 @@
 @import "components/cards";
 @import "components/header";
 @import "components/icons";
+@import "components/pagination";
 
 .sidebar {
   width: 100px;
@@ -48,7 +49,21 @@
     padding: 20px;
     position: absolute;
     top: 80px;
-    width: calc(40% - 60px);
+    width: 50%;
+  }
+
+  .content-header {
+    background-color: #fff;
+    margin: -20px -20px 20px;
+    text-align: center;
+
+    h2 {
+      font-size: $font-size-base;
+      font-weight: 700;
+      line-height: 72px;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
   }
 
   .map {
@@ -56,6 +71,10 @@
     position: fixed !important;
     right: 0;
     top: 80px;
-    width: calc(60% - 40px);
+    width: calc(50% - 100px);
   }
+}
+
+.map-search-results-footer {
+  text-align: center;
 }
