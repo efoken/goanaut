@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n placeholder_helpers %}
+
+{% block title %}{% trans "Party" %}: {{ object.name }}{% endblock %}
+
+{% block content %}
+    <div class="party" data-location='{"lat": {{ object.location.1 }}, "lng": {{ object.location.0 }}}' data-type="{{ party.type }}" itemscope itemtype="http://schema.org/Event">
+
+        <meta itemprop="image" content="{% placeholder_image 'images/placeholders/' %}">
+        <meta itemprop="startDate" content="{{ object.start_date|date:'c' }}">
+        <meta itemprop="endDate" content="{{ object.end_date|date:'c' }}">
+
+        <div class="jumbotron jumbotron-fluid party-jumbotron bg-inverse" style="background-image: url({% placeholder_image 'images/placeholders/' %});">
+            <div class="party-jumbotron-content container">
+                <div class="party-jumbotron-inner row">
+                    <div class="col-sm-12">
+                        <h1 class="party-title" itemprop="name">{{ object.name }}</h1>
+                        <p class="party-type">{{ object.get_type_display }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="party-jumbotron-countdown">
+                <div class="container">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item countdown-label">{% trans "Time left to event" %}:</li>
+                        <li class="list-group-item countdown-days">
+                            <em>{{ countdown_days }}</em>
+                            {% trans "Days" %}
+                        </li>
+                        <li class="list-group-item countdown-hours">
+                            <em>{{ countdown_hours }}</em>
+                            {% trans "Hours" %}
+                        </li>
+                        <li class="list-group-item countdown-minutes">
+                            <em>{{ countdown_minutes }}</em>
+                            {% trans "Minutes" %}
+                        </li>
+                        <li class="list-group-item countdown-seconds">
+                            <em>{{ countdown_seconds }}</em>
+                            {% trans "Seconds" %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container party-container m-y-3">
+            <div class="row">
+                <div class="col-sm-7 p-t-2">
+                    <h2>{% trans "Description" %}</h2>
+
+                    <div class="card">
+                        <div class="card-block">
+                            {{ object.more|linebreaks }}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-block">
+                            <h3 class="card-title">{% trans "Lineup" %}</h3>
+                            {{ object.lineup|linebreaks }}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-block">
+                            <h3 class="card-title">{% trans "Decoration" %}</h3>
+                            {{ object.decoration|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 p-t-2">
+                    <div class="party-location m-b-1" style="height: 400px;"></div>
+
+                    <div class="card">
+                        <div class="card-block row">
+                            <div class="col-sm-6">{{ object.organizer_url }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

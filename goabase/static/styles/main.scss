@@ -7,8 +7,16 @@
 @import "components/forms";
 @import "components/header";
 @import "components/icons";
+@import "components/jumbotron";
+@import "components/list-group";
 @import "components/pagination";
 @import "components/sidenav";
+
+@import "utilities/text";
+
+.page {
+  padding-top: 80px;
+}
 
 .map-search {
   .sidenav {

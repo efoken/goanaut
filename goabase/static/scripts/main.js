@@ -18,33 +18,52 @@ $(document).ready(() => {
     tooltip_position: 'bottom',
   });
 
-  const map = new google.maps.Map($('#map')[0], {
-    center: {
-      lat: 52.3764090,
-      lng: 9.7540310,
-    },
-    zoom: 13,
-    styles: mapStyles,
-    mapTypeControl: false,
-    zoomControl: true,
-    zoomControlOptions: {
-      position: google.maps.ControlPosition.RIGHT_BOTTOM,
-    },
-    streetViewControl: false,
-  });
+  if ($('#map').length) {
+    const map = new google.maps.Map($('#map')[0], {
+      center: {
+        lat: 52.3764090,
+        lng: 9.7540310,
+      },
+      zoom: 13,
+      styles: mapStyles,
+      mapTypeControl: false,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM,
+      },
+      streetViewControl: false,
+    });
 
-  const markers = [];
+    const markers = [];
 
-  $('.party-card').each((i, el) => {
-    const position = $(el).data('location');
-    const type = $(el).data('type');
-    markers.push(new google.maps.Marker({
-      position,
+    $('.party-card').each((i, el) => {
+      const position = $(el).data('location');
+      const type = $(el).data('type');
+      markers.push(new google.maps.Marker({
+        position,
+        map,
+        icon: {
+          url: `/static/images/map-marker-${type.replace('_', '-')}.svg`,
+          optimized: false,
+        },
+      }));
+    });
+  }
+
+  if ($('.party-location').length) {
+    const map = new google.maps.Map($('.party-location')[0], {
+      center: $('.party').data('location'),
+      zoom: 13,
+      styles: mapStyles,
+      disableDefaultUI: true,
+    });
+    new google.maps.Marker({
+      position: $('.party').data('location'),
       map,
       icon: {
-        url: `/static/images/map-marker-${type.replace('_', '-')}.svg`,
+        url: `/static/images/map-marker-${$('.party').data('type').replace('_', '-')}.svg`,
         optimized: false,
       },
-    }));
-  });
+    })
+  }
 });

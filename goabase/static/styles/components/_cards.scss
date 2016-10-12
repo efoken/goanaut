@@ -1,24 +1,23 @@
-.party-card-deck {
-  flex-wrap: wrap;
+//
+// Base styles
+//
 
-  .card {
-    margin: 0 10px 20px;
-    min-width: calc(50% - 20px);
-    width: calc(50% - 20px);
-  }
+.card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
+
 
 //
 // Parties
 //
 
 .party-card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   display: block;
   position: relative;
 
   .card-img-overlay {
     padding: 10px;
+    pointer-events: none;
 
     a {
       color: #fff;
@@ -73,4 +72,15 @@
   margin-left: 20px;
   margin-top: 5px;
   text-transform: uppercase;
+}
+
+// Card set
+.party-card-deck {
+  flex-wrap: wrap;
+
+  .card {
+    margin: 0 10px 20px;
+    min-width: calc(50% - 20px);
+    width: calc(50% - 20px);
+  }
 }
