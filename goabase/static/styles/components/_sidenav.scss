@@ -1,0 +1,52 @@
+.sidenav {
+  width: 100px;
+}
+
+@mixin sidenav-item-style($color) {
+  .nav-link {
+    @include hover-focus {
+      &,
+      .icon {
+        color: $color;
+      }
+    }
+  }
+}
+
+.sidenav-nav {
+  .nav-item {
+    border-bottom: 1px solid #000;
+
+    &.festival { @include sidenav-item-style(#f7e336); }
+    &.openair { @include sidenav-item-style(#90a9d1); }
+    &.indoor { @include sidenav-item-style(#f2766a); }
+    &.indoor-outdoor { @include sidenav-item-style(#78c253); }
+    &.club { @include sidenav-item-style(#de443a); }
+
+    &.active {
+      .nav-link {
+        background-color: #121416;
+        color: #fff;
+      }
+    }
+  }
+
+  .nav-link {
+    @include size(100px);
+    align-items: center;
+    color: #cacbcb;
+    display: flex;
+    flex-direction: column;
+    font-size: $font-size-sm;
+    justify-content: center;
+    line-height: 20px;
+    text-align: center;
+
+    .icon {
+      @include size(40px);
+      color: #fff;
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+}

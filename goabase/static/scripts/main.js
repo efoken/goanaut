@@ -15,6 +15,7 @@ $(document).ready(() => {
 
   $('.custom-slider input').slider({
     tooltip: 'always',
+    tooltip_position: 'bottom',
   });
 
   const map = new google.maps.Map($('#map')[0], {
@@ -24,6 +25,26 @@ $(document).ready(() => {
     },
     zoom: 13,
     styles: mapStyles,
+    mapTypeControl: false,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_BOTTOM,
+    },
+    streetViewControl: false,
   });
-  console.log(map);
+
+  const markers = [];
+
+  $('.party-card').each((i, el) => {
+    const position = $(el).data('location');
+    const type = $(el).data('type');
+    markers.push(new google.maps.Marker({
+      position,
+      map,
+      icon: {
+        url: `/static/images/map-marker-${type.replace('_', '-')}.svg`,
+        optimized: false,
+      },
+    }));
+  });
 });

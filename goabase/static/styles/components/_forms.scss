@@ -1,7 +1,64 @@
+.form-control {
+  min-height: $input-height;
+}
+
 .custom-control-indicator {
   border: 1px solid $input-border-color;
 }
 
 .custom-select {
+  height: $input-height;
   width: 100%;
+}
+
+.custom-slider {
+  padding: 10px 0 16px;
+
+  .slider {
+    display: block;
+  }
+
+  .slider-horizontal {
+    margin-left: 10px;
+
+    .slider-track {
+      height: 4px;
+      margin: -2px -10px 0;
+      width: calc(100% + 20px);
+    }
+  }
+
+  .slider-track {
+    background-color: #dbdada;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .slider-selection {
+    background-color: $brand-primary;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .slider-handle {
+    background-color: $input-bg;
+    background-image: none;
+    border: 1px solid $input-border-color;
+    box-shadow: none;
+  }
+
+  .tooltip {
+    display: block !important;
+    opacity: 1;
+  }
+
+  .tooltip-main {
+    display: none !important;
+  }
+
+  .tooltip-inner {
+    background-color: transparent;
+    color: #555;
+    padding: 0;
+  }
 }

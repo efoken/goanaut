@@ -3,39 +3,39 @@
 
 {% block content %}
     <div class="map-search">
-        <div class="sidebar bg-inverse" role="complementary">
-            <ul class="nav sidebar-nav">
-                <li class="nav-item">
+        <div class="sidenav bg-inverse" role="complementary">
+            <ul class="nav sidenav-nav">
+                <li class="nav-item festival">
                     <a class="nav-link" href="#">
                         {% icon 'large/festival' %}
                         {% trans "Festival" %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item openair">
                     <a class="nav-link" href="#">
                         {% icon 'large/open-air' %}
                         {% trans "Open Air" %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item indoor">
                     <a class="nav-link" href="#">
                         {% icon 'large/party' %}
                         {% trans "Indoor" %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item indoor-outdoor">
                     <a class="nav-link" href="#">
                         {% icon 'large/seasonal' %}
                         {% trans "In- & Outdoor" %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item club">
                     <a class="nav-link" href="#">
                         {% icon 'large/club' %}
                         {% trans "Club" %}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active all-events">
                     <a class="nav-link" href="#">
                         {% blocktrans %}All<br>events{% endblocktrans %}
                     </a>
@@ -47,24 +47,24 @@
                 <h2>{% trans "All events" %}</h2>
                 <form class="filters">
                     <div class="filters-section form-group row">
-                        <label for="filter_type" class="col-sm-2 col-form-label">{% trans "Type" %}:</label>
-                        <div class="col-sm-10">
+                        <label for="filter_type" class="col-sm-3 col-form-label">{% trans "Type" %}:</label>
+                        <div class="col-sm-9">
                             <select class="custom-select" id="filter_type">
                                 <option>{% trans "Any type" %}</option>
                             </select>
                         </div>
                     </div>
                     <div class="filters-section form-group row">
-                        <label for="filter_price" class="col-sm-2 col-form-label">{% trans "Price range" %}:</label>
-                        <div class="col-sm-10">
+                        <label for="filter_price" class="col-sm-3 col-form-label">{% trans "Price range" %}:</label>
+                        <div class="col-sm-9">
                             <div class="custom-slider">
                                 <input type="text" class="custom-slider-input" id="filter_price" data-slider-id="filterPriceSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[5,25]">
                             </div>
                         </div>
                     </div>
                     <div class="filters-section form-group row">
-                        <label for="filter_location" class="col-sm-2 col-form-label">{% trans "Location" %}:</label>
-                        <div class="col-sm-8">
+                        <label for="filter_location" class="col-sm-3 col-form-label">{% trans "Location" %}:</label>
+                        <div class="col-sm-7">
                             <input type="email" class="form-control" id="filter_location" placeholder="{% trans 'Enter location' %}">
                         </div>
                         <div class="col-sm-2">
@@ -76,8 +76,8 @@
                         </div>
                     </div>
                     <div class="filters-section form-group row">
-                        <label for="filter_order" class="col-sm-2 col-form-label">{% trans "Sorting by" %}:</label>
-                        <div class="col-sm-10">
+                        <label for="filter_order" class="col-sm-3 col-form-label">{% trans "Sorting by" %}:</label>
+                        <div class="col-sm-9">
                             <select class="custom-select" id="filter_order">
                                 <option>{% trans "Popular" %}</option>
                             </select>
@@ -85,12 +85,12 @@
                     </div>
                 </form>
             </div>
-            <div class="map-search-results">
+            <div class="content-body map-search-results">
                 <div class="parties-container">
                     <div class="card-deck party-card-deck">
                         {% paginate 40 party_list %}
                         {% for party in party_list %}
-                            <div class="card party-card" itemscope itemtype="http://schema.org/Event">
+                            <div class="card party-card" data-location='{"lat": {{ party.location.1 }}, "lng": {{ party.location.0 }}}' data-type="{{ party.type }}" itemscope itemtype="http://schema.org/Event">
                                 <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.id %}">
                                     <img class="card-img" src="{% placeholder_image 'images/placeholders/' %}" alt="{{ party.name }}" itemprop="image">
                                 </a>
