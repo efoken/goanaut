@@ -18,6 +18,44 @@
   padding-top: 80px;
 }
 
+.action {
+  color: $body-color;
+  display: inline-block;
+
+  @include hover-focus {
+    color: $brand-primary;
+
+    .action-icon {
+      background-color: $brand-primary;
+      color: #fff;
+    }
+  }
+}
+
+.action-icon {
+  @include size(40px);
+  border: 1px solid $brand-primary;
+  border-radius: 50%;
+  color: $brand-primary;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  vertical-align: middle;
+
+  .icon {
+    @include size(16px);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.action-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .map-search {
   .sidenav {
     bottom: 0;

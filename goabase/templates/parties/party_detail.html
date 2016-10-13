@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n placeholder_helpers %}
+{% load icon_helpers i18n placeholder_helpers %}
 
 {% block title %}{% trans "Party" %}: {{ object.name }}{% endblock %}
 
@@ -13,15 +13,31 @@
         <div class="jumbotron jumbotron-fluid party-jumbotron bg-inverse" style="background-image: url({% placeholder_image 'images/placeholders/' %});">
             <div class="party-jumbotron-content container">
                 <div class="party-jumbotron-inner row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                         <h1 class="party-title" itemprop="name">{{ object.name }}</h1>
                         <p class="party-type">{{ object.get_type_display }}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="text-sm-right party-date">
+                            {% if object.is_multiday %}
+                                {% if object.start_date|date:"y" != object.end_date|date:"y" %}{# across years #}
+                                    {{ object.start_date|date:"d m Y" }}-{{ object.end_date|date:"d F Y" }}
+                                {% elif object.start_date|date:"m" != object.end_date|date:"m" %}{# across months #}
+                                    {{ object.start_date|date:"d F" }} - {{ object.end_date|date:"d F Y" }}
+                                {% else %}
+                                    {{ object.start_date|date:"d" }}-{{ object.end_date|date:"d F Y" }}
+                                {% endif %}
+                            {% else %}
+                                {{ object.start_date|date:"d F Y" }}
+                            {% endif %}
+                        </p>
+                        <p class="text-sm-right party-time">{{ party.start_date|date:"h:i A" }} - {{ party.end_date|date:"h:i A" }}</p>
                     </div>
                 </div>
             </div>
             <div class="party-jumbotron-countdown">
                 <div class="container">
-                    <ul class="list-group list-group-horizontal">
+                    <ul class="list-group list-group-horizontal countdown">
                         <li class="list-group-item countdown-label">{% trans "Time left to event" %}:</li>
                         <li class="list-group-item countdown-days">
                             <em>{{ countdown_days }}</em>
@@ -48,6 +64,28 @@
             <div class="row">
                 <div class="col-sm-7 p-t-2">
                     <h2>{% trans "Description" %}</h2>
+                    <hr>
+                    <div class="action-group row">
+                        <div class="col-sm-4">
+                            <a class="action action-review" href="#">
+                                <span class="action-icon">{% icon 'star-filled' %}</span>
+                                <span class="action-text">{% trans "Write a review" %}</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a class="action action-favorite" href="#">
+                                <span class="action-icon">{% icon 'heart-filled' %}</span>
+                                <span class="action-text">{% trans "Add to favorites" %}</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a class="action action-share" href="#">
+                                <span class="action-icon">{% icon 'share-filled' %}</span>
+                                <span class="action-text">{% trans "Share" %}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
 
                     <div class="card">
                         <div class="card-block">

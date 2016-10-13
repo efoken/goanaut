@@ -34,12 +34,22 @@
   .party-title {
     font-family: $font-family-serif;
   }
+
+  .party-date {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .party-jumbotron-content {
   flex: 0 0 100%;
   position: relative;
   z-index: 10;
+}
+
+.party-jumbotron-inner {
+  padding-bottom: 30px;
 }
 
 .party-jumbotron-countdown {

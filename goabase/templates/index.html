@@ -103,7 +103,10 @@
                                         <p class="party-card-time">{{ party.start_date|date:"H:i" }} - {{ party.end_date|date:"H:i" }}</p>
                                     {% endif %}
                                     <div class="party-card-favorite pull-xs-right">
-                                        <a href="#">{% icon 'heart' %}</a>
+                                        <a href="#">
+                                            {% icon 'heart' %}
+                                            {% icon 'heart-filled' %}
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="card-block">

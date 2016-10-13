@@ -57,6 +57,10 @@ class Party(models.Model):
     def __str__(self):
         return self.name
 
+    def is_multiday(self):
+        td = self.end_date - self.start_date
+        return td.days >= 1
+
 
 class PartyItem(DjangoItem):
     django_model = Party
