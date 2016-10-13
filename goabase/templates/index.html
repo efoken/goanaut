@@ -58,14 +58,14 @@
                         <label for="filter_price" class="col-sm-3 col-form-label">{% trans "Price range" %}:</label>
                         <div class="col-sm-9">
                             <div class="custom-slider">
-                                <input type="text" class="custom-slider-input" id="filter_price" data-slider-id="filterPriceSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[5,25]">
+                                <input type="text" class="custom-slider-input" id="filter_price" data-slider-id="filterPriceSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[5,25]" />
                             </div>
                         </div>
                     </div>
                     <div class="filters-section form-group row">
                         <label for="filter_location" class="col-sm-3 col-form-label">{% trans "Location" %}:</label>
                         <div class="col-sm-7">
-                            <input type="email" class="form-control" id="filter_location" placeholder="{% trans 'Enter location' %}">
+                            <input type="email" class="form-control" id="filter_location" placeholder="{% trans 'Enter location' %}" />
                         </div>
                         <div class="col-sm-2">
                             <label class="custom-control custom-checkbox">
@@ -92,7 +92,7 @@
                         {% for party in party_list %}
                             <div class="card party-card" data-location='{"lat": {{ party.location.1 }}, "lng": {{ party.location.0 }}}' data-type="{{ party.type }}" itemscope itemtype="http://schema.org/Event">
                                 <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.id %}">
-                                    <img class="card-img" src="{% placeholder_image 'images/placeholders/' %}" alt="{{ party.name }}" itemprop="image">
+                                    <img class="card-img" src="{% placeholder_image 'images/placeholders/' %}" alt="{{ party.name }}" itemprop="image" />
                                 </a>
                                 <div class="card-img-overlay">
                                     <div class="party-card-date">

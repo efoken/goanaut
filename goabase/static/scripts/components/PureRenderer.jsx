@@ -1,17 +1,14 @@
-import React, { PropTypes } from 'react/addons';
-import shallowCompare from 'react-addons-shallow-compare';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default class PureRenderer extends React.Component {
   static propTypes = {
-    render: PropTypes.func,
+    render: React.PropTypes.func,
   };
 
   constructor(props) {
     super(props);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   render() {

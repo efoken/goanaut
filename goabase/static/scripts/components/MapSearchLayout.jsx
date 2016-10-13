@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react/addons';
-import shallowCompare from 'react-addons-shallow-compare';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import PureRenderer from './PureRenderer.jsx';
 
 export default class MapSearchLayout extends React.Component {
   static propTypes = {
-    renderMap: PropTypes.func,
-    renderTable: PropTypes.func,
-    layout: PropTypes.string,
+    renderMap: React.PropTypes.func,
+    renderTable: React.PropTypes.func,
+    layout: React.PropTypes.string,
   };
 
   static defaultProps = {
@@ -16,10 +16,7 @@ export default class MapSearchLayout extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   render() {

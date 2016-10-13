@@ -6,8 +6,6 @@ import 'bootstrap-slider';
 import 'react';
 import 'underscore';
 
-import mapStyles from './map-styles';
-
 $(document).ready(() => {
   $('.navbar-search .btn').on('click', () => {
     $('.navbar-search').toggleClass('active');

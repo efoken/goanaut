@@ -6,9 +6,9 @@
 {% block content %}
     <div class="party" data-location='{"lat": {{ object.location.1 }}, "lng": {{ object.location.0 }}}' data-type="{{ party.type }}" itemscope itemtype="http://schema.org/Event">
 
-        <meta itemprop="image" content="{% placeholder_image 'images/placeholders/' %}">
-        <meta itemprop="startDate" content="{{ object.start_date|date:'c' }}">
-        <meta itemprop="endDate" content="{{ object.end_date|date:'c' }}">
+        <meta itemprop="image" content="{% placeholder_image 'images/placeholders/' %}" />
+        <meta itemprop="startDate" content="{{ object.start_date|date:'c' }}" />
+        <meta itemprop="endDate" content="{{ object.end_date|date:'c' }}" />
 
         <div class="jumbotron jumbotron-fluid party-jumbotron bg-inverse" style="background-image: url({% placeholder_image 'images/placeholders/' %});">
             <div class="party-jumbotron-content container">

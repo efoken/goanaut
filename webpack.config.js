@@ -6,13 +6,14 @@ const easyImport = require('postcss-easy-import');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const path = require('path');
+const SvgstorePlugin = require('webpack-svgstore-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  context: path.join(__dirname, 'goabase'),
+  // context: path.join(__dirname, 'goabase'),
   entry: [
-    './static/scripts/main.js',
-    './static/styles/main.scss',
+    './goabase/static/scripts/main.js',
+    './goabase/static/styles/main.scss',
   ],
   output: {
     path: path.resolve('./goabase/static/bundles/'),
@@ -40,11 +41,6 @@ module.exports = {
           'sass?+sourceMap',
         ]),
       },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/,
-        include: path.resolve('./static/'),
-        loader: 'file-loader?name=[path][name].[ext]',
-      },
     ],
   },
   resolve: {
@@ -56,6 +52,11 @@ module.exports = {
       filename: './webpack-stats.json',
     }),
     new CleanPlugin(['./goabase/static/bundles/']),
+    new SvgstorePlugin(path.join(__dirname, 'goabase/static/icons', '**/*.svg'), '', {
+      name: 'icons-[hash].svg',
+      prefix: 'icon-',
+      svgoOptions: {},
+    }),
     new ImageminPlugin({
       optipng: {
         optimizationLevel: 7,
@@ -93,23 +94,17 @@ module.exports = {
       comments: false,
     }),
   ],
-  postcss() {
-    return {
-      plugins: [
-        easyImport({ extensions: ['.scss'] }),
-        autoprefixer({
-          browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'],
-        }),
-      ],
-    };
-  },
+  postcss: [
+    easyImport({ extensions: ['.scss'] }),
+    autoprefixer({
+      browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'],
+    }),
+  ],
   sassLoader: {
     precision: 9,
   },
-  eslint() {
-    return {
-      failOnWarning: false,
-      failOnError: true,
-    };
+  eslint: {
+    failOnWarning: false,
+    failOnError: true,
   },
 };

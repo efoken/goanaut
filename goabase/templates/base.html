@@ -1,14 +1,17 @@
 {% load render_bundle from webpack_loader %}
+{% load webpack_static from webpack_loader %}
 {% load i18n icon_helpers %}
 <!doctype html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <title>Goanaut</title>
         {% render_bundle 'main' 'css' %}
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Alike&subset=latin-ext" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Alike&subset=latin-ext" rel="stylesheet" />
     </head>
     <body class="page">
+
+        {% webpack_static 'icons.svg' %}
 
         <header id="header" class="header{% if user.is_authenticated %} header-logged-in{% endif %}" role="banner">
             <div class="navbar navbar-dark bg-inverse">
@@ -51,9 +54,12 @@
                         </ul>
                         <form class="form-inline navbar-search">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" class="form-control" placeholder="Search" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-outline-primary" type="submit">{% icon 'magnifier' %}</button>
+                                    <button class="btn btn-outline-primary" type="submit">
+                                        <svg class="icon icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
+                                        {#{% icon 'magnifier' %}#}
+                                    </button>
                                 </span>
                             </div>
                         </form>
