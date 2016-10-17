@@ -11,8 +11,6 @@
     </head>
     <body class="page">
 
-        {% webpack_static 'icons.svg' %}
-
         <header id="header" class="header{% if user.is_authenticated %} header-logged-in{% endif %}" role="banner">
             <div class="navbar navbar-dark bg-inverse">
                 <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#header-collapse" aria-controls="header-collapse" aria-expanded="false" aria-label="Toggle navigation">

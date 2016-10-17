@@ -4,7 +4,8 @@ import 'tether';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap-slider';
 import 'react';
-import 'underscore';
+
+import mapStyles from './map-styles';
 
 $(document).ready(() => {
   $('.navbar-search .btn').on('click', () => {
@@ -46,6 +47,8 @@ $(document).ready(() => {
         },
       }));
     });
+
+    console.log(markers);
   }
 
   if ($('.party-location').length) {
@@ -55,13 +58,16 @@ $(document).ready(() => {
       styles: mapStyles,
       disableDefaultUI: true,
     });
-    new google.maps.Marker({
+
+    const marker = new google.maps.Marker({
       position: $('.party').data('location'),
       map,
       icon: {
         url: `/static/images/map-marker-${$('.party').data('type').replace('_', '-')}.svg`,
         optimized: false,
       },
-    })
+    });
+
+    console.log(marker);
   }
 });
