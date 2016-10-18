@@ -1,5 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const gulp = require('gulp');
+const rename = require('gulp-rename');
+const svgmin = require('gulp-svgmin');
+const svgstore = require('gulp-svgstore');
 const util = require('gulp-util');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -7,6 +10,18 @@ const WebpackDevServer = require('webpack-dev-server');
 const mergeWithConcat = require('./build/utils/merge-with-concat');
 const webpackConfig = require('./build/webpack.config');
 const webpackConfigWatch = require('./build/webpack.config.watch');
+
+gulp.task('svgstore', () =>
+  gulp.src('goabase/static/icons/**/*.svg')
+    .pipe(rename({ prefix: 'icon-' }))
+    .pipe(svgmin({
+      plugins: [
+        { removeDoctype: true },
+      ],
+    }))
+    .pipe(svgstore({ inlineSvg: true }))
+    .pipe(gulp.dest('goabase/templates'))
+);
 
 gulp.task('webpack', (callback) => {
   webpack(webpackConfig, (err, stats) => {

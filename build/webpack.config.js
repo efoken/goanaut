@@ -4,7 +4,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const SvgStorePlugin = require('webpack-svgstore-plugin');
+// const SvgStorePlugin = require('webpack-svgstore-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -44,12 +44,12 @@ module.exports = {
     new CleanPlugin([path.resolve('./goabase/static/bundles')], {
       root: process.cwd(),
     }),
-    new SvgStorePlugin(path.resolve('./goabase/static/icons/**/*.svg'), '', {
-      name: 'icons-[hash].svg',
-      chunk: 'main',
-      prefix: 'icon-',
-      svgoOptions: {},
-    }),
+    // new SvgStorePlugin(path.resolve('./goabase/static/icons/**/*.svg'), '', {
+    //   name: 'icons-[hash].svg',
+    //   chunk: 'main',
+    //   prefix: 'icon-',
+    //   svgoOptions: {},
+    // }),
     new ExtractTextPlugin('[name]-[hash:8].css', {
       allChunks: true,
     }),

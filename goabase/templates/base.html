@@ -21,19 +21,22 @@
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                {% icon 'star' %}
+                                <svg class="icon icon-star" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-star" /></svg>
+                                {# icon 'star' #}
                                 {% trans "Events" %}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                {% icon 'pencil' %}
+                                <svg class="icon icon-pencil" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-pencil" /></svg>
+                                {# icon 'pencil' #}
                                 {% trans "Blog" %}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                {% icon 'question-circle' %}
+                                <svg class="icon icon-question-circle" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-question-circle" /></svg>
+                                {# icon 'question-circle' #}
                                 {% trans "Help" %}
                             </a>
                         </li>
@@ -45,7 +48,8 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    {% icon 'lock' %}
+                                    <svg class="icon icon-lock" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-lock" /></svg>
+                                    {# icon 'lock' #}
                                     {% trans "My Account" %}
                                 </a>
                             </li>
@@ -55,8 +59,8 @@
                                 <input type="text" class="form-control" placeholder="Search" />
                                 <span class="input-group-btn">
                                     <button class="btn btn-outline-primary" type="submit">
-                                        <svg class="icon icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
-                                        {#{% icon 'magnifier' %}#}
+                                        <svg class="icon icon-magnifier" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-magnifier" /></svg>
+                                        {# icon 'magnifier' #}
                                     </button>
                                 </span>
                             </div>
@@ -68,6 +72,10 @@
 
         <div id="content" class="page-content">
             {% block content %}{% endblock %}
+        </div>
+
+        <div style="height: 0; width: 0; position: absolute; visibility: hidden;">
+            {% include "icons.svg" %}
         </div>
 
         <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ"></script>

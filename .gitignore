@@ -1,6 +1,7 @@
 __pycache__/
 bundles/
 env/
+goabase/templates/icons.svg
 node_modules/
 .env
 db.sqlite3
