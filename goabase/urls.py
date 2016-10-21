@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
+from django.views.i18n import JavaScriptCatalog
 from tastypie.api import Api
 
 from goabase.modules.parties.api import PartyResource
@@ -15,6 +16,7 @@ v1_api.register(PartyResource())
 urlpatterns = [
     url(r'^$', PartyListView.as_view(template_name='index.html'), name='index'),
     url(r'^api/', include(v1_api.urls)),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='jsi18n'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(r'^admin/', admin.site.urls),
@@ -32,5 +34,6 @@ if settings.DEBUG:
         url(r'^400/$', default_views.bad_request, kwargs={'exception': Exception('Bad Request!')}),
         url(r'^403/$', default_views.permission_denied, kwargs={'exception': Exception('Permission Denied')}),
         url(r'^404/$', default_views.page_not_found, kwargs={'exception': Exception('Page not Found')}),
+        url(r'^500/$', default_views.server_error),
         url(r'^500/$', default_views.server_error),
     ]

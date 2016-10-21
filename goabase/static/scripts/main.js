@@ -3,8 +3,9 @@ import 'jquery';
 import 'tether';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap-slider';
-import 'react';
+import ReactDOM from 'react-dom';
 
+import CountdownTimer from './components/CountdownTimer.jsx';
 import mapStyles from './map-styles';
 
 $(document).ready(() => {
@@ -52,6 +53,11 @@ $(document).ready(() => {
   }
 
   if ($('.party-location').length) {
+    ReactDOM.render(
+      <CountdownTimer initialTimeRemaining={$('.countdown').data('initialTimeRemaining')} />,
+      $('.countdown')[0]
+    );
+
     const map = new google.maps.Map($('.party-location')[0], {
       center: $('.party').data('location'),
       zoom: 13,

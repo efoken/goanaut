@@ -54,10 +54,10 @@ export default class HeaderSearch extends React.Component {
 
   render() {
     return (
-      <form action={this.props.action} class="header-search navbar-search" onSubmit={this.handleSubmit} ref={(ref) => this.form = ref}>
+      <form action={this.props.action} className="header-search navbar-search" onSubmit={this.handleSubmit} ref={(ref) => this.form = ref}>
         <div>
-          <div class="input-group">
-            <input type="text" class="form-control" name="location" id="header-search-location" placeholder="Search" autoComplete="off" onChange={this.handleChange} onFocus={this.handleFocus} onKeyDown={this.handleKeyDown} ref={(ref) => this.location = ref} />
+          <div className="input-group">
+            <input type="text" className="form-control" name="location" id="header-search-location" placeholder="Search" autoComplete="off" onChange={this.handleChange} onFocus={this.handleFocus} onKeyDown={this.handleKeyDown} ref={(ref) => this.location = ref} />
           </div>
         </div>
       </form>

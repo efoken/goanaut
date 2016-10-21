@@ -1,5 +1,7 @@
+from django.contrib.staticfiles.finders import find
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
+from react.render import render_component
 
 from goabase.modules.parties.models import Party
 
@@ -9,11 +11,15 @@ class PartyDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PartyDetailView, self).get_context_data(**kwargs)
+
         td = self.object.start_date - timezone.now()
-        context['countdown_seconds'] = td.seconds % 60
-        context['countdown_minutes'] = int((td.seconds / 60) % 60)
-        context['countdown_hours'] = int((td.seconds / 60 * 60) % 24)
-        context['countdown_days'] = td.days
+
+        context['react_countdown'] = render_component(
+            find('scripts/components/CountdownTimer.jsx', all=True)[0],
+            {'initialTimeRemaining': int(td.total_seconds() * 1000)}
+        )
+        context['react_countdown_milliseconds'] = int(td.total_seconds() * 1000)
+
         return context
 
 

@@ -59,6 +59,8 @@ module.exports = {
       'window.jQuery': 'jquery',
       Tether: 'tether',
       'window.Tether': 'tether',
+      React: 'react',
+      'window.React': 'react',
     }),
   ],
   postcss: [

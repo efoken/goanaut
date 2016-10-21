@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'el_pagination',
+    'react',
     'tastypie',
     'webpack_loader',
     'goabase.core',
@@ -197,3 +198,8 @@ WEBPACK_LOADER = {
 
 EL_PAGINATION_DEFAULT_CALLABLE_EXTREMES = 1
 EL_PAGINATION_DEFAULT_CALLABLE_AROUNDS = 2
+
+REACT = {
+    'RENDER': not DEBUG,
+    'RENDER_URL': 'http://127.0.0.1:8001/render',
+}
