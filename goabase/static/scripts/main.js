@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap-slider';
 import ReactDOM from 'react-dom';
 
-import CountdownTimer from './components/CountdownTimer.jsx';
+import CountdownTimer from './components/CountdownTimer';
 import mapStyles from './map-styles';
 
 $(document).ready(() => {

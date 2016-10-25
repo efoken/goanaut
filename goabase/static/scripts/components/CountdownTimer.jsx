@@ -45,7 +45,7 @@ class CountdownTimer extends React.Component {
   }
 
   tick() {
-    const currentTime = Date.now();
+    const currentTime = moment.now();
     const dt = this.state.prevTime ? (currentTime - this.state.prevTime) : 0;
     const interval = this.props.interval;
 
@@ -89,24 +89,23 @@ class CountdownTimer extends React.Component {
   }
 
   render() {
-    const timeRemaining = this.state.timeRemaining;
     return (
-      <ul className='list-group list-group-horizontal countdown-inner'>
-        <li className='list-group-item countdown-label'>{gettext('Time left to event:')}</li>
-        <li className='list-group-item countdown-days'>
-          <em>{this.getDays(timeRemaining)}</em>
+      <ul className="list-group list-group-horizontal countdown-inner">
+        <li className="list-group-item countdown-label">{gettext('Time left to event:')}</li>
+        <li className="list-group-item countdown-days">
+          <em>{this.getDays(this.state.timeRemaining)}</em>
           {gettext('Days')}
         </li>
-        <li className='list-group-item countdown-hours'>
-          <em>{this.getHours(timeRemaining)}</em>
+        <li className="list-group-item countdown-hours">
+          <em>{this.getHours(this.state.timeRemaining)}</em>
           {gettext('Hours')}
         </li>
-        <li className='list-group-item countdown-minutes'>
-          <em>{this.getMinutes(timeRemaining)}</em>
+        <li className="list-group-item countdown-minutes">
+          <em>{this.getMinutes(this.state.timeRemaining)}</em>
           {gettext('Minutes')}
         </li>
-        <li className='list-group-item countdown-seconds'>
-          <em>{this.getSeconds(timeRemaining)}</em>
+        <li className="list-group-item countdown-seconds">
+          <em>{this.getSeconds(this.state.timeRemaining)}</em>
           {gettext('Seconds')}
         </li>
       </ul>
