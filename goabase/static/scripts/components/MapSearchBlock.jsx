@@ -4,6 +4,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import React from 'react';
 import { List } from 'immutable';
 
+import MapMarker, { K_SCALE_NORMAL } from './MapMarker';
+import { getScale, getRealFromTo } from '../calc-markers-visibility';
+
 const K_MARGIN_BOTTOM = 30;
 const K_MARGIN_LEFT = 30;
 const K_MARGIN_RIGHT = 30;
@@ -80,10 +83,22 @@ class MapSearchBlock extends React.Component {
   }
 
   render() {
+    const { rowFrom, rowTo } = getRealFromTo(this.props.visibleRowFirst, this.props.visibleRowLast, this.props.maxVisibleRows, this.props.markers.size);
+
     const markers = this.props.markers &&
       this.props.markers
         .filter((marker, index) => index >= rowFrom && index <= rowTo)
         .map((marker, index) => (
+          <MapMarker
+            key={marker.get('id')}
+            lat={marker.get('lat')}
+            lng={marker.get('lng')}
+            showBallon={index + rowFrom === this.props.openBallonIndex}
+            onCloseClick={this._onBalloonCloseClick}
+            hoveredAtTable={index + rowFrom === this.props.hoveredRowIndex}
+            scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
+            marker={marker}
+          />
         ));
 
     return (
