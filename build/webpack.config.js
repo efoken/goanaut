@@ -21,7 +21,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules(?![/|\\]bootstrap)/,
-        loader: `babel-loader?presets[]=${path.resolve('./node_modules/babel-preset-airbnb')}&cacheDirectory`,
+        loader: `babel-loader?plugins[]=transform-decorators-legacy&plugins[]=transform-async-to-generator&presets[]=${path.resolve('./node_modules/babel-preset-airbnb')}&cacheDirectory`,
       },
       {
         test: /\.scss$/,
@@ -36,6 +36,9 @@ module.exports = {
         loader: 'file-loader',
       },
     ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
   },
   plugins: [
     new BundleTracker({

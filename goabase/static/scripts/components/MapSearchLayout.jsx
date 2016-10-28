@@ -5,12 +5,7 @@ import PureRenderer from './PureRenderer.jsx';
 
 const propTypes = {
   renderMap: React.PropTypes.func,
-  renderTable: React.PropTypes.func,
-  layout: React.PropTypes.string,
-};
-
-const defaultProps = {
-  layout: 'left',
+  renderGrid: React.PropTypes.func,
 };
 
 class MapSearchLayout extends React.Component {
@@ -21,9 +16,9 @@ class MapSearchLayout extends React.Component {
 
   render() {
     return (
-      <div class="map-search" style={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
+      <div className="map-search" style={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', left: 0, top: 0, width: '38%', height: '100%' }}>
-          <PureRenderer render={this.props.renderTable} />
+          <PureRenderer render={this.props.renderGrid} />
         </div>
         <div style={{ position: 'absolute', right: 0, top: 0, width: '62%', height: '100%' }}>
           <PureRenderer render={this.props.renderMap} />
@@ -34,6 +29,5 @@ class MapSearchLayout extends React.Component {
 }
 
 MapSearchLayout.propTypes = propTypes;
-MapSearchLayout.defaultProps = defaultProps;
 
 export default MapSearchLayout;

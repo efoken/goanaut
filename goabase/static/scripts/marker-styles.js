@@ -4,9 +4,9 @@ export function getMarkerHolderStyle(size, origin) {
   return {
     cursor: 'pointer',
     height: size.height,
-    left: left,
+    left,
     position: 'absolute',
-    top: top,
+    top,
     width: size.width,
   };
 }

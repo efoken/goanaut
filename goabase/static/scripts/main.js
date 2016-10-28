@@ -3,9 +3,11 @@ import 'jquery';
 import 'tether';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap-slider';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CountdownTimer from './components/CountdownTimer.jsx';
+import CountdownTimer from './components/CountdownTimer';
+import MapSearchPage from './components/MapSearchPage';
 import mapStyles from './map-styles';
 
 $(document).ready(() => {
@@ -19,6 +21,11 @@ $(document).ready(() => {
   });
 
   if ($('#map').length) {
+    ReactDOM.render(
+      <MapSearchPage />,
+      $('.map-search')[0]
+    );
+
     const map = new google.maps.Map($('#map')[0], {
       center: {
         lat: 52.3764090,

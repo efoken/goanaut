@@ -1,4 +1,4 @@
-from tastypie.resources import ModelResource
+from tastypie.contrib.gis.resources import ModelResource
 
 from goabase.modules.parties.models import Party
 

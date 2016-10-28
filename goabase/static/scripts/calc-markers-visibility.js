@@ -11,7 +11,7 @@ export function getScale(rowIndex, rowFrom, rowTo, K_SCALE_NORMAL) {
   if (K_BEFORE_AFTER_SCALES.length) {
     if (rowIndex < rowFrom) {
       let deltaS = rowFrom;
-      for (let index = K_BEFORE_AFTER_SCALES.length - 1; index >= 0; --index) {
+      for (let index = K_BEFORE_AFTER_SCALES.length - 1; index >= 0; index -= 1) {
         deltaS -= K_BEFORE_AFTER_SCALES[index].l;
         if (rowIndex >= deltaS) {
           return K_BEFORE_AFTER_SCALES[index].scale;
@@ -24,7 +24,7 @@ export function getScale(rowIndex, rowFrom, rowTo, K_SCALE_NORMAL) {
 
     if (rowIndex > rowTo) {
       let deltaS = rowTo;
-      for (let index = K_BEFORE_AFTER_SCALES.length - 1; index >= 0; --index) {
+      for (let index = K_BEFORE_AFTER_SCALES.length - 1; index >= 0; index -= 1) {
         deltaS += K_BEFORE_AFTER_SCALES[index].l;
         if (rowIndex <= deltaS) {
           return K_BEFORE_AFTER_SCALES[index].scale;
@@ -39,11 +39,11 @@ export function getScale(rowIndex, rowFrom, rowTo, K_SCALE_NORMAL) {
 }
 
 // This calculations is not precise (dirty)
-function _getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
-  let addFrom = ((rowFrom + maxVisibleRows + K_SCALES_SUM) > (totalSize - 1)) ? ((rowFrom + maxVisibleRows + K_SCALES_SUM) - (totalSize - 1)) : 0;
-
+function innerGetRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
+  const addFrom = ((rowFrom + maxVisibleRows + K_SCALES_SUM) > (totalSize - 1)) ?
+    ((rowFrom + maxVisibleRows + K_SCALES_SUM) - (totalSize - 1)) : 0;
   const dadd = K_SCALES_SUM - rowFrom;
-  let addTo = dadd >= 0 ? dadd : 0;
+  const addTo = dadd >= 0 ? dadd : 0;
 
   return {
     rowFrom: Math.max(0, rowFrom - K_SCALES_SUM - addFrom),
@@ -52,7 +52,7 @@ function _getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
 }
 
 export function getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize) {
-  const current = _getRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize);
+  const current = innerGetRealFromTo(rowFrom, rowTo, maxVisibleRows, totalSize);
 
   return {
     rowFrom: current.rowFrom,

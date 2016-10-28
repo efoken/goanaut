@@ -1,11 +1,11 @@
-import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React from 'react';
 
-export default class PureRenderer extends React.Component {
-  static propTypes = {
-    render: React.PropTypes.func,
-  };
+const propTypes = {
+  render: React.PropTypes.func,
+};
 
+class PureRenderer extends React.Component {
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
@@ -16,3 +16,7 @@ export default class PureRenderer extends React.Component {
     return render(other);
   }
 }
+
+PureRenderer.propTypes = propTypes;
+
+export default PureRenderer;
