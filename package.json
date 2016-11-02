@@ -46,6 +46,7 @@
     "webpack-svgstore-plugin": "^2.0.9"
   },
   "dependencies": {
+    "aphrodite": "^1.0.0",
     "async-decorators": "^0.1.5",
     "bootstrap": "^4.0.0-alpha.4",
     "bootstrap-slider": "^9.2.0",
