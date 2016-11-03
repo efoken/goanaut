@@ -7,10 +7,12 @@ from django.views.generic.base import TemplateView
 from django.views.i18n import JavaScriptCatalog
 from tastypie.api import Api
 
+from goabase.modules.countries.api import CountryResource
 from goabase.modules.parties.api import PartyResource
 from goabase.modules.parties.views import PartyListView
 
 v1_api = Api(api_name='v1')
+v1_api.register(CountryResource())
 v1_api.register(PartyResource())
 
 urlpatterns = [

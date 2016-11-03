@@ -10,7 +10,11 @@ import CountdownTimer from './components/CountdownTimer';
 import MapSearchPage from './components/MapSearchPage';
 import mapStyles from './map-styles';
 
+import fetchParties from './actions/PartiesActions';
+
 $(document).ready(() => {
+  fetchParties();
+
   $('.navbar-search .btn').on('click', () => {
     $('.navbar-search').toggleClass('active');
   });
