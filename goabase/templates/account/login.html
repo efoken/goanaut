@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load account i18n socialaccount %}
+
+{% block title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    <div class="card signup-login-form-container" id="signup-modal-content">
+        <div class="card-block card-padding signup-login-form-card-block">
+            {% get_providers as socialaccount_providers %}
+
+            {% if socialaccount_providers %}
+                <ul class="social-buttons">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </ul>
+
+                <div class="login-or">{% trans "or" %}</div>
+
+                {% include "socialaccount/snippets/login_extra.html" %}
+            {% else %}
+                <p>{% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+            {% endif %}
+
+            <form class="login-form" method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                {% endif %}
+                <a class="btn btn-secondary" href="{% url 'account_reset_password' %}">{% trans "Forgot password?" %}</a>
+                <button type="submit" class="btn btn-primary">{% trans "Sign In" %}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
