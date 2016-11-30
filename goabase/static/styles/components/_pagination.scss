@@ -1,7 +1,6 @@
 .page-link {
   margin-left: 10px;
   min-width: 40px;
-
   @include hover-focus {
     text-decoration: none;
   }

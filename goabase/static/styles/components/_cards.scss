@@ -3,7 +3,7 @@
 //
 
 .card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  color : inherit;
 }
 
 
@@ -12,6 +12,7 @@
 //
 
 .party-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   display: block;
   position: relative;
 
@@ -47,7 +48,6 @@
 }
 
 .party-card-date {
-  @include size(50px);
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   float: left;
@@ -55,6 +55,7 @@
   line-height: 25px;
   padding: 5px 0;
   text-align: center;
+  @include size(50px);
 
   em {
     display: block;

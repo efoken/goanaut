@@ -16,5 +16,5 @@ line_length = 120
 [*.{js,json,jsx,scss}]
 indent_size = 2
 
-[.eslintrc]
+[{.eslintrc,.stylelintrc}]
 indent_size = 2

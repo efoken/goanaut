@@ -32,7 +32,6 @@
   }
 
   .nav-link {
-    @include size(100px);
     align-items: center;
     color: #cacbcb;
     display: flex;
@@ -41,12 +40,13 @@
     justify-content: center;
     line-height: 20px;
     text-align: center;
+    @include size(100px);
 
     .icon {
-      @include size(40px);
       color: #fff;
       display: block;
       margin-bottom: 5px;
+      @include size(40px);
     }
   }
 }

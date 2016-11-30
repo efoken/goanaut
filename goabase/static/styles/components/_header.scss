@@ -6,9 +6,9 @@
 }
 
 .navbar-nav .nav-link {
-  text-transform: uppercase;
-  padding-top: 10px;
   padding-bottom: 10px;
+  padding-top: 10px;
+  text-transform: uppercase;
 
   .icon {
     float: left;
@@ -95,8 +95,8 @@
 }
 
 .btn-outline-navbar {
-  @include button-outline-variant($brand-primary);
   border-color: $navbar-dark-color;
   color: $navbar-dark-color;
   padding: 13px 20px;
+  @include button-outline-variant($brand-primary);
 }
