@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'crispy_forms',
     'el_pagination',
     'react',
@@ -84,6 +86,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# See http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'goabase.wsgi.application'
 
@@ -138,6 +143,18 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'goabase.modules.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'goabase.modules.users.adapters.SocialAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'FIELDS': ['email', 'first_name', 'last_name'],
+    },
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    },
+}
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
