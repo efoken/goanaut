@@ -95,8 +95,8 @@
 }
 
 .btn-outline-navbar {
+  @include button-outline-variant($brand-primary);
   border-color: $navbar-dark-color;
   color: $navbar-dark-color;
   padding: 13px 20px;
-  @include button-outline-variant($brand-primary);
 }

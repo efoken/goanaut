@@ -10,11 +10,7 @@ import CountdownTimer from './components/CountdownTimer';
 import MapSearchPage from './components/MapSearchPage';
 import mapStyles from './map-styles';
 
-import fetchParties from './actions/PartiesActions';
-
 $(document).ready(() => {
-  fetchParties();
-
   $('.navbar-search .btn').on('click', () => {
     $('.navbar-search').toggleClass('active');
   });
@@ -25,10 +21,10 @@ $(document).ready(() => {
   });
 
   if ($('#map').length) {
-    ReactDOM.render(
+    /* ReactDOM.render(
       <MapSearchPage />,
       $('.map-search')[0]
-    );
+    ); */
 
     const map = new google.maps.Map($('#map')[0], {
       center: {
