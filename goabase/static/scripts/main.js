@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import CountdownTimer from './components/CountdownTimer';
 import MapSearchPage from './components/MapSearchPage';
 import mapStyles from './map-styles';
+import SignupLoginModal from './components/SignupLoginModal';
 
 $(document).ready(() => {
   $('.navbar-search .btn').on('click', () => {
@@ -19,6 +20,9 @@ $(document).ready(() => {
     tooltip: 'always',
     tooltip_position: 'bottom',
   });
+
+  const l = new SignupLoginModal();
+  l.init();
 
   if ($('#map').length) {
     /* ReactDOM.render(

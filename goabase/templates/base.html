@@ -47,10 +47,17 @@
                         </div>
                         <ul class="nav navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="/accounts/login/" data-login-modal>
                                     <svg class="icon icon-lock" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-lock" /></svg>
                                     {# icon 'lock' #}
-                                    {% trans "My Account" %}
+                                    {% trans "Login" %}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/accounts/signup/" data-signup-modal>
+                                    <svg class="icon icon-lock" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-lock" /></svg>
+                                    {# icon 'lock' #}
+                                    {% trans "Signup" %}
                                 </a>
                             </li>
                         </ul>

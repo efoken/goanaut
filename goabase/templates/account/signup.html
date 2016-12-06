@@ -1,12 +1,12 @@
-{% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
+{% extends request.is_ajax|yesno:"base_modal.html,base.html" %}
 
 {% load crispy_forms_tags i18n %}
 
 {% block title %}{% trans "Sign Up" %}{% endblock %}
 
 {% block content %}
-    <div class="card signup-login-form-container" id="signup-modal-content">
-        <div class="card-block card-padding signup-login-form-card-block">
+    <div class="{% if request.is_ajax %}modal-content signup{% else %}card{% endif %} signup-login-form-container" id="signup-modal-content">
+        <div class="{% if request.is_ajax %}modal-body{% else %}card-block card-padding{% endif %} signup-login-form-card-block">
             <form class="login-form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
                 {{ form|crispy }}

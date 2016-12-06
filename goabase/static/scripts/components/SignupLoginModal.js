@@ -1,204 +1,240 @@
+/* eslint-disable max-len, no-param-reassign */
+import $ from 'jquery';
 import qs from 'qs';
 
 import * as types from '../consts/ModalTypes';
+import events from '../events';
 
 const o = {}; // n(47);
-// const s = n(545);
-const u = {}; // babelHelpers.interopRequireDefault(s);
 // const d = n(42);
 const f = {}; // babelHelpers.interopRequireDefault(d);
 // const b = n(696);
-const g = {}; // babelHelpers.interopRequireDefault(b);
+// const g = {}; // babelHelpers.interopRequireDefault(b);
 // const y = n(704);
-const v = {}; // babelHelpers.interopRequireDefault(y);
+// const v = {}; // babelHelpers.interopRequireDefault(y);
 // const _ = n(710);
 const k = {}; // babelHelpers.interopRequireDefault(_);
 // const T = n(712);
-const w = {}; // babelHelpers.interopRequireDefault(T);
+// const w = {}; // babelHelpers.interopRequireDefault(T);
 // const E = n(11);
 const S = {}; // babelHelpers.interopRequireDefault(E);
 
 class SignupLoginModal {
-  launchSignup(e) {
-    function callback() {
-      (0, k.default)();
-      if (o.callback) {
-        o.callback();
-      }
-    }
+  constructor() {
+    this.modals = {};
+  }
 
-    function onFinishedFlow() {
-      (0, k.default)();
-      if (o.onFinishedFlow) {
-        o.onFinishedFlow();
-      }
-    }
-
-    function prioritizedCallbackReturningPromise() {
-      (0, k.default)();
-      return o.prioritizedCallbackReturningPromise ? o.prioritizedCallbackReturningPromise() : Promise.resolve();
-    }
-
-    const o = e || {};
+  launchSignup(options = {}) {
     const i = {
       path: window.location.pathname,
     };
-
-    o.redirectUrl && (i.redirect_url = o.redirectUrl);
-    o.launch_type === 'auto' && (i.launch_type = 'auto');
-    o.ajax_endpoint && (i.ajax_endpoint = o.ajax_endpoint);
-    o.sticky === true && (i.sticky = 'true');
-    if (o.business_email) {
-      i.business_email = o.business_email;
-      (0, S.default)().bt_sig && (i.business_email_sig = (0, S.default)().bt_sig);
-      (0, S.default)().bt_ts && (i.business_email_ts = (0, S.default)().bt_ts);
+    if (options.redirectUrl) {
+      i.redirect_url = options.redirectUrl;
     }
-    o.email && (i.email = o.email);
-    o.urlParams ? o.urlParams = String(o.urlParams) + '&' + String(qs.stringify(i)) : o.urlParams = qs.stringify(i);
-    const a = this.getWindowLocationSearch();
-    a.length > 0 && (o.urlParams = String(o.urlParams) + '&' + String(a.slice(1)));
-    const s = Object.assign({}, o, { callback, onFinishedFlow, prioritizedCallbackReturningPromise });
+    if (options.launch_type === 'auto') {
+      i.launch_type = 'auto';
+    }
+    if (options.ajax_endpoint) {
+      i.ajax_endpoint = options.ajax_endpoint;
+    }
+    if (options.business_email) {
+      i.business_email = options.business_email;
+      if ((0, S.default)().bt_sig) {
+        i.business_email_sig = (0, S.default)().bt_sig;
+      }
+      if ((0, S.default)().bt_ts) {
+        i.business_email_ts = (0, S.default)().bt_ts;
+      }
+    }
+    if (options.email) {
+      i.email = options.email;
+    }
+
+    if (options.urlParams) {
+      options.urlParams = `${options.urlParams}&${qs.stringify(i)}`;
+    } else {
+      options.urlParams = qs.stringify(i);
+    }
+
+    const search = this.constructor.getWindowLocationSearch();
+    if (search.length > 0) {
+      options.urlParams = `${options.urlParams}&${search.slice(1)}`;
+    }
+
+    const s = Object.assign({}, options, {
+      callback() {
+        (0, k.default)();
+        if (o.callback) {
+          o.callback();
+        }
+      },
+      onFinishedFlow() {
+        (0, k.default)();
+        if (o.onFinishedFlow) {
+          o.onFinishedFlow();
+        }
+      },
+      prioritizedCallbackReturningPromise() {
+        (0, k.default)();
+        return o.prioritizedCallbackReturningPromise ? o.prioritizedCallbackReturningPromise() : Promise.resolve();
+      },
+    });
     this.setupSignupLogin(types.MODAL_TYPE_SIGNUP, s);
   }
 
-  launchSignupOrLogin(e) {
+  launchSignupOrLogin(options) {
     if ((0, f.default)('hli')) {
-      this.launchLogin(e);
+      this.launchLogin(options);
     } else {
-      this.launchSignup(e);
+      this.launchSignup(options);
     }
   }
 
-  getWindowLocationSearch() {
+  static getWindowLocationSearch() {
     return window.location.search;
   }
 
-  launchLogin(e) {
-    (0, w.default)();
-    this.setupSignupLogin(types.MODAL_TYPE_LOGIN, e);
+  launchLogin(options) {
+    // (0, w.default)();
+    this.setupSignupLogin(types.MODAL_TYPE_LOGIN, options);
   }
 
-  launchLogout(e) {
-    this.setupSignupLogin(types.MODAL_TYPE_LOGOUT, e);
+  launchLogout(options) {
+    this.setupSignupLogin(types.MODAL_TYPE_LOGOUT, options);
   }
 
   launchOtp() {
     this.setupSignupLogin(types.MODAL_TYPE_OTP);
   }
 
-  setupSignupLogin(e, t) {
-    const n = this;
-    const r = t || {};
-    const i = Object.assign({}, r);
+  setupSignupLogin(type, options = {}) {
+    const i = Object.assign({}, options);
     delete i.$container;
-    const s = r.callback;
-    const u = r.urlParams;
-    const l = r.flow;
-    const c = this.getModalUrl(e, u);
-    const d = r.sticky;
-    this.setLoading(e, true),
-    this.closeModals();
-    const f = r.customType ? String(e) + '.' + String(r.customType) : e;
-    !r.$container && this.modals[f] ? (this.modals[f].open(),
-    r.onModalOpen && r.onModalOpen(),
-    this.setLoading(e, false),
-    g.default.page = e) : $.get(c, this.getRequestParams(r), (t) => {
-      let s = void 0;
 
-      if (r.$container) {
-        r.$container.html(t.trim());
-      } else {
-        s = new o.Modal(t.trim(), {
-          sticky: d,
-        });
-        s.open();
-        r.onModalOpen && r.onModalOpen();
-        s.on('close', () => {
-          v.default.handleModalClose(n.modalIsLoading);
-        });
-        n.modals[f] = s;
+    const callback = options.callback;
+    const flow = options.flow;
+    const modalUrl = this.constructor.getModalUrl(type, options.urlParams);
+
+    this.setLoading(type, true);
+    this.hideModals();
+
+    const name = options.customType ? `${type}.${options.customType}` : type;
+
+    if (!options.$container && this.modals[name]) {
+      this.modals[name].modal('show');
+      if (options.onModalShow) {
+        options.onModalShow();
       }
+      this.setLoading(type, false);
+      // g.default.page = type;
+    } else {
+      $.get(modalUrl, this.constructor.getRequestParams(options), (data) => {
+        let $modal;
 
-      if ([types.MODAL_TYPE_SIGNUP, types.MODAL_TYPE_LOGIN].indexOf(e) !== -1) {
-        const u = $('#link_alipay_user_id');
-        const l = !!u.val();
-        g.default.init({
-          page: e,
-          inModal: true,
-          onFinishedFlow: r.onFinishedFlow,
-          prioritizedCallbackReturningPromise: r.prioritizedCallbackReturningPromise,
-          shouldInitPhoneNumberSignup: l,
-        });
-      }
-      const p = r.$container || s.$element;
-      o.Tooltip && o.Tooltip.bind(p);
-      n.setLoading(e, false);
+        if (options.$container) {
+          options.$container.html(data.trim());
+        } else {
+          $modal = $(data.trim()).modal();
+          $modal.modal('show');
+          if (options.onModalShow) {
+            options.onModalShow();
+          }
+          $modal.on('hide.bs.modal', () => {
+            // v.default.handleModalHide(this.modalIsLoading);
+          });
+          this.modals[name] = $modal;
+        }
 
-      if ('auto' === r.launch_type) {
-        v.default.addModalBackground();
-      }
+        if ([types.MODAL_TYPE_SIGNUP, types.MODAL_TYPE_LOGIN].indexOf(type) !== -1) {
+          // const u = $('#link_alipay_user_id');
+          // const l = !!u.val();
+          // g.default.init({
+          //   page: type,
+          //   inModal: true,
+          //   onFinishedFlow: options.onFinishedFlow,
+          //   prioritizedCallbackReturningPromise: options.prioritizedCallbackReturningPromise,
+          //   shouldInitPhoneNumberSignup: l,
+          // });
+        }
 
-      p.find('input[placeholder], textarea[placeholder]').placeholder();
-      p.on('click', '.modal-link', n.handleModalChange.bind(n, i));
-      if (e === types.MODAL_TYPE_LOGOUT) {
-        n.listenForLogin();
-      }
-      n.modals[f] = s;
-    }),
-    s && g.default.addLoginCallback(s),
-    l && g.default.addFlow(l);
-  }
+        const $element = options.$container || $modal;
 
-  handleModalChange(e, ev) {
-    ev.preventDefault();
+        if (o.Tooltip) {
+          o.Tooltip.bind($element);
+        }
+        this.setLoading(type, false);
 
-    if (e.onModalChange) {
-      e.onModalChange();
+        if (options.launch_type === 'auto') {
+          // v.default.addModalBackground();
+        }
+
+        $element.on('click', '.modal-link', this.handleModalChange.bind(this, i));
+        if (type === types.MODAL_TYPE_LOGOUT) {
+          this.constructor.listenForLogin();
+        }
+        this.modals[name] = $modal;
+      });
     }
 
-    const type = ev.target.getAttribute('data-modal-type');
+    if (callback) {
+      // g.default.addLoginCallback(callback);
+    }
+
+    if (flow) {
+      // g.default.addFlow(flow);
+    }
+  }
+
+  handleModalChange(options, ev) {
+    ev.preventDefault();
+
+    if (options.onModalChange) {
+      options.onModalChange();
+    }
+
+    const type = $(ev.target).data('modalType');
 
     switch (type) {
       case types.MODAL_TYPE_LOGIN:
-        this.launchLogin(e);
+        this.launchLogin(options);
         break;
       case types.MODAL_TYPE_SIGNUP:
-        this.launchSignup(e);
+        this.launchSignup(options);
         break;
       // no default
     }
   }
 
-  closeModals() {
+  hideModals() {
     Object.values(this.modals).filter(el => el).forEach((el) => {
-      el.close();
+      el.modal('hide');
     });
   }
 
-  setLoading(e, t) {
-    const $modal = $(`.airbnb-header [data-${e}-modal]`);
+  setLoading(type, loading) {
+    const $modal = $(`#header [data-${type}-modal]`);
 
-    if (t) {
+    if (loading) {
       this.modalIsLoading = true;
       $modal.addClass('link-disabled');
       $modal.attr('disabled', true);
     } else {
-      v.default.removeSignupGardenBanner();
+      // v.default.removeSignupGardenBanner();
       this.modalIsLoading = false;
       $modal.removeClass('link-disabled');
       $modal.removeAttr('disabled');
     }
   }
 
-  getModalUrl(type, params) {
+  static getModalUrl(type, params) {
     let url;
 
     switch (type) {
       case types.MODAL_TYPE_LOGIN:
-        url = '/login_modal';
+        url = '/accounts/login/';
         break;
       case types.MODAL_TYPE_SIGNUP:
-        url = '/signup_modal';
+        url = '/accounts/signup/';
         break;
       case types.MODAL_TYPE_LOGOUT:
         url = '/signed_out_modal';
@@ -210,60 +246,62 @@ class SignupLoginModal {
     }
 
     if (params) {
-      url += `?${String(params)}`;
+      url += `?${params}`;
     }
     return url;
   }
 
   init() {
     this.initEvents();
-    this.initClickEvents();
+    this.constructor.initClickEvents();
     setTimeout(() => {
-      v.default.initSignupPrompt();
+      // v.default.initSignupPrompt();
     }, 0);
   }
 
   initEvents() {
-    u.default.on('login-modal:open', this.launchLogin.bind(this));
-    u.default.on('signup-modal:open', this.launchSignup.bind(this));
-    u.default.on('otp-modal:open', this.launchOtp.bind(this));
-    u.default.on('signup-login-modals:close', this.closeModals.bind(this));
+    events.on('login-modal:show', this.launchLogin.bind(this));
+    events.on('signup-modal:show', this.launchSignup.bind(this));
+    events.on('otp-modal:show', this.launchOtp.bind(this));
+    events.on('signup-login-modals:hide', this.hideModals.bind(this));
   }
 
-  initClickEvents() {
-    if (!['/login', '/signup_login'].includes(window.location.pathname)) {
+  static initClickEvents() {
+    if (!['/accounts/login/', '/accounts/signup/'].includes(window.location.pathname)) {
       $(document).on('click', '[data-login-modal]', (ev) => {
         ev.preventDefault();
-        const t = $(ev.currentTarget);
-        if (!t.parents('#header').length) {
-          u.default.emit('login-modal:open');
-        }
+        events.emit('login-modal:show');
       });
       $(document).on('click', '[data-signup-modal]', (ev) => {
         ev.preventDefault();
-        const t = $(ev.currentTarget);
-        if (!t.parents('#header').length) {
-          u.default.emit('signup-modal:open');
-        }
+        events.emit('signup-modal:show');
       });
     }
   }
 
-  listenForLogin() {
-    u.default.once('login', (e) => {
-      e && e.refresh === false || window.location.reload();
+  static listenForLogin() {
+    events.once('login', (value) => {
+      if (value && value.refresh === false) {
+        // do nothing
+      } else {
+        window.location.reload();
+      }
     });
   }
 
-  getRequestParams() {
-    const e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-    const t = {};
-    return e.$container && (t.embed = 1),
-    e.redirectUrl && (t.redirect_url = e.redirectUrl),
-    t;
+  static getRequestParams(...args) {
+    const options = args.length > 0 && args[0] !== undefined ? args[0] : {};
+    const params = {};
+
+    if (options.$container) {
+      params.embed = 1;
+    }
+    if (options.redirectUrl) {
+      params.redirect_url = options.redirectUrl;
+    }
+
+    return params;
   }
 }
-
-SignupLoginModal.modals = {};
 
 export default window.GoaSignupLoginModal ? window.GoaSignupLoginModal : (window.GoaSignupLoginModal = SignupLoginModal);

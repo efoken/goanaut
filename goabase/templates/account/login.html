@@ -1,12 +1,12 @@
-{% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
+{% extends request.is_ajax|yesno:"base_modal.html,base.html" %}
 
 {% load account i18n socialaccount %}
 
 {% block title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-    <div class="card signup-login-form-container" id="signup-modal-content">
-        <div class="card-block card-padding signup-login-form-card-block">
+    <div class="{% if request.is_ajax %}modal-content login{% else %}card{% endif %} signup-login-form-container" id="signup-modal-content">
+        <div class="{% if request.is_ajax %}modal-body{% else %}card-block card-padding{% endif %} signup-login-form-card-block">
             {% get_providers as socialaccount_providers %}
 
             {% if socialaccount_providers %}
