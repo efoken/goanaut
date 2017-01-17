@@ -35,7 +35,7 @@ $(document).ready(() => {
 
     const markers = [];
 
-    $('.party-card').each((i, el) => {
+    $('.party-card').each((_0, el) => {
       const position = $(el).data('location');
       const type = $(el).data('type');
 
@@ -65,7 +65,7 @@ $(document).ready(() => {
       zoom: 13,
     });
 
-    const marker = new google.maps.Marker({
+    new google.maps.Marker({
       map,
       icon: {
         url: `/static/images/map-marker-${$('.party').data('type').replace('_', '-')}.svg`,

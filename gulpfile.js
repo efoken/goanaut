@@ -7,7 +7,7 @@ const util = require('gulp-util');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
-const mergeWithConcat = require('./build/utils/merge-with-concat');
+const mergeWithConcat = require('./build/utils/mergeWithConcat');
 const webpackConfig = require('./build/webpack.config');
 const webpackConfigWatch = require('./build/webpack.config.watch');
 

@@ -1,10 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const autoprefixer = require('autoprefixer');
 const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-// const SvgStorePlugin = require('webpack-svgstore-plugin');
+const qs = require('qs');
 const webpack = require('webpack');
 
 module.exports = {
@@ -21,7 +20,10 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules(?![/|\\]bootstrap)/,
-        loader: `babel-loader?plugins[]=transform-decorators-legacy&plugins[]=transform-async-to-generator&presets[]=${path.resolve('./node_modules/babel-preset-airbnb')}&cacheDirectory`,
+        loader: `babel-loader?${qs.stringify({
+          plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash'],
+          presets: [path.resolve('./node_modules/babel-preset-airbnb')],
+        }, { arrayFormat: 'brackets', encode: false })}`,
       },
       {
         test: /\.scss$/,
@@ -46,13 +48,8 @@ module.exports = {
     }),
     new CleanPlugin([path.resolve('./goabase/static/bundles')], {
       root: process.cwd(),
+      verbose: false,
     }),
-    // new SvgStorePlugin(path.resolve('./goabase/static/icons/**/*.svg'), '', {
-    //   name: 'icons-[hash].svg',
-    //   chunk: 'main',
-    //   prefix: 'icon-',
-    //   svgoOptions: {},
-    // }),
     new ExtractTextPlugin('[name]-[hash:8].css', {
       allChunks: true,
     }),

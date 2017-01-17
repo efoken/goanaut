@@ -6,7 +6,7 @@ import eventEmitter from '../eventEmitter';
 
 const o: any = {};
 const f: any = {};
-const k = {};
+// const k = {};
 
 export const MODAL_TYPE_LOGIN = 'login';
 export const MODAL_TYPE_LOGOUT = 'logout';
@@ -105,13 +105,6 @@ class SignupLoginModal {
   }
 
   /**
-   * @return {String}
-   */
-  private getWindowLocationSearch(): string {
-    return window.location.search;
-  }
-
-  /**
    * @param {ISignupModalOptions} options
    */
   public launchLogin(options: ISignupModalOptions): void {
@@ -129,6 +122,21 @@ class SignupLoginModal {
    */
   public launchOtp(): void {
     this.setupSignupLogin(MODAL_TYPE_OTP);
+  }
+
+  /**
+   */
+  public init(): void {
+    this.initEvents();
+    this.initClickEvents();
+    // setTimeout(v.default.initSignupPrompt, 0);
+  }
+
+  /**
+   * @return {String}
+   */
+  private getWindowLocationSearch(): string {
+    return window.location.search;
   }
 
   /**
@@ -286,14 +294,6 @@ class SignupLoginModal {
 
   /**
    */
-  public init() {
-    this.initEvents();
-    this.initClickEvents();
-    // setTimeout(v.default.initSignupPrompt, 0);
-  }
-
-  /**
-   */
   private initEvents(): void {
     eventEmitter.on('login-modal:show', this.launchLogin.bind(this));
     eventEmitter.on('signup-modal:show', this.launchSignup.bind(this));
@@ -305,12 +305,12 @@ class SignupLoginModal {
    */
   private initClickEvents(): void {
     if (!_.includes(['/accounts/login/', '/accounts/signup/'], window.location.pathname)) {
-      $(document).on('click', '[data-login-modal]', (ev) => {
-        ev.preventDefault();
+      $(document).on('click', '[data-login-modal]', (event) => {
+        event.preventDefault();
         eventEmitter.emit('login-modal:show');
       });
-      $(document).on('click', '[data-signup-modal]', (ev) => {
-        ev.preventDefault();
+      $(document).on('click', '[data-signup-modal]', (event) => {
+        event.preventDefault();
         eventEmitter.emit('signup-modal:show');
       });
     }
@@ -327,6 +327,7 @@ class SignupLoginModal {
   }
 
   /**
+   * @param {Array<any>} args
    * @return {any}
    */
   private getRequestParams(...args): any {
@@ -344,4 +345,7 @@ class SignupLoginModal {
   }
 }
 
-export default window['GoaSignupLoginModal'] ? window['GoaSignupLoginModal'] : (window['GoaSignupLoginModal'] = SignupLoginModal);
+if (!((<any>window).GoaSignupLoginModal instanceof SignupLoginModal)) {
+  (<any>window).GoaSignupLoginModal = SignupLoginModal;
+}
+export default (<any>window).GoaSignupLoginModal;
