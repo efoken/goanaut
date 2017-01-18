@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable comma-dangle, import/no-extraneous-dependencies */
 const gulp = require('gulp');
 const rename = require('gulp-rename');
 const svgmin = require('gulp-svgmin');
@@ -11,7 +11,7 @@ const mergeWithConcat = require('./build/utils/mergeWithConcat');
 const webpackConfig = require('./build/webpack.config');
 const webpackConfigWatch = require('./build/webpack.config.watch');
 
-gulp.task('svgstore', () =>
+gulp.task('svgstore', () => {
   gulp.src('goabase/static/icons/**/*.svg')
     .pipe(rename({ prefix: 'icon-' }))
     .pipe(svgmin({
@@ -20,8 +20,8 @@ gulp.task('svgstore', () =>
       ],
     }))
     .pipe(svgstore({ inlineSvg: true }))
-    .pipe(gulp.dest('goabase/templates'))
-);
+    .pipe(gulp.dest('goabase/templates'));
+});
 
 gulp.task('webpack', (callback) => {
   webpack(webpackConfig, (err, stats) => {
@@ -35,7 +35,7 @@ gulp.task('webpack', (callback) => {
 
 gulp.task('webpack-dev-server', () => {
   const config = mergeWithConcat(webpackConfig, webpackConfigWatch);
-  config.entry.unshift('webpack-dev-server/client?http://localhost:3000/', 'webpack/hot/dev-server');
+  config.entry.main.unshift('webpack-dev-server/client?http://localhost:3000/', 'webpack/hot/dev-server');
 
   new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,

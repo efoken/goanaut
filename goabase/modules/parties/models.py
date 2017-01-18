@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
-from scrapy_djangoitem import DjangoItem
+# from scrapy_djangoitem import DjangoItem
 
 from goabase.modules.countries.models import Country
 
@@ -62,5 +62,5 @@ class Party(models.Model):
         return td.days >= 1
 
 
-class PartyItem(DjangoItem):
-    django_model = Party
+# class PartyItem(DjangoItem):
+#     django_model = Party

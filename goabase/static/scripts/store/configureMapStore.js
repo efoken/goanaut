@@ -5,6 +5,6 @@ import mapReducer from '../reducers/map';
 
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
 
-export default configureMapStore(initialState) {
+export default function configureMapStore(initialState) {
   return createStoreWithMiddleware(mapReducer, initialState);
 }

@@ -5,11 +5,11 @@ module.exports = {
     pathinfo: true,
     publicPath: 'http://localhost:3000/static/bundles/',
   },
-  debug: true,
   devtool: '#cheap-module-source-map',
+  stats: false,
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
 };
