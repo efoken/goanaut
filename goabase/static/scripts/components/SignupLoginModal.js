@@ -3,7 +3,7 @@ import $ from 'jquery';
 import qs from 'qs';
 
 import * as types from '../consts/ModalTypes';
-import events from '../events';
+import eventEmitter from '../eventEmitter';
 
 const o = {}; // n(47);
 // const d = n(42);
@@ -260,27 +260,27 @@ class SignupLoginModal {
   }
 
   initEvents() {
-    events.on('login-modal:show', this.launchLogin.bind(this));
-    events.on('signup-modal:show', this.launchSignup.bind(this));
-    events.on('otp-modal:show', this.launchOtp.bind(this));
-    events.on('signup-login-modals:hide', this.hideModals.bind(this));
+    eventEmitter.on('login-modal:show', this.launchLogin.bind(this));
+    eventEmitter.on('signup-modal:show', this.launchSignup.bind(this));
+    eventEmitter.on('otp-modal:show', this.launchOtp.bind(this));
+    eventEmitter.on('signup-login-modals:hide', this.hideModals.bind(this));
   }
 
   static initClickEvents() {
     if (!['/accounts/login/', '/accounts/signup/'].includes(window.location.pathname)) {
       $(document).on('click', '[data-login-modal]', (ev) => {
         ev.preventDefault();
-        events.emit('login-modal:show');
+        eventEmitter.emit('login-modal:show');
       });
       $(document).on('click', '[data-signup-modal]', (ev) => {
         ev.preventDefault();
-        events.emit('signup-modal:show');
+        eventEmitter.emit('signup-modal:show');
       });
     }
   }
 
   static listenForLogin() {
-    events.once('login', (value) => {
+    eventEmitter.once('login', (value) => {
       if (value && value.refresh === false) {
         // do nothing
       } else {

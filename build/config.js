@@ -1,9 +1,13 @@
+const argv = require('minimist')(process.argv.slice(2));
 const path = require('path');
 
-const isProduction = false;
+const mergeWithConcat = require('./utils/mergeWithConcat');
+
+const isProduction = !!((argv.env && argv.env.production) || argv.p);
 const rootPath = process.cwd();
 
-module.exports = {
+const config = {
+  publicUrl: 'http://localhost:3000',
   paths: {
     root: rootPath,
     bundles: path.join(rootPath, 'goabase/static/bundles'),
@@ -15,3 +19,7 @@ module.exports = {
     sourceMaps: !isProduction,
   },
 };
+
+module.exports = mergeWithConcat(config, {
+  env: Object.assign({ production: isProduction, development: !isProduction }, argv.env),
+});

@@ -11,7 +11,7 @@ const config = require('./config');
 const assetsFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
 const sourceMapQueryStr = config.enabled.sourceMaps ? '+sourceMap' : '-sourceMap';
 
-module.exports = {
+const webpackConfig = {
   context: config.paths.static,
   entry: {
     main: [
@@ -52,10 +52,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [
-      config.paths.static,
-      'node_modules',
-    ],
+    modules: [config.paths.static, 'node_modules'],
     enforceExtension: false,
     extensions: ['.js', '.jsx', '.css', '.scss'],
   },
@@ -70,6 +67,7 @@ module.exports = {
     new ExtractTextPlugin({
       filename: `${assetsFilenames}.css`,
       allChunks: true,
+      disable: config.enabled.devServer,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -99,3 +97,9 @@ module.exports = {
     }),
   ],
 };
+
+if (config.env.production) {
+  webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
+}
+
+module.exports = webpackConfig;
