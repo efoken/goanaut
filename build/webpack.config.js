@@ -8,8 +8,8 @@ const webpack = require('webpack');
 
 const config = require('./config');
 
-const assetsFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
 const sourceMapQueryStr = config.enabled.sourceMaps ? '+sourceMap' : '-sourceMap';
+const staticFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
 
 const webpackConfig = {
   context: config.paths.static,
@@ -21,7 +21,7 @@ const webpackConfig = {
   },
   output: {
     path: config.paths.bundles,
-    filename: `${assetsFilenames}.js`,
+    filename: `${staticFilenames}.js`,
   },
   devtool: config.enabled.sourceMaps ? '#source-map' : undefined,
   module: {
@@ -46,7 +46,7 @@ const webpackConfig = {
         test: /\.(png|jpe?g|gif|ico)$/,
         include: config.paths.static,
         loader: `file-loader?${qs.stringify({
-          name: `[path]${assetsFilenames}.[ext]`,
+          name: `[path]${staticFilenames}.[ext]`,
         })}`,
       },
     ],
@@ -65,7 +65,7 @@ const webpackConfig = {
       filename: './webpack-stats.json',
     }),
     new ExtractTextPlugin({
-      filename: `${assetsFilenames}.css`,
+      filename: `${staticFilenames}.css`,
       allChunks: true,
       disable: config.enabled.devServer,
     }),

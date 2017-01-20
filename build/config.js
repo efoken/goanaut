@@ -1,7 +1,6 @@
 const argv = require('minimist')(process.argv.slice(2));
+const merge = require('webpack-merge');
 const path = require('path');
-
-const mergeWithConcat = require('./utils/mergeWithConcat');
 
 const isProduction = !!((argv.env && argv.env.production) || argv.p);
 const rootPath = process.cwd();
@@ -20,6 +19,6 @@ const config = {
   },
 };
 
-module.exports = mergeWithConcat(config, {
+module.exports = merge(config, {
   env: Object.assign({ production: isProduction, development: !isProduction }, argv.env),
 });

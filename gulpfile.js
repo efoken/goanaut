@@ -1,16 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies, max-len */
+/* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
 const gulp = require('gulp');
+const merge = require('webpack-merge');
 const rename = require('gulp-rename');
 const svgmin = require('gulp-svgmin');
 const svgstore = require('gulp-svgstore');
 const util = require('gulp-util');
 const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
 
-const mergeWithConcat = require('./build/utils/mergeWithConcat');
 const publicUrl = require('./build/config').publicUrl;
 const webpackConfig = require('./build/webpack.config');
-const webpackConfigDevServer = require('./build/webpack.config.devServer');
 
 gulp.task('svgstore', () => {
   gulp.src('goabase/static/icons/**/*.svg')
@@ -35,19 +33,14 @@ gulp.task('webpack', (callback) => {
 });
 
 gulp.task('webpack-dev-server', () => {
-  const config = mergeWithConcat(webpackConfig, webpackConfigDevServer);
+  const config = merge(webpackConfig, require('./build/webpack.config.devServer'));
 
   Object.keys(config.entry).forEach((name) => {
     config.entry[name] = Array.isArray(config.entry[name]) ? config.entry[name].slice(0) : [config.entry[name]];
-    config.entry[name].push(`webpack-dev-server/client?${publicUrl}/`, 'webpack/hot/dev-server');
+    config.entry[name].push('webpack-hot-middleware/client?timeout=20000&reload=true');
   });
 
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    inline: true,
-    historyApiFallback: true,
-  }).listen(3000, '0.0.0.0', (err) => {
+  webpack(config, (err) => {
     if (err) {
       throw new util.PluginError('webpack-dev-server', err);
     }

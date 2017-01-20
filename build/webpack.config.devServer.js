@@ -1,3 +1,4 @@
+const BrowserSyncPlugin = require('browsersync-webpack-plugin');
 const webpack = require('webpack');
 
 const config = require('./config');
@@ -13,5 +14,10 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new BrowserSyncPlugin({
+      target: 'http://localhost:8000',
+      proxyUrl: config.publicUrl,
+      watch: [],
+    }),
   ],
 };
