@@ -1,60 +1,73 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const autoprefixer = require('autoprefixer');
 const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-// const SvgStorePlugin = require('webpack-svgstore-plugin');
+const qs = require('qs');
 const webpack = require('webpack');
 
-module.exports = {
-  entry: [
-    './goabase/static/scripts/main.js',
-    './goabase/static/styles/main.scss',
-  ],
-  output: {
-    path: path.resolve('./goabase/static/bundles'),
-    filename: '[name]-[hash:8].js',
+const config = require('./config');
+
+const sourceMapQueryStr = config.enabled.sourceMaps ? '+sourceMap' : '-sourceMap';
+const staticFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
+
+const webpackConfig = {
+  context: config.paths.static,
+  entry: {
+    main: [
+      './scripts/main.js',
+      './styles/main.scss',
+    ],
   },
+  output: {
+    path: config.paths.bundles,
+    filename: `${staticFilenames}.js`,
+  },
+  devtool: config.enabled.sourceMaps ? '#source-map' : undefined,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules(?![/|\\]bootstrap)/,
-        loader: `babel-loader?plugins[]=transform-decorators-legacy&plugins[]=transform-async-to-generator&presets[]=${path.resolve('./node_modules/babel-preset-airbnb')}&cacheDirectory`,
+        exclude: [/node_modules(?![/|\\]bootstrap)/],
+        loader: `babel-loader?${qs.stringify({
+          plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash'],
+          presets: [path.resolve('./node_modules/babel-preset-airbnb')],
+        }, { arrayFormat: 'brackets', encode: false })}`,
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', [
-          'css?sourceMap',
-          'postcss',
-          'sass?sourceMap',
-        ]),
+        include: config.paths.static,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [`css-loader?${sourceMapQueryStr}`, 'postcss-loader', `sass-loader?${sourceMapQueryStr}`],
+        }),
       },
       {
-        test: /\.jpe?g$|\.gif$|\.png$/i,
-        loader: 'file-loader',
+        test: /\.(png|jpe?g|gif|ico)$/,
+        include: config.paths.static,
+        loader: `file-loader?${qs.stringify({
+          name: `[path]${staticFilenames}.[ext]`,
+        })}`,
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    modules: [config.paths.static, 'node_modules'],
+    enforceExtension: false,
+    extensions: ['.js', '.jsx', '.css', '.scss'],
   },
   plugins: [
+    new CleanPlugin([config.paths.bundles], {
+      root: config.paths.root,
+      verbose: false,
+    }),
     new BundleTracker({
       filename: './webpack-stats.json',
     }),
-    new CleanPlugin([path.resolve('./goabase/static/bundles')], {
-      root: process.cwd(),
-    }),
-    // new SvgStorePlugin(path.resolve('./goabase/static/icons/**/*.svg'), '', {
-    //   name: 'icons-[hash].svg',
-    //   chunk: 'main',
-    //   prefix: 'icon-',
-    //   svgoOptions: {},
-    // }),
-    new ExtractTextPlugin('[name]-[hash:8].css', {
+    new ExtractTextPlugin({
+      filename: `${staticFilenames}.css`,
       allChunks: true,
+      disable: config.enabled.devServer,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -65,11 +78,28 @@ module.exports = {
       React: 'react',
       'window.React': 'react',
     }),
+    new webpack.LoaderOptionsPlugin({
+      debug: config.enabled.devServer,
+      stats: { colors: true },
+    }),
+    new webpack.LoaderOptionsPlugin({
+      test: /\.scss$/,
+      options: {
+        context: config.paths.static,
+        output: { path: config.paths.bundles },
+        postcss: [
+          autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'] }),
+        ],
+        sassLoader: {
+          precision: 9,
+        },
+      },
+    }),
   ],
-  postcss: [
-    autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'] }),
-  ],
-  sassLoader: {
-    precision: 9,
-  },
 };
+
+if (config.env.production) {
+  webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
+}
+
+module.exports = webpackConfig;

@@ -1,17 +1,16 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
 const gulp = require('gulp');
+const merge = require('webpack-merge');
 const rename = require('gulp-rename');
 const svgmin = require('gulp-svgmin');
 const svgstore = require('gulp-svgstore');
 const util = require('gulp-util');
 const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
 
-const mergeWithConcat = require('./build/utils/merge-with-concat');
+const publicUrl = require('./build/config').publicUrl;
 const webpackConfig = require('./build/webpack.config');
-const webpackConfigWatch = require('./build/webpack.config.watch');
 
-gulp.task('svgstore', () =>
+gulp.task('svgstore', () => {
   gulp.src('goabase/static/icons/**/*.svg')
     .pipe(rename({ prefix: 'icon-' }))
     .pipe(svgmin({
@@ -20,8 +19,8 @@ gulp.task('svgstore', () =>
       ],
     }))
     .pipe(svgstore({ inlineSvg: true }))
-    .pipe(gulp.dest('goabase/templates'))
-);
+    .pipe(gulp.dest('goabase/templates'));
+});
 
 gulp.task('webpack', (callback) => {
   webpack(webpackConfig, (err, stats) => {
@@ -34,18 +33,17 @@ gulp.task('webpack', (callback) => {
 });
 
 gulp.task('webpack-dev-server', () => {
-  const config = mergeWithConcat(webpackConfig, webpackConfigWatch);
-  config.entry.unshift('webpack-dev-server/client?http://localhost:3000/', 'webpack/hot/dev-server');
+  const config = merge(webpackConfig, require('./build/webpack.config.devServer'));
 
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    inline: true,
-    historyApiFallback: true,
-  }).listen(3000, '0.0.0.0', (err) => {
+  Object.keys(config.entry).forEach((name) => {
+    config.entry[name] = Array.isArray(config.entry[name]) ? config.entry[name].slice(0) : [config.entry[name]];
+    config.entry[name].push('webpack-hot-middleware/client?timeout=20000&reload=true');
+  });
+
+  webpack(config, (err) => {
     if (err) {
       throw new util.PluginError('webpack-dev-server', err);
     }
-    util.log('[webpack-dev-server]', 'http://localhost:3000/webpack-dev-server/index.html');
+    util.log('[webpack-dev-server]', `${publicUrl}/webpack-dev-server/index.html`);
   });
 });
