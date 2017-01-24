@@ -14,8 +14,8 @@ const config = {
   },
   enabled: {
     cacheBusting: isProduction,
-    devServer: process.argv[2] === 'webpack-dev-server',
     sourceMaps: !isProduction,
+    watcher: process.argv[2] === 'watch',
   },
 };
 

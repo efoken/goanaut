@@ -32,8 +32,8 @@ gulp.task('webpack', (callback) => {
   });
 });
 
-gulp.task('webpack-dev-server', () => {
-  const config = merge(webpackConfig, require('./build/webpack.config.devServer'));
+gulp.task('watch', () => {
+  const config = merge(webpackConfig, require('./build/webpack.config.watch'));
 
   Object.keys(config.entry).forEach((name) => {
     config.entry[name] = Array.isArray(config.entry[name]) ? config.entry[name].slice(0) : [config.entry[name]];
@@ -42,8 +42,8 @@ gulp.task('webpack-dev-server', () => {
 
   webpack(config, (err) => {
     if (err) {
-      throw new util.PluginError('webpack-dev-server', err);
+      throw new util.PluginError('watch', err);
     }
-    util.log('[webpack-dev-server]', `${publicUrl}/webpack-dev-server/index.html`);
+    util.log('[watch]', `${publicUrl}/webpack-dev-server/index.html`);
   });
 });

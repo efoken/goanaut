@@ -1,4 +1,3 @@
-// import external dependencies
 import 'jquery';
 import 'tether';
 import 'bootstrap/dist/js/bootstrap';
@@ -7,8 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import CountdownTimer from './components/CountdownTimer';
-import MapSearchPage from './components/MapSearchPage';
-import mapStyles from './map-styles';
+import mapStyles from './mapStyles';
 import SignupLoginModal from './components/SignupLoginModal';
 
 $(document).ready(() => {
@@ -25,11 +23,6 @@ $(document).ready(() => {
   l.init();
 
   if ($('#map').length) {
-    /* ReactDOM.render(
-      <MapSearchPage />,
-      $('.map-search')[0]
-    ); */
-
     const map = new google.maps.Map($('#map')[0], {
       center: {
         lat: 52.3764090,
@@ -66,7 +59,7 @@ $(document).ready(() => {
   if ($('.party-location').length) {
     ReactDOM.render(
       <CountdownTimer initialTimeRemaining={$('.countdown').data('initialTimeRemaining')} />,
-      $('.countdown')[0]
+      $('.countdown')[0],
     );
 
     const map = new google.maps.Map($('.party-location')[0], {

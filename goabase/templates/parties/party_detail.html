@@ -10,7 +10,7 @@
         <meta itemprop="startDate" content="{{ object.start_date|date:'c' }}" />
         <meta itemprop="endDate" content="{{ object.end_date|date:'c' }}" />
 
-        <div class="jumbotron jumbotron-fluid party-jumbotron bg-inverse" style="background-image: url({% placeholder_image 'images/placeholders/' %});">
+        <div class="jumbotron jumbotron-fluid party-jumbotron bg-inverse text-white" style="background-image: url({% placeholder_image 'images/placeholders/' %});">
             <div class="party-jumbotron-content container">
                 <div class="party-jumbotron-inner row">
                     <div class="col-sm-8">
@@ -38,27 +38,6 @@
             <div class="party-jumbotron-countdown">
                 <div class="container">
                     <div class="countdown" data-initial-time-remaining="{{ react_countdown_milliseconds }}">{{ react_countdown|safe }}</div>
-                    {% comment %}
-                    <ul class="list-group list-group-horizontal countdown">
-                        <li class="list-group-item countdown-label">{% trans "Time left to event" %}:</li>
-                        <li class="list-group-item countdown-days">
-                            <em>{{ countdown_days }}</em>
-                            {% trans "Days" %}
-                        </li>
-                        <li class="list-group-item countdown-hours">
-                            <em>{{ countdown_hours }}</em>
-                            {% trans "Hours" %}
-                        </li>
-                        <li class="list-group-item countdown-minutes">
-                            <em>{{ countdown_minutes }}</em>
-                            {% trans "Minutes" %}
-                        </li>
-                        <li class="list-group-item countdown-seconds">
-                            <em>{{ countdown_seconds }}</em>
-                            {% trans "Seconds" %}
-                        </li>
-                    </ul>
-                    {% endcomment %}
                 </div>
             </div>
         </div>

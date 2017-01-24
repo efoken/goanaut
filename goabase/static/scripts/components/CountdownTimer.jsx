@@ -1,6 +1,8 @@
 import moment from 'moment';
 import React from 'react';
 
+const gettext = (text) => text;
+
 const propTypes = {
   initialTimeRemaining: React.PropTypes.number.isRequired,
   interval: React.PropTypes.number,
@@ -90,21 +92,21 @@ class CountdownTimer extends React.Component {
 
   render() {
     return (
-      <ul className="list-group list-group-horizontal countdown-inner">
-        <li className="list-group-item countdown-label">{gettext('Time left to event:')}</li>
-        <li className="list-group-item countdown-days">
+      <ul className="countdown-inner list-group list-group-horizontal">
+        <li className="countdown-label list-group-item">{gettext('Time left to event:')}</li>
+        <li className="countdown-days list-group-item">
           <em>{this.getDays(this.state.timeRemaining)}</em>
           {gettext('Days')}
         </li>
-        <li className="list-group-item countdown-hours">
+        <li className="countdown-hours list-group-item">
           <em>{this.getHours(this.state.timeRemaining)}</em>
           {gettext('Hours')}
         </li>
-        <li className="list-group-item countdown-minutes">
+        <li className="countdown-minutes list-group-item">
           <em>{this.getMinutes(this.state.timeRemaining)}</em>
           {gettext('Minutes')}
         </li>
-        <li className="list-group-item countdown-seconds">
+        <li className="countdown-seconds list-group-item">
           <em>{this.getSeconds(this.state.timeRemaining)}</em>
           {gettext('Seconds')}
         </li>

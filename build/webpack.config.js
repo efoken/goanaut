@@ -67,7 +67,7 @@ const webpackConfig = {
     new ExtractTextPlugin({
       filename: `${staticFilenames}.css`,
       allChunks: true,
-      disable: config.enabled.devServer,
+      disable: config.enabled.watcher,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -79,7 +79,7 @@ const webpackConfig = {
       'window.React': 'react',
     }),
     new webpack.LoaderOptionsPlugin({
-      debug: config.enabled.devServer,
+      debug: config.enabled.watcher,
       stats: { colors: true },
     }),
     new webpack.LoaderOptionsPlugin({

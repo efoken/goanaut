@@ -1,8 +1,7 @@
 .list-group-horizontal {
-  @include clearfix;
+  flex-direction: row;
 
   .list-group-item {
-    float: left;
     margin-bottom: 0;
     margin-right: -1px;
 
