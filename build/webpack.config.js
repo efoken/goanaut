@@ -29,7 +29,7 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules(?![/|\\]bootstrap)/],
-        loader: `babel-loader?${qs.stringify({
+        use: `babel-loader?${qs.stringify({
           plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash'],
           presets: [path.resolve('./node_modules/babel-preset-airbnb')],
         }, { arrayFormat: 'brackets', encode: false })}`,
@@ -37,15 +37,15 @@ const webpackConfig = {
       {
         test: /\.scss$/,
         include: config.paths.static,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: [`css-loader?${sourceMapQueryStr}`, 'postcss-loader', `sass-loader?${sourceMapQueryStr}`],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [`css-loader?${sourceMapQueryStr}`, 'postcss-loader', `sass-loader?${sourceMapQueryStr}`],
         }),
       },
       {
         test: /\.(png|jpe?g|gif|ico)$/,
         include: config.paths.static,
-        loader: `file-loader?${qs.stringify({
+        use: `file-loader?${qs.stringify({
           name: `[path]${staticFilenames}.[ext]`,
         })}`,
       },

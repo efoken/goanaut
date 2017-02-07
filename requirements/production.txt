@@ -1,3 +1,4 @@
 -r base.txt
 
+django-anymail==0.8
 psycopg2==2.6.2
