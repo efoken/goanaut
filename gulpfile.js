@@ -1,4 +1,5 @@
 /* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
+const argv = require('minimist')(process.argv.slice(2));
 const gulp = require('gulp');
 const merge = require('webpack-merge');
 const rename = require('gulp-rename');
@@ -7,8 +8,8 @@ const svgstore = require('gulp-svgstore');
 const util = require('gulp-util');
 const webpack = require('webpack');
 
-const publicUrl = require('./build/config').publicUrl;
-const webpackConfig = require('./build/webpack.config');
+const config = require('./build/config');
+let webpackConfig = require('./build/webpack.config');
 
 gulp.task('svgstore', () => {
   gulp.src('goabase/static/icons/**/*.svg')
@@ -22,7 +23,11 @@ gulp.task('svgstore', () => {
     .pipe(gulp.dest('goabase/templates'));
 });
 
-gulp.task('webpack', (callback) => {
+gulp.task('build', ['svgstore'], (callback) => {
+  if (config.enabled.optimize) {
+    webpackConfig = merge(webpackConfig, require('./build/webpack.config.optimize'));
+  }
+
   webpack(webpackConfig, (err, stats) => {
     if (err) {
       throw new util.PluginError('webpack', err);
@@ -33,17 +38,13 @@ gulp.task('webpack', (callback) => {
 });
 
 gulp.task('watch', () => {
-  const config = merge(webpackConfig, require('./build/webpack.config.watch'));
+  webpackConfig.entry = require('./build/utils/addHotMiddleware')(webpackConfig.entry);
+  webpackConfig = merge(webpackConfig, require('./build/webpack.config.watch'));
 
-  Object.keys(config.entry).forEach((name) => {
-    config.entry[name] = Array.isArray(config.entry[name]) ? config.entry[name].slice(0) : [config.entry[name]];
-    config.entry[name].push('webpack-hot-middleware/client?timeout=20000&reload=true');
-  });
-
-  webpack(config, (err) => {
+  webpack(webpackConfig, (err) => {
     if (err) {
       throw new util.PluginError('watch', err);
     }
-    util.log('[watch]', `${publicUrl}/webpack-dev-server/index.html`);
+    util.log('[watch]', `${config.proxyUrl}/webpack-dev-server/index.html`);
   });
 });

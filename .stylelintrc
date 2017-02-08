@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "plugins": [
+    "stylelint-order",
     "stylelint-scss"
   ],
   "rules": {
@@ -12,7 +13,6 @@
         "ignore": ["after-comment"],
       }
     ],
-    "declaration-block-properties-order": "alphabetical",
     "declaration-empty-line-before": "never",
     "declaration-property-value-blacklist": {
       "/^border/": [
@@ -21,6 +21,7 @@
     },
     "max-empty-lines": 2,
     "max-nesting-depth": 3,
+    "order/declaration-block-properties-alphabetical-order": true,
     "scss/dollar-variable-colon-newline-after": "always-multi-line",
     "scss/dollar-variable-colon-space-after": "always-single-line",
     "scss/dollar-variable-colon-space-before": "never",

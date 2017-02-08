@@ -6,7 +6,7 @@ const config = require('./config');
 module.exports = {
   output: {
     pathinfo: true,
-    publicPath: `${config.publicUrl}/static/bundles/`,
+    publicPath: `${config.proxyUrl}/static/bundles/`,
   },
   devtool: '#cheap-module-source-map',
   stats: false,
@@ -16,8 +16,8 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new BrowserSyncPlugin({
       target: 'http://localhost:8000',
-      proxyUrl: config.publicUrl,
-      watch: [],
+      proxyUrl: config.proxyUrl,
+      watch: config.watch,
     }),
   ],
 };

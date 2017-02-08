@@ -6,7 +6,7 @@ const isProduction = !!((argv.env && argv.env.production) || argv.p);
 const rootPath = process.cwd();
 
 const config = {
-  publicUrl: 'http://localhost:3000',
+  proxyUrl: 'http://localhost:3000',
   paths: {
     root: rootPath,
     bundles: path.join(rootPath, 'goabase/static/bundles'),
@@ -14,9 +14,12 @@ const config = {
   },
   enabled: {
     cacheBusting: isProduction,
+    optimize: isProduction,
     sourceMaps: !isProduction,
     watcher: process.argv[2] === 'watch',
   },
+  watch: [],
+  browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'],
 };
 
 module.exports = merge(config, {

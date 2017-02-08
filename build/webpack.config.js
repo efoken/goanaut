@@ -79,6 +79,7 @@ const webpackConfig = {
       'window.React': 'react',
     }),
     new webpack.LoaderOptionsPlugin({
+      minimize: config.env.production,
       debug: config.enabled.watcher,
       stats: { colors: true },
     }),
@@ -88,7 +89,7 @@ const webpackConfig = {
         context: config.paths.static,
         output: { path: config.paths.bundles },
         postcss: [
-          autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'opera 12', 'ff esr'] }),
+          autoprefixer({ browsers: config.browsers }),
         ],
         sassLoader: {
           precision: 9,
