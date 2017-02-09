@@ -1,7 +1,8 @@
+/* eslint-disable react/require-default-props */
 import moment from 'moment';
 import React from 'react';
 
-const gettext = (text) => text;
+const gettext = text => text;
 
 const propTypes = {
   initialTimeRemaining: React.PropTypes.number.isRequired,
@@ -46,6 +47,22 @@ class CountdownTimer extends React.Component {
     clearTimeout(this.state.timeoutId);
   }
 
+  getDays() {
+    return Math.floor(moment.duration(this.state.timeRemaining).asDays());
+  }
+
+  getHours() {
+    return Math.floor(moment.duration(this.state.timeRemaining).hours());
+  }
+
+  getMinutes() {
+    return Math.floor(moment.duration(this.state.timeRemaining).minutes());
+  }
+
+  getSeconds() {
+    return Math.floor(moment.duration(this.state.timeRemaining).seconds());
+  }
+
   tick() {
     const currentTime = moment.now();
     const dt = this.state.prevTime ? (currentTime - this.state.prevTime) : 0;
@@ -69,25 +86,9 @@ class CountdownTimer extends React.Component {
       this.setState({
         timeoutId: countdownComplete ? null : setTimeout(this.tick.bind(this), timeout),
         prevTime: currentTime,
-        timeRemaining: timeRemaining,
+        timeRemaining,
       });
     }
-  }
-
-  getDays(milliseconds) {
-    return Math.floor(moment.duration(milliseconds).asDays());
-  }
-
-  getHours(milliseconds) {
-    return Math.floor(moment.duration(milliseconds).hours());
-  }
-
-  getMinutes(milliseconds) {
-    return Math.floor(moment.duration(milliseconds).minutes());
-  }
-
-  getSeconds(milliseconds) {
-    return Math.floor(moment.duration(milliseconds).seconds());
   }
 
   render() {
@@ -95,19 +96,19 @@ class CountdownTimer extends React.Component {
       <ul className="countdown-inner list-group list-group-horizontal">
         <li className="countdown-label list-group-item">{gettext('Time left to event:')}</li>
         <li className="countdown-days list-group-item">
-          <em>{this.getDays(this.state.timeRemaining)}</em>
+          <em>{this.getDays()}</em>
           {gettext('Days')}
         </li>
         <li className="countdown-hours list-group-item">
-          <em>{this.getHours(this.state.timeRemaining)}</em>
+          <em>{this.getHours()}</em>
           {gettext('Hours')}
         </li>
         <li className="countdown-minutes list-group-item">
-          <em>{this.getMinutes(this.state.timeRemaining)}</em>
+          <em>{this.getMinutes()}</em>
           {gettext('Minutes')}
         </li>
         <li className="countdown-seconds list-group-item">
-          <em>{this.getSeconds(this.state.timeRemaining)}</em>
+          <em>{this.getSeconds()}</em>
           {gettext('Seconds')}
         </li>
       </ul>

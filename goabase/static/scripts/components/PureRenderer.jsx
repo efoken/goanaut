@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import React from 'react';
 
@@ -12,7 +13,7 @@ class PureRenderer extends React.Component {
   }
 
   render() {
-    const {render, ...other} = this.props;
+    const { render, ...other } = this.props;
     return render(other);
   }
 }

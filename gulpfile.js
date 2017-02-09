@@ -1,5 +1,4 @@
 /* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
-const argv = require('minimist')(process.argv.slice(2));
 const gulp = require('gulp');
 const merge = require('webpack-merge');
 const rename = require('gulp-rename');
