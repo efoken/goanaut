@@ -5,7 +5,6 @@ import MapElement from './components/MapElement';
 import * as controlPositions from './consts/ControlPositions';
 
 const propTypes = {};
-propTypes.ControlPositionPropType = propTypes.MapBoundsLiteralPropType = propTypes.MapBoundsPropType = propTypes.MapPropType = propTypes.PathPropTypes = propTypes.LatLngPropType = propTypes.PositionPropType = propTypes.SizePropType = undefined; // eslint-disable-line
 
 const p = (
   propTypes.SizePropType = React.PropTypes.shape({

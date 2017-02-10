@@ -45,45 +45,45 @@ class MapElementBase extends React.Component {
     object.detach();
   }
 
-  onClick(e) {
+  onClick(ev) {
     if (this.props.onClick) {
-      this.props.onClick(this.eventData(e));
+      this.props.onClick(this.eventData(ev));
     }
   }
 
-  onDrag(e) {
+  onDrag(ev) {
     if (this.props.onDrag) {
-      this.props.onDrag(this.eventData(e));
+      this.props.onDrag(this.eventData(ev));
     }
   }
 
-  onDragEnd(e) {
+  onDragEnd(ev) {
     if (this.props.onDragEnd) {
-      this.props.onDragEnd(this.eventData(e));
+      this.props.onDragEnd(this.eventData(ev));
     }
   }
 
-  onDragStart(e) {
+  onDragStart(ev) {
     if (this.props.onDragStart) {
-      this.props.onDragStart(this.eventData(e));
+      this.props.onDragStart(this.eventData(ev));
     }
   }
 
-  onMouseMove(e) {
+  onMouseMove(ev) {
     if (this.props.onMouseMove) {
-      this.props.onMouseMove(this.eventData(e));
+      this.props.onMouseMove(this.eventData(ev));
     }
   }
 
-  onMouseOut(e) {
+  onMouseOut(ev) {
     if (this.props.onMouseOut) {
-      this.props.onMouseOut(this.eventData(e));
+      this.props.onMouseOut(this.eventData(ev));
     }
   }
 
-  onMouseOver(e) {
+  onMouseOver(ev) {
     if (this.props.onMouseOver) {
-      this.props.onMouseOver(this.eventData(e));
+      this.props.onMouseOver(this.eventData(ev));
     }
   }
 

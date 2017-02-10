@@ -4,9 +4,8 @@ import React from 'react';
 
 import MapBounds from '../MapBounds';
 import MapElement from '../MapElement';
-import * as convertUtils from '../../convertUtils';
+import { check, convert } from '../../utils';
 import * as customPropTypes from '../../customPropTypes';
-import * as geoUtils from '../../geoUtils';
 import * as zoomControlPositions from '../../consts/ZoomControlPositions';
 
 function createBounds(bounds) {
@@ -114,7 +113,7 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (geoUtils.changed('static', this.props, newProps) || geoUtils.changed('staticImageHeight', this.props, newProps) || geoUtils.changed('staticImageWidth', this.props, newProps)) { // eslint-disable-line
+    if (check.changed('static', this.props, newProps) || check.changed('staticImageHeight', this.props, newProps) || check.changed('staticImageWidth', this.props, newProps)) { // eslint-disable-line
       if (newProps.static) {
         const n = {
           height: newProps.staticImageHeight,
@@ -136,35 +135,35 @@ class Map extends React.Component {
       const o = i.center;
       const l = i.zoom;
 
-      if (newProps.center && !geoUtils.latLngEqual(o, newProps.center)) {
+      if (newProps.center && !check.latLngEqual(o, newProps.center)) {
         map.setView(newProps.center || o, newProps.zoom || l);
       } else {
         newProps.zoom && l !== newProps.zoom && map.setZoom(newProps.zoom);
       }
 
-      if (geoUtils.changed('minZoom', this.props, newProps)) {
+      if (check.changed('minZoom', this.props, newProps)) {
         map.setMinZoom(newProps.minZoom);
       }
-      if (geoUtils.changed('maxZoom', this.props, newProps)) {
+      if (check.changed('maxZoom', this.props, newProps)) {
         map.setMinZoom(newProps.maxZoom);
       }
-      if (geoUtils.changed('zoomControl', this.props, newProps)) {
+      if (check.changed('zoomControl', this.props, newProps)) {
         map.setZoomControl(newProps.zoomControl);
       }
-      if (geoUtils.changed('scaleControl', this.props, newProps)) {
+      if (check.changed('scaleControl', this.props, newProps)) {
         map.setScaleControl(newProps.scaleControl);
       }
-      if (geoUtils.changed('streetViewControl', this.props, newProps)) {
+      if (check.changed('streetViewControl', this.props, newProps)) {
         map.setStreetViewControl(newProps.streetViewControl);
       }
-      if (geoUtils.changed('showTransitLayer', this.props, newProps)) {
+      if (check.changed('showTransitLayer', this.props, newProps)) {
         map.toggleTransitLayer(newProps.showTransitLayer);
       }
-      if (geoUtils.changed('directions', this.props, newProps)) {
+      if (check.changed('directions', this.props, newProps)) {
         map.setDirections(newProps.directions);
       }
 
-      if (newProps.minBounds && !geoUtils.boundsEqual(this.props.minBounds, newProps.minBounds)) {
+      if (newProps.minBounds && !check.boundsEqual(this.props.minBounds, newProps.minBounds)) {
         const bounds = createBounds(newProps.minBounds);
         this.fitBounds(bounds);
       }
@@ -185,75 +184,75 @@ class Map extends React.Component {
     }
   }
 
-  onBoundsChange(e) {
+  onBoundsChange(ev) {
     if (this.props.onBoundsChange) {
-      this.props.onBoundsChange(this.eventData(), e);
+      this.props.onBoundsChange(this.eventData(), ev);
     }
   }
 
-  onClick(e) {
+  onClick(ev) {
     if (this.props.onClick) {
-      this.props.onClick(e);
+      this.props.onClick(ev);
     }
   }
 
-  onDrag(e) {
+  onDrag(ev) {
     if (this.props.onDrag) {
-      this.props.onDrag(this.eventData(), e);
+      this.props.onDrag(this.eventData(), ev);
     }
   }
 
-  onDragEnd(e) {
+  onDragEnd(ev) {
     if (this.props.onDragEnd) {
-      this.props.onDragEnd(this.eventData(), e);
+      this.props.onDragEnd(this.eventData(), ev);
     }
   }
 
-  onDragStart(e) {
+  onDragStart(ev) {
     if (this.props.onDragStart) {
-      this.props.onDragStart(this.eventData(), e);
+      this.props.onDragStart(this.eventData(), ev);
     }
   }
 
-  onIdle(e) {
+  onIdle(ev) {
     if (this.props.onIdle) {
-      this.props.onIdle(e);
+      this.props.onIdle(ev);
     }
   }
 
-  onLoad(e) {
+  onLoad(ev) {
     if (this.props.onLoad) {
-      this.props.onLoad(e);
+      this.props.onLoad(ev);
     }
   }
 
-  onMouseMove(e) {
+  onMouseMove(ev) {
     if (this.props.onMouseMove) {
-      this.props.onMouseMove(e);
+      this.props.onMouseMove(ev);
     }
   }
 
-  onMouseOver(e) {
+  onMouseOver(ev) {
     if (this.props.onMouseOver) {
-      this.props.onMouseOver(e);
+      this.props.onMouseOver(ev);
     }
   }
 
-  onMouseOut(e) {
+  onMouseOut(ev) {
     if (this.props.onMouseOut) {
-      this.props.onMouseOut(e);
+      this.props.onMouseOut(ev);
     }
   }
 
-  onZoomChange(e) {
+  onZoomChange(ev) {
     if (this.props.onZoomChange) {
-      this.props.onZoomChange(this.eventData(), e);
+      this.props.onZoomChange(this.eventData(), ev);
     }
   }
 
-  onStreetViewVisibleChange(e) {
+  onStreetViewVisibleChange(ev) {
     if (this.props.onStreetViewVisibleChange) {
-      this.props.onStreetViewVisibleChange(e);
+      this.props.onStreetViewVisibleChange(ev);
     }
   }
 
@@ -397,9 +396,9 @@ class Map extends React.Component {
     const a = e - t;
 
     const i = '/maps/api/staticmap';
-    const o = convertUtils.latLngToString(this.props.center);
+    const o = convert.latLngToString(this.props.center);
     const s = `${i}?size=${n}x${r}&zoom=${this.props.zoom}&center=${o}`;
-    return `${s}&${convertUtils.joinWithMaxLength(l, '&', a - s.length)}`;
+    return `${s}&${convert.joinWithMaxLength(l, '&', a - s.length)}`;
   }
 
   uninitialize() {

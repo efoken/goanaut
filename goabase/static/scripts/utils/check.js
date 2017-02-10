@@ -1,4 +1,4 @@
-import MapBounds from './components/MapBounds';
+import MapBounds from '../components/MapBounds';
 
 export function latLngEqual(e, t) {
   return e.lat === t.lat && e.lng === t.lng;

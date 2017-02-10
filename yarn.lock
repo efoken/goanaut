@@ -91,6 +91,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+amplify-store@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/amplify-store/-/amplify-store-0.0.5.tgz#58664bea6a8f0ffba17809bcaea22c22cb288868"
+
 ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
@@ -1306,6 +1310,10 @@ clap@^1.0.9:
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.1.2.tgz#316545bf22229225a2cecaa6824cd2f56a9709ed"
   dependencies:
     chalk "^1.1.3"
+
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-webpack-plugin@^0.1.13:
   version "0.1.15"
@@ -2727,6 +2735,13 @@ glob@~3.1.21:
     graceful-fs "~1.2.0"
     inherits "1"
     minimatch "~0.2.11"
+
+global-cache@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/global-cache/-/global-cache-1.2.0.tgz#bf7f4178a389c8ee513001a7a2e8d3253cc4ad8c"
+  dependencies:
+    define-properties "^1.1.2"
+    is-symbol "^1.0.1"
 
 global-modules@^0.2.3:
   version "0.2.3"

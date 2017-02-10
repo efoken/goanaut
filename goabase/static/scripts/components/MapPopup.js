@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import MapHandlerRegistry from './MapHandlerRegistry';
+import { mq } from '../utils';
 
 const o = babelHelpers.interopRequireDefault(n(2295));
-const l = n(184);
 
 const DEFAULT_OFFSET = { x: 0, y: 0 };
 
@@ -52,7 +52,7 @@ class MapPopup extends MapHandlerRegistry {
 
     const content = e.getPopupContent();
 
-    if (l.matchMedia.is('sm')) {
+    if (mq.matchMedia.is('sm')) {
       this.ignoreNextMapClick = true;
     }
 

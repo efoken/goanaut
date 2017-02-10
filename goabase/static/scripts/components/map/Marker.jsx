@@ -1,14 +1,12 @@
 /* eslint-disable react/require-default-props */
+import _ from 'lodash';
 import React from 'react';
 
 import MapElementBase from './MapElementBase';
 import MapIcon from '../MapIcon';
-import * as convertUtils from '../../convertUtils';
+import MapObject from '../MapObject';
+import { check, convert } from '../../utils';
 import * as customPropTypes from '../../customPropTypes';
-import * as geoUtils from '../../geoUtils';
-
-const i = n(152);
-const l = babelHelpers.interopRequireDefault(n(2305));
 
 const propTypes = Object.assign({}, MapElementBase.propTypes, {
   position: customPropTypes.LatLngPropType.isRequired,
@@ -33,35 +31,50 @@ const propTypes = Object.assign({}, MapElementBase.propTypes, {
 
 class Marker extends MapElementBase {
   componentDidMount() {
-    var e = new l.default(this.props.position, this.iconFromProps(this.props), {
+    const object = new MapObject(this.props.position, this.iconFromProps(this.props), {
       map: this.props.map,
       iconAnchor: this.props.iconAnchor,
       draggable: this.props.draggable,
       title: this.props.title,
     });
-    this._mountWithObject(e);
+    this._mountWithObject(object);
   }
 
-  iconFromProps(e) {
-    if (typeof e.icon === 'string' || React.isValidElement(e.icon)) {
-      return e.icon;
-    } else if (typeof e.icon === 'object') {
-      return new MapIcon(e.icon.url, e.icon);
+  iconFromProps(props) {
+    if (typeof props.icon === 'string' || React.isValidElement(props.icon)) {
+      return props.icon;
+    } else if (typeof props.icon === 'object') {
+      return new MapIcon(props.icon.url, props.icon);
     }
     return <i className="icon icon-map-marker" />;
   }
 
-  componentWillReceiveProps(e) {
-    const t = this.props;
-    const n = this.state.object;
-    if (n) {
-      geoUtils.latLngEqual(n.getLatLng(), e.position) || n.setLatLng(e.position);
-      geoUtils.using('icon', t, e) && !(0, i.isEqual)(t.icon, e.icon) && n.setIcon(this.iconFromProps(e));
-      geoUtils.using('visible', t, e) && n.isVisible() !== e.visible && n.setVisible(e.visible);
-      geoUtils.using('zIndex', t, e) && n.getZIndex() !== e.zIndex && n.setZIndex(e.zIndex);
-      geoUtils.using('markerType', t, e) && n.getMarkerType() !== e.markerType && n.setMarkerType(e.markerType);
-      geoUtils.changed('className', t, e) && n.setClass(e.className);
-      geoUtils.changed('title', t, e) && n.setTitle(e.title);
+  componentWillReceiveProps(nextProps) {
+    const props = this.props;
+    const object = this.state.object;
+
+    if (object) {
+      if (!check.latLngEqual(object.getLatLng(), nextProps.position)) {
+        object.setLatLng(nextProps.position);
+      }
+      if (check.using('icon', props, nextProps) && !_.isEqual(props.icon, nextProps.icon)) {
+        object.setIcon(this.iconFromProps(nextProps));
+      }
+      if (check.using('visible', props, nextProps) && object.isVisible() !== nextProps.visible) {
+        object.setVisible(nextProps.visible);
+      }
+      if (check.using('zIndex', props, nextProps) && object.getZIndex() !== nextProps.zIndex) {
+        object.setZIndex(nextProps.zIndex);
+      }
+      if (check.using('markerType', props, nextProps) && object.getMarkerType() !== nextProps.markerType) {
+        object.setMarkerType(nextProps.markerType);
+      }
+      if (check.changed('className', props, nextProps)) {
+        object.setClass(nextProps.className);
+      }
+      if (check.changed('title', props, nextProps)) {
+        object.setTitle(nextProps.title);
+      }
     }
   }
 
@@ -74,9 +87,14 @@ class Marker extends MapElementBase {
     }
   }
 
-  staticMapUrl(e) {
+  staticMapUrl(props) {
     let t = null;
-    typeof e.icon === 'string' ? t = e.icon : 'icon' in e && (t = e.icon.url || null);
+
+    if (typeof props.icon === 'string') {
+      t = props.icon;
+    } else if ('icon' in props) {
+      t = props.icon.url || null;
+    }
 
     const n = {
       bar: 'http://goo.gl/MxX5fU',
@@ -91,7 +109,7 @@ class Marker extends MapElementBase {
       tourism: 'http://goo.gl/FumdDM',
     };
     const r = t.match(/pin_([^.]+)/)[1];
-    const a = convertUtils.latLngToString(e.position);
+    const a = convert.latLngToString(props.position);
 
     r && (t = n[r] || t);
     t = t ? `icon:${t}|` : '';
