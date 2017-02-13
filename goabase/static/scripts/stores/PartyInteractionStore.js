@@ -1,7 +1,7 @@
 import React from 'react';
 
-var a = babelHelpers.interopRequireDefault(n(1889));
-var s = babelHelpers.interopRequireDefault(n(1890));
+import alt from '../alt';
+import PartyInteractionActions from '../actions/PartyInteractionActions';
 
 export const propTypes = {
   clickedListingId: React.PropTypes.number.isRequired,
@@ -11,7 +11,7 @@ export const propTypes = {
 
 class PartyInteractionStore {
   constructor() {
-    this.bindActions(s.default);
+    this.bindActions(PartyInteractionActions);
     this.clickedListingId = null;
     this.hoveredListingId = null;
     this.shouldFocusCheckin = false;
@@ -44,4 +44,4 @@ class PartyInteractionStore {
   }
 }
 
-export default a.default.createStore(PartyInteractionStore, 'PartyInteractionStore');
+export default alt.createStore(PartyInteractionStore, 'PartyInteractionStore');

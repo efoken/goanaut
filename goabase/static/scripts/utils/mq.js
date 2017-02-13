@@ -2,7 +2,7 @@ export const breakpoints = {
   sm: '(max-width: 743px)',
   md: '(min-width: 744px) and (max-width: 1127px)',
   lg: '(min-width: 1128px)',
-}
+};
 
 function getMq(breakpoint) {
   return breakpoints[breakpoint];
@@ -13,21 +13,21 @@ export const matchMedia = {
     const mq = getMq(breakpoint);
 
     if (!mq) {
-      return function() {};
+      return () => {};
     }
     if (!window.matchMedia) {
-      return function() {};
+      return () => {};
     }
 
     const mql = window.matchMedia(mq);
     mql.addListener((e) => {
       callback.call(this, e);
-    })
-    callback(mql),
+    });
+    callback(mql);
 
-    return function() {
+    return () => {
       mql.removeListener(callback);
-    }
+    };
   },
   is: (breakpoint) => {
     const mq = getMq(breakpoint);

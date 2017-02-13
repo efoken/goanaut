@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle, react/no-unused-prop-types, react/prop-types, react/require-default-props */
 import React from 'react';
 
 import Popup from './Popup';
@@ -103,7 +103,7 @@ class MapElementBase extends React.Component {
       nativeEvent: event,
       object: this.state.object,
       data: this.props.data,
-    }
+    };
   }
 
   renderChildren() {

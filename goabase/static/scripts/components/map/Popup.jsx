@@ -24,7 +24,7 @@ const defaultProps = {
     y: 50,
   },
   visible: false,
-}
+};
 
 class Popup extends React.Component {
   constructor(props) {

@@ -1,5 +1,6 @@
-var a = babelHelpers.interopRequireDefault(n(1889));
-var o = babelHelpers.interopRequireDefault(n(8063));
+import alt from '../alt';
+
+const o = babelHelpers.interopRequireDefault(n(8063));
 
 const defaultState = {
   wishlistedListingsIds: {},
@@ -19,20 +20,22 @@ class FavoredPartiesStore {
     const t = e.wishlists;
     const wishlistedListingsIds = this.state.wishlistedListingsIds;
     const r = t.listingIds;
-    Object.keys(r).filter(e => r[e] === true).forEach(e => wishlistedListingsIds[e] = true);
+    Object.keys(r).filter(a => r[a] === true).forEach((a) => {
+      wishlistedListingsIds[a] = true;
+    });
     this.setState({ wishlistedListingsIds });
   }
 
-  listingAdded(e) {
-    const t = e.id;
+  listingAdded(party) {
+    const t = party.id;
     const wishlistedListingsIds = this.state.wishlistedListingsIds;
     wishlistedListingsIds[t] = true;
     this.setState({ wishlistedListingsIds });
   }
 
-  listingRemoved(e) {
-    const t = e.id;
-    const n = e.selectedIds;
+  listingRemoved(party) {
+    const t = party.id;
+    const n = party.selectedIds;
     if (n.length === 0) {
       const wishlistedListingsIds = this.state.wishlistedListingsIds;
       delete wishlistedListingsIds[t];
@@ -41,4 +44,4 @@ class FavoredPartiesStore {
   }
 }
 
-export default a.default.createStore(FavoredPartiesStore, 'FavoredPartiesStore');
+export default alt.createStore(FavoredPartiesStore, 'FavoredPartiesStore');

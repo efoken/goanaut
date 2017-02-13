@@ -1,8 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import MapHandlerRegistry from './MapHandlerRegistry';
+import MapOverlayView from './MapOverlayView';
 import { mq } from '../utils';
-
-const o = babelHelpers.interopRequireDefault(n(2295));
 
 const DEFAULT_OFFSET = { x: 0, y: 0 };
 
@@ -13,8 +12,7 @@ class MapPopup extends MapHandlerRegistry {
     this._onClose = undefined;
     this._isOpen = false;
 
-    const Popup = (0, o.default)(google);
-    this._popup = new Popup({
+    this._popup = new MapOverlayView({
       closeBoxURL: '',
       pane: 'floatPane',
       alignBottom: true,

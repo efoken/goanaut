@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign, no-underscore-dangle */
 class OverlayView extends google.maps.OverlayView {
   constructor(e, t, r) {
+    super();
     this.marker_ = e;
     this.handCursorURL_ = e.handCursorURL;
     this.labelDiv_ = document.createElement('div');
@@ -26,8 +28,8 @@ class OverlayView extends google.maps.OverlayView {
   onAdd() {
     let zIndex, subLan, subLng, i, o, position, center;
 
-    const c = false;
-    const d = false;
+    let c = false;
+    let d = false;
     const p = 20;
     const cursorUrl = `url(${this.handCursorURL_})`;
 
@@ -50,9 +52,9 @@ class OverlayView extends google.maps.OverlayView {
     this.getPanes().overlayImage.appendChild(this.labelDiv_);
     this.getPanes().overlayMouseTarget.appendChild(this.eventDiv_);
 
-    if (typeof n.getSharedCross.processed === 'undefined') {
+    if (typeof OverlayView.getSharedCross.processed === 'undefined') {
       this.getPanes().overlayImage.appendChild(this.crossDiv_);
-      n.getSharedCross.processed = true;
+      OverlayView.getSharedCross.processed = true;
     }
 
     this.listeners_ = [
@@ -99,7 +101,9 @@ class OverlayView extends google.maps.OverlayView {
             try {
               this.marker_.setAnimation(google.maps.Animation.BOUNCE);
               setTimeout(m, 1406);
-            } catch (e) {}
+            } catch (e) {
+              // do nothing
+            }
           }
 
           this.crossDiv_.style.display = 'none';
@@ -219,7 +223,7 @@ class OverlayView extends google.maps.OverlayView {
   onRemove() {
     this.labelDiv_.parentNode.removeChild(this.labelDiv_);
     this.eventDiv_.parentNode.removeChild(this.eventDiv_);
-    for (let i = 0; i < this.listeners_.length; i++) {
+    for (let i = 0; i < this.listeners_.length; i += 1) {
       google.maps.event.removeListener(this.listeners_[i]);
     }
   }
@@ -312,7 +316,7 @@ class OverlayView extends google.maps.OverlayView {
   }
 
   setVisible() {
-    if (this.marker_.get('labelVisible') {
+    if (this.marker_.get('labelVisible')) {
       this.labelDiv_.style.display = this.marker_.getVisible() ? 'block' : 'none';
     } else {
       this.labelDiv_.style.display = 'none';

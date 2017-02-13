@@ -1,4 +1,4 @@
-/* eslint-disable react/require-default-props */
+/* eslint-disable class-methods-use-this, no-underscore-dangle, react/require-default-props */
 import _ from 'lodash';
 import React from 'react';
 
@@ -84,7 +84,7 @@ class Marker extends MapElementBase {
       marker: this.state.object,
       position: this.props.position,
       data: this.props.data,
-    }
+    };
   }
 
   staticMapUrl(props) {
@@ -111,7 +111,9 @@ class Marker extends MapElementBase {
     const r = t.match(/pin_([^.]+)/)[1];
     const a = convert.latLngToString(props.position);
 
-    r && (t = n[r] || t);
+    if (r) {
+      t = n[r] || t;
+    }
     t = t ? `icon:${t}|` : '';
     return `markers=${t}${a}`;
   }

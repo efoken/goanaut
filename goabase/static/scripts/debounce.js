@@ -11,7 +11,7 @@ export default function debounce(func, milliseconds, immediate = false) {
       if (!immediate) {
         func.apply(this, args);
       }
-    }
+    };
     const callNow = immediate && !timeout;
 
     clear();

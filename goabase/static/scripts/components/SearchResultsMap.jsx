@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import classNames from 'classnames';
+import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 import React from 'react';
 import store from 'amplify-store';
@@ -14,14 +15,10 @@ import { mq } from '../utils';
 
 var i = n(14)
   , o = babelHelpers.interopRequireDefault(i)
-  , u = n(16)
-  , c = babelHelpers.interopRequireDefault(u)
   , b = n(15)
   , v = babelHelpers.interopRequireDefault(b)
   , g = n(2)
   , y = babelHelpers.interopRequireDefault(g)
-  , _ = n(38)
-  , P = babelHelpers.interopRequireDefault(_)
   , T = n(30)
   , k = babelHelpers.interopRequireDefault(T)
   , R = n(7991)
@@ -37,7 +34,7 @@ var i = n(14)
   , A = n(6008)
   , j = babelHelpers.interopRequireDefault(A)
   , F = n(8001)
-  , B = babelHelpers.interopRequireDefault(F);
+  , B = babelHelpers.interopRequireDefault(F)
   , W = n(8007)
   , V = babelHelpers.interopRequireDefault(W)
   , G = n(8008)
@@ -171,7 +168,6 @@ class PureSearchResultsMap extends React.Component {
       , r = this.props
       , a = r.searchResponse.filters
       , i = r.isSmMapVisible
-      , o = r.provider
       , l = void 0 === n || n;
     if (this.setState({
         autoRefresh: l
@@ -214,18 +210,15 @@ class PureSearchResultsMap extends React.Component {
             inSmallP2Experiment: s
         })
     }
-    var u = {};
-    "google" === o ? (u.x = GOOGLE_POPUP_OFFSET.x,
-    u.y = GOOGLE_POPUP_OFFSET.y) : "mapbox" === o && (u.x = MAPBOX_POPUP_OFFSET.x,
-    u.y = MAPBOX_POPUP_OFFSET.y),
-    this.setState({
-        popupOffset: u
-    }),
-    (0, Re.loadBusinessLocations)(),
-    window.addEventListener("resize", this.handleWindowResize),
-    "google" === o && y.default.get("p2_map_transit") && this.setState({
-        showTransitLayer: true
-    })
+    const popupOffset = { x: GOOGLE_POPUP_OFFSET.x, y: GOOGLE_POPUP_OFFSET.y };
+    this.setState({ popupOffset });
+    (0, Re.loadBusinessLocations)();
+    window.addEventListener('resize', this.handleWindowResize);
+    if (y.default.get('p2_map_transit')) {
+      this.setState({
+        showTransitLayer: true,
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -357,15 +350,15 @@ class PureSearchResultsMap extends React.Component {
             , a = n.geography
             , i = "";
           a && (i = a.city),
-          P.default.logEvent({
-              event_name: "search_page",
-              event_data: {
-                  sub_event: "map",
-                  operation: "click_office_location_pin",
-                  city: i,
-                  check_in: r.checkin
-              }
-          }),
+          // P.default.logEvent({
+          //     event_name: "search_page",
+          //     event_data: {
+          //         sub_event: "map",
+          //         operation: "click_office_location_pin",
+          //         city: i,
+          //         check_in: r.checkin
+          //     }
+          // }),
           (0, Re.clickedOfficeLocationCard)(e)
       }
 
@@ -455,17 +448,17 @@ class PureSearchResultsMap extends React.Component {
                   lat: c,
                   lng: d
               }),
-              P.default.logEvent({
-                  event_name: "search_page",
-                  event_data: {
-                      sub_event: "map",
-                      operation: "precise_address",
-                      lat: c,
-                      lng: d,
-                      location: i,
-                      place_id: p
-                  }
-              })
+              // P.default.logEvent({
+              //     event_name: "search_page",
+              //     event_data: {
+              //         sub_event: "map",
+              //         operation: "precise_address",
+              //         lat: c,
+              //         lng: d,
+              //         location: i,
+              //         place_id: p
+              //     }
+              // })
           }
           if (l.forEach(function(e) {
               e && s.push({
@@ -528,36 +521,34 @@ class PureSearchResultsMap extends React.Component {
   }
 
   logMapBounds(e) {
-    const bounds = e.bounds;
-    const zoom = e.zoom;
-    const page = e.page;
-    const params = this.getMapParams({ bounds, zoom });
-    P.default.logEvent({
-      event_name: 'search_page',
-      event_data: Object.assign({
-        sub_event: 'map',
-        operation: 'bounds_changed',
-        url_tag: e.urlTag,
-        page,
-      }, params),
-    });
+    // const bounds = e.bounds;
+    // const zoom = e.zoom;
+    // const page = e.page;
+    // const params = this.getMapParams({ bounds, zoom });
+    // P.default.logEvent({
+    //   event_name: 'search_page',
+    //   event_data: Object.assign({
+    //     sub_event: 'map',
+    //     operation: 'bounds_changed',
+    //     url_tag: e.urlTag,
+    //     page,
+    //   }, params),
+    // });
   }
 
   programmaticMapChange(e) {
-          var t = this
-            , n = this.props.provider;
-          this.isProgrammaticBoundsChange = true;
-          var r = this.map && this.map.state.map;
-          if (r) {
-              var a = void 0;
-              "mapbox" === n ? a = "moveend" : "google" === n && (a = "idle"),
-              r.once(a, function() {
-                  t.isProgrammaticBoundsChange = false
-              })
-          }
-          e(),
-          r || (this.isProgrammaticBoundsChange = false)
-      }
+    this.isProgrammaticBoundsChange = true;
+    const r = this.map && this.map.state.map;
+    if (r) {
+      r.once('idle', () => {
+        this.isProgrammaticBoundsChange = false
+      });
+    }
+    e();
+    if (!r) {
+      this.isProgrammaticBoundsChange = false;
+    }
+  }
 
   refreshMap(e) {
           var t = e.bounds
@@ -818,7 +809,7 @@ class PureSearchResultsMap extends React.Component {
 PureSearchResultsMap.propTypes = propTypes,
 PureSearchResultsMap.defaultProps = defaultProps;
 
-const Fe = (0, c.default)(storeConfig, PureSearchResultsMap);
+const Fe = connectToStores(storeConfig, PureSearchResultsMap);
 
 export PureSearchResultsMap;
 export const LegacySearchResultsMap = Fe;

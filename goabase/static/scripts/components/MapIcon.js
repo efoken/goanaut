@@ -10,10 +10,10 @@ class MapIcon extends MapHandlerRegistry {
     const size = a.size;
     const anchor = a.anchor;
 
-    r._name = n.name;
+    this._name = n.name;
 
     if (origin && size) {
-      r._icon = a.isRetina ? {
+      this._icon = a.isRetina ? {
         size,
         origin,
         anchor,
@@ -24,7 +24,7 @@ class MapIcon extends MapHandlerRegistry {
         },
       } : { size, origin, anchor, url };
     } else {
-      r._icon = a.isRetina ? {
+      this._icon = a.isRetina ? {
         anchor,
         url,
         scaledSize: {
@@ -32,6 +32,7 @@ class MapIcon extends MapHandlerRegistry {
           height: size.height,
         },
       } : { anchor, url };
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import * as check from './convert';
+import * as check from './check';
 import * as convert from './convert';
 import * as mq from './mq';
 

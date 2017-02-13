@@ -1,20 +1,14 @@
-const env;
+const env = {};
 
-const isDev = function() {
+let isDev = () => {
   const testDev = /(^|\s+)development($|\s+)/.test(document.body.className);
-  env.isDev = isDev = testDev ? function() {
-    return true;
-  } : function() {
-    return false
-  };
+  env.isDev = isDev = testDev ? () => true : () => false; // eslint-disable-line
   return testDev;
 };
 
-const isProd = function() {
-  return !isDev();
-};
+const isProd = () => !isDev();
 
-env.isDev = isDev
+env.isDev = isDev;
 env.isProd = isProd;
 
-export env;
+export default env;

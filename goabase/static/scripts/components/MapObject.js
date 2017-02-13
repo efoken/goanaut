@@ -23,7 +23,9 @@ class MapObject extends MapHandlerRegistry {
       raiseOnDrag: false,
     });
     this.setIcon(icon, r);
-    r.map && this.addTo(r.map);
+    if (r.map) {
+      this.addTo(r.map);
+    }
   }
 
   on(action, callback) {
@@ -53,7 +55,7 @@ class MapObject extends MapHandlerRegistry {
   }
 
   setIcon(icon) {
-    const t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    const t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}; // eslint-disable-line
 
     if (React.isValidElement(icon)) {
       return this.setIcon(ReactDOMServer.renderToStaticMarkup(icon), t);
@@ -67,9 +69,11 @@ class MapObject extends MapHandlerRegistry {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 0,
         },
-      }
+      };
       const r = t.iconAnchor && new google.maps.Point(t.iconAnchor.x, t.iconAnchor.y);
-      r && (options.labelAnchor = r);
+      if (r) {
+        options.labelAnchor = r;
+      }
       this._marker.setOptions(options);
     } else {
       this._marker.setOptions({
@@ -179,7 +183,7 @@ class MapObject extends MapHandlerRegistry {
   }
 
   getTitle() {
-    return this._marker.getTitle()
+    return this._marker.getTitle();
   }
 
   setTitle(title) {
