@@ -1,6 +1,6 @@
 {% extends request.is_ajax|yesno:"base_modal.html,base.html" %}
 
-{% load account i18n socialaccount %}
+{% load account crispy_forms_tags i18n socialaccount %}
 
 {% block title %}{% trans "Sign In" %}{% endblock %}
 
@@ -12,10 +12,11 @@
             {% if socialaccount_providers %}
                 <ul class="social-buttons socialaccount_providers">
                     {% for provider in socialaccount_providers %}
-                        {% if provider.id == "openid" %}
-                        {% endif %}
                         <li>
-                            <a title="{{ provider.name }}" class="btn btn-block btn-lg mb-1 socialaccount_provider btn-{{ provider.id }}" href="{% provider_login_url provider.id process='login' %}">{{ provider.name }}</a>
+                            <a title="{{ provider.name }}" class="btn btn-block btn-lg mb-1 socialaccount_provider btn-{{ provider.id }}" href="{% provider_login_url provider.id process='login' %}">
+                                <svg class="icon icon-{{ provider.id }}" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-{{ provider.id }}" /></svg>
+                                {{ provider.name }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -29,9 +30,9 @@
 
             <form class="login-form" method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% crispy form %}
                 {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
                 <a class="btn btn-secondary" href="{% url 'account_reset_password' %}">{% trans "Forgot password?" %}</a>
                 <button type="submit" class="btn btn-primary">{% trans "Sign In" %}</button>

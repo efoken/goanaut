@@ -9,30 +9,30 @@ function n(e) {
   return e;
 }
 
-const u = babelHelpers.interopRequireDefault(n(476));
-const c = babelHelpers.interopRequireDefault(n(7));
-const f = babelHelpers.interopRequireDefault(n(4));
-const h = babelHelpers.interopRequireDefault(n(147));
-const b = babelHelpers.interopRequireDefault(n(39));
-const y = babelHelpers.interopRequireDefault(n(42));
-const T = babelHelpers.interopRequireDefault(n(26));
-const P = babelHelpers.interopRequireDefault(n(37));
-const O = babelHelpers.interopRequireDefault(n(6));
-const D = n(697);
-const x = babelHelpers.interopRequireDefault(n(698));
-const j = babelHelpers.interopRequireDefault(n(699));
-const N = babelHelpers.interopRequireDefault(n(700));
-const L = babelHelpers.interopRequireDefault(n(701));
-const q = babelHelpers.interopRequireDefault(n(713));
-const B = babelHelpers.interopRequireDefault(n(714));
-const G = babelHelpers.interopRequireDefault(n(712));
-const z = n(716);
-const V = babelHelpers.interopRequireDefault(n(11));
-const W = babelHelpers.interopRequireDefault(n(722));
-const K = n(710);
-const X = n(723);
-const J = n(744);
-const Q = babelHelpers.interopRequireDefault(n(708));
+// const u = babelHelpers.interopRequireDefault(n(476));
+// const c = babelHelpers.interopRequireDefault(n(7));
+// const f = babelHelpers.interopRequireDefault(n(4));
+// const h = babelHelpers.interopRequireDefault(n(147));
+// const b = babelHelpers.interopRequireDefault(n(39));
+// const y = babelHelpers.interopRequireDefault(n(42));
+// const T = babelHelpers.interopRequireDefault(n(26));
+// const P = babelHelpers.interopRequireDefault(n(37));
+// const O = babelHelpers.interopRequireDefault(n(6));
+// const D = n(697);
+// const x = babelHelpers.interopRequireDefault(n(698));
+// const j = babelHelpers.interopRequireDefault(n(699));
+// const N = babelHelpers.interopRequireDefault(n(700));
+// const L = babelHelpers.interopRequireDefault(n(701));
+// const q = babelHelpers.interopRequireDefault(n(713));
+// const B = babelHelpers.interopRequireDefault(n(714));
+// const G = babelHelpers.interopRequireDefault(n(712));
+// const z = n(716);
+// const V = babelHelpers.interopRequireDefault(n(11));
+// const W = babelHelpers.interopRequireDefault(n(722));
+// const K = n(710);
+// const X = n(723);
+// const J = n(744);
+// const Q = babelHelpers.interopRequireDefault(n(708));
 
 function callOnLogin(callback) {
   if (u.default.isLoggedIn()) {
@@ -42,7 +42,7 @@ function callOnLogin(callback) {
   }
 }
 
-class SignupLogin {
+class SignupLoginForm {
   constructor() {
     this.initSignInOutListeners();
   }
@@ -1835,7 +1835,7 @@ class SignupLogin {
   }
 }
 
-SignupLogin.loginCallbacks = [];
-SignupLogin.logoutCallbacks = [];
+SignupLoginForm.loginCallbacks = [];
+SignupLoginForm.logoutCallbacks = [];
 
-export default SignupLogin;
+export default window.GoaSignupLoginForm ? window.GoaSignupLoginForm : (window.GoaSignupLoginForm = new SignupLoginForm);

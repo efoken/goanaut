@@ -4,7 +4,7 @@ import qs from 'qs';
 
 import * as types from '../consts/ModalTypes';
 import eventEmitter from '../eventEmitter';
-// import SignupLogin from './SignupLogin';
+import SignupLoginForm from './SignupLoginForm';
 
 const o = {}; // n(47);
 // const d = n(42);
@@ -127,7 +127,7 @@ class SignupLoginModal {
         options.onModalShow();
       }
       this.setLoading(type, false);
-      SignupLogin.page = type;
+      SignupLoginForm.page = type;
     } else {
       $.get(modalUrl, this.constructor.getRequestParams(options), (data) => {
         let $modal;
@@ -149,7 +149,7 @@ class SignupLoginModal {
         if ([types.MODAL_TYPE_SIGNUP, types.MODAL_TYPE_LOGIN].indexOf(type) !== -1) {
           const u = $('#link_alipay_user_id');
           const l = !!u.val();
-          SignupLogin.init({
+          SignupLoginForm.init({
             page: type,
             inModal: true,
             onFinishedFlow: options.onFinishedFlow,
@@ -178,11 +178,11 @@ class SignupLoginModal {
     }
 
     if (callback) {
-      SignupLogin.addLoginCallback(callback);
+      SignupLoginForm.addLoginCallback(callback);
     }
 
     if (flow) {
-      SignupLogin.addFlow(flow);
+      SignupLoginForm.addFlow(flow);
     }
   }
 

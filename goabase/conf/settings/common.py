@@ -140,6 +140,8 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
+ACCOUNT_FORMS = {'login': 'goabase.modules.accounts.forms.LoginForm'}
+
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'goabase.modules.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'goabase.modules.users.adapters.SocialAccountAdapter'

@@ -1,3 +1,5 @@
+/* global babelHelpers, n */
+/* eslint-disable class-methods-use-this, react/require-default-props */
 import _ from 'lodash';
 import classNames from 'classnames';
 import connectToStores from 'alt/utils/connectToStores';
@@ -8,7 +10,7 @@ import store from 'amplify-store';
 import debounce from '../debounce';
 import FavoredPartiesStore from '../stores/FavoredPartiesStore';
 import PartyInteractionStore from '../stores/PartyInteractionStore';
-import { Map, Marker, Popup } from './components/map';
+import { Map, Marker, Popup } from './map';
 import { mq } from '../utils';
 
 // const z = babelHelpers.interopRequireDefault(n(8002))
@@ -124,11 +126,6 @@ export const storeConfig = {
 export const GOOGLE_POPUP_OFFSET = {
   x: -10,
   y: -10,
-};
-
-export const MAPBOX_POPUP_OFFSET = {
-  x: -14,
-  y: -20,
 };
 
 class PureSearchResultsMap extends React.Component {
@@ -255,12 +252,6 @@ class PureSearchResultsMap extends React.Component {
             if (g && y) {
                 var _ = l.page
                   , P = u.search.mobile_session_id;
-                this.logMapBounds({
-                    bounds: g,
-                    zoom: y,
-                    page: _,
-                    urlTag: P
-                })
             }
         }
     }
@@ -325,42 +316,27 @@ class PureSearchResultsMap extends React.Component {
     });
   }
 
-  onMarkerClick(e) {
-    const n = e.data;
+  onMarkerClick(ev) {
+    const n = ev.data;
     this.programmaticMapChange(() => {
       const e = n.listing.id;
       const r = this.props;
       const a = r.hoveredListingId;
       const i = r.wishlistedListingsIds;
-      const o = (0, he.default)({
-        hovered: e === a,
-        viewed: this.isListingMarkerViewed(e),
-        wishlisted: i[e] === true,
-      });
+      // const o = (0, he.default)({
+      //   hovered: e === a,
+      //   viewed: this.isListingMarkerViewed(e),
+      //   wishlisted: i[e] === true,
+      // });
       this.setListingMarkerViewed(e);
       ae.default.clickedListingCard(e);
       // z.default.trackPricePinClick(e, o);
     });
   }
 
-  onOfficeLocationPinClick(e) {
-          var t = this.props.searchResponse
-            , n = t.metadata
-            , r = t.filters
-            , a = n.geography
-            , i = "";
-          a && (i = a.city),
-          // P.default.logEvent({
-          //     event_name: "search_page",
-          //     event_data: {
-          //         sub_event: "map",
-          //         operation: "click_office_location_pin",
-          //         city: i,
-          //         check_in: r.checkin
-          //     }
-          // }),
-          (0, Re.clickedOfficeLocationCard)(e)
-      }
+  onOfficeLocationPinClick(ev) {
+    (0, Re.clickedOfficeLocationCard)(ev);
+  }
 
   onMapClick() {
     ae.default.closedListingCard();
@@ -379,12 +355,6 @@ class PureSearchResultsMap extends React.Component {
           this.isProgrammaticBoundsChange) {
               var o = a.page
                 , l = i.search.mobile_session_id;
-              this.logMapBounds({
-                  bounds: t,
-                  zoom: n,
-                  page: o,
-                  urlTag: l
-              })
           }
           if (!this.isProgrammaticBoundsChange && !this.windowResizing) {
               var s = t.toJSON();
@@ -408,172 +378,134 @@ class PureSearchResultsMap extends React.Component {
       }
 
   setMapViewFromProps(e) {
-          var t = this
-            , n = e.searchResponse.filters
-            , r = new D.default({
-              lat: n.sw_lat,
-              lng: n.sw_lng
-          },{
-              lat: n.ne_lat,
-              lng: n.ne_lng
-          });
-          this.programmaticMapChange(function() {
-              t.map.setView(r.getCenter(), n.zoom)
-          })
-      }
+    const n = e.searchResponse.filters;
+    const r = new D.default({
+      lat: n.sw_lat,
+      lng: n.sw_lng,
+    }, {
+      lat: n.ne_lat,
+      lng: n.ne_lng,
+    });
+    this.programmaticMapChange(() => {
+      this.map.setView(this.getCenter(), n.zoom);
+    });
+  }
 
   setMapViewFromMarkers(props) {
-          var t = this
-            , n = props.searchResponse
-            , r = n.results
-            , a = n.metadata
-            , i = n.filters.location
-            , o = props.provider
-            , l = props.extraListingMarkers
-            , s = r.map(function(e) {
-              var t = e.listing
-                , n = t.lat
-                , r = t.lng;
-              return {
-                  lat: n,
-                  lng: r
-              }
-          });
-          if ((0, ge.default)(a)) {
-              var u = a.geography
-                , c = u.lat
-                , d = u.lng
-                , p = u.place_id;
-              s.push({
-                  lat: c,
-                  lng: d
-              }),
-              // P.default.logEvent({
-              //     event_name: "search_page",
-              //     event_data: {
-              //         sub_event: "map",
-              //         operation: "precise_address",
-              //         lat: c,
-              //         lng: d,
-              //         location: i,
-              //         place_id: p
-              //     }
-              // })
-          }
-          if (l.forEach(function(e) {
-              e && s.push({
-                  lat: e.listing.lat,
-                  lng: e.listing.lng
-              })
-          }),
-          0 !== s.length) {
-              var f = (0, q.default)(s)
-                , h = new D.default(f.sw,f.ne);
-              this.programmaticMapChange(function() {
-                  "mapbox" === o ? setTimeout(function() {
-                      t.map.fitBounds(h)
-                  }, 0) : t.map.fitBounds(h)
-              })
-          }
+    const n = props.searchResponse;
+    const r = n.results;
+    const a = n.metadata;
+    const location = n.filters.location;
+    const l = props.extraListingMarkers;
+
+    const s = r.map((e) => {
+      const lat = e.listing.lat
+      const lng = e.listing.lng;
+      return { lat, lng };
+    });
+
+    if ((0, ge.default)(a)) {
+      const lat = a.geography.lat;
+      const lng = a.geography.lng;
+      s.push({ lat, lng });
+    }
+
+    l.forEach((e) => {
+      if (e) {
+        s.push({ lat: e.listing.lat, lng: e.listing.lng });
       }
+    });
+    if (s.length !== 0) {
+      var f = (0, q.default)(s);
+      var h = new D.default(f.sw, f.ne);
+      this.programmaticMapChange(() => {
+        this.map.fitBounds(h);
+      });
+    }
+  }
 
   getMapParams(e) {
-          var t = e.bounds
-            , n = e.zoom
-            , r = this.map
-            , a = r && r.refs.container
-            , i = $(a)
-            , o = i.width();
-          return (0, pe.default)({
-              bounds: t,
-              zoom: n,
-              width: o
-          })
-      }
+    const bounds = e.bounds;
+    const zoom = e.zoom;
+    const r = this.map;
+    const a = r && r.refs.container;
+    const i = $(a);
+    const width = i.width();
+    return (0, pe.default)({ bounds, zoom, width });
+  }
 
   setListingMarkerViewed(e) {
-          var t = this.props.p2ViewedMarkersKey
-            , n = store(t) || {};
-          n[e] = true,
-          store(t, n, {
-              expires: moment.duration(1, "days")
-          })
-      }
+    const t = this.props.p2ViewedMarkersKey;
+    const n = store(t) || {};
+    n[e] = true;
+    store(t, n, {
+      expires: moment.duration(1, 'days'),
+    });
+  }
 
   checkMapMovedEnough(e) {
-          var t = e.jsonBounds
-            , n = e.zoom;
-          if (this.zoom !== n)
-              return true;
-          var r = t.ne
-            , a = t.sw
-            , i = .05
-            , o = Math.abs(this.sw.lat - a.lat)
-            , l = Math.abs(this.sw.lng - a.lng)
-            , s = r.lat - a.lat + l
-            , u = r.lng - a.lng + o;
-          return (o * u + l * s - o * l) / (u * s) > i
-      }
+    const t = e.jsonBounds;
+    const n = e.zoom;
+
+    if (this.zoom !== n) {
+      return true;
+    }
+    const r = t.ne;
+    const a = t.sw;
+    const i = 0.05;
+    const o = Math.abs(this.sw.lat - a.lat);
+    const l = Math.abs(this.sw.lng - a.lng);
+    const s = r.lat - a.lat + l;
+    const u = r.lng - a.lng + o;
+    return (o * u + l * s - o * l) / (u * s) > i;
+  }
 
   isListingMarkerViewed(e) {
     const t = store(this.props.p2ViewedMarkersKey);
     return !(!t || !t[e]);
   }
 
-  logMapBounds(e) {
-    // const bounds = e.bounds;
-    // const zoom = e.zoom;
-    // const page = e.page;
-    // const params = this.getMapParams({ bounds, zoom });
-    // P.default.logEvent({
-    //   event_name: 'search_page',
-    //   event_data: Object.assign({
-    //     sub_event: 'map',
-    //     operation: 'bounds_changed',
-    //     url_tag: e.urlTag,
-    //     page,
-    //   }, params),
-    // });
-  }
-
   programmaticMapChange(e) {
     this.isProgrammaticBoundsChange = true;
     const r = this.map && this.map.state.map;
+
     if (r) {
       r.once('idle', () => {
         this.isProgrammaticBoundsChange = false
       });
     }
+
     e();
+
     if (!r) {
       this.isProgrammaticBoundsChange = false;
     }
   }
 
   refreshMap(e) {
-          var t = e.bounds
-            , n = e.zoom
-            , r = this.getMapParams({
-              bounds: t,
-              zoom: n
-          })
-            , a = _.pick(r, Object.keys(Se.MapDetailsPropTypes))
-            , i = !!y.default.get("webcot");
-          if (i) {
-              var o = this.props
-                , l = o.stagedFilters
-                , s = o.responseFilters;
-              qe.default.pushToHistory({
-                  stagedFilters: Object.assign({}, l, a),
-                  responseFilters: s,
-                  currentTab: He.EXPLORE_TABS.HOMES
-              })
-          } else
-              (0, Ce.updateFilters)(a);
-          this.setState({
-              loading: true
-          })
-      }
+    const bounds = e.bounds;
+    const zoom = e.zoom;
+    const r = this.getMapParams({ bounds, zoom });
+    const a = _.pick(r, Object.keys(Se.MapDetailsPropTypes));
+    const i = !!y.default.get('webcot');
+
+    if (i) {
+      const o = this.props;
+      const stagedFilters = o.stagedFilters;
+      const responseFilters = o.responseFilters;
+      qe.default.pushToHistory({
+        stagedFilters: Object.assign({}, stagedFilters, a),
+        responseFilters,
+        currentTab: He.EXPLORE_TABS.HOMES,
+      });
+    } else {
+      (0, Ce.updateFilters)(a);
+    }
+
+    this.setState({
+      loading: true,
+    });
+  }
 
   handleWindowResize() {
     this.windowResizing = true;
@@ -600,210 +532,195 @@ class PureSearchResultsMap extends React.Component {
   }
 
   renderOfficeLocationPins() {
-          var e = this
-            , t = this.props
-            , n = t.businessOfficeLocations
-            , r = t.clickedOfficeLocationId;
-          if (0 === n.length)
-              return null;
-          var i = this.props.searchResponse
-            , l = i.metadata
-            , s = i.filters
-            , u = l.geography;
-          if (!u)
-              return null;
-          var c = u.city
-            , d = u.lat
-            , p = u.lng
-            , f = n.filter(function(e) {
-              return Math.abs(e.lat - d) + Math.abs(e.lng - p) < 2
-          });
-          if (0 === f.length)
-              return null;
-          var h = o.default.current().id % 2 === 1;
-          return P.default.logEvent({
-              event_name: "biz_travel_experiments",
-              event_data: {
-                  experiment_name: "office_location",
-                  show_pin: h,
-                  city: c,
-                  check_in: s.checkin
-              }
-          }),
-          h ? f.map(function(t) {
-              var n = t.id
-                , i = t.lat
-                , o = t.lng
-                , l = t.business_entity_name
-                , s = t.office_name
-                , u = t.street;
-              return React.createElement(Marker, {
-                  icon: {
-                      url: y.default.get("p2_marker_image_path")["page2/address_pin.png"]
-                  },
-                  markerType: "office_location",
-                  position: {
-                      lat: i,
-                      lng: o
-                  },
-                  onClick: function() {
-                      function t() {
-                          e.onOfficeLocationPinClick(n)
-                      }
-                      return t
-                  }(),
-                  key: "office-pin-" + String(n)
-              }, React.createElement(Popup, {
-                  visible: r === n,
-                  offset: e.state.popupOffset,
-                  onMapClick: e.onMapClick
-              }, React.createElement("div", {
-                  className: "business-office-location-panel text-center"
-              }, React.createElement("div", null, l), React.createElement("div", null, s), React.createElement("div", {
-                  className: "text-muted"
-              }, u))))
-          }) : null
-      }
+    const n = this.props.businessOfficeLocations;
+    const r = this.props.clickedOfficeLocationId;
+    if (n.length === 0) {
+      return null;
+    }
+    const i = this.props.searchResponse;
+    const l = i.metadata;
+    const u = l.geography;
+    if (!u) {
+      return null;
+    }
+    const d = u.lat;
+    const p = u.lng;
+    const f = n.filter((e) => {
+      return Math.abs(e.lat - d) + Math.abs(e.lng - p) < 2;
+    });
+    if (f.length === 0) {
+      return null;
+    }
+
+    if (h) {
+      return f.map(t => (
+          <Marker
+            icon={{ url: y.default.get('p2_marker_image_path')['page2/address_pin.png'] }}
+            markerType="office_location"
+            position={{ lat: t.lat, lng: t.lng }}
+            onClick={() => this.onOfficeLocationPinClick(t.id)}
+            key={`office-pin-${t.id}`}
+          >
+            <Popup visible={r === t.id} offset={this.state.popupOffset} onMapClick={this.onMapClick}>
+              <div className="business-office-location-panel text-center">
+                <div>{t.business_entity_name}</div>
+                <div>{t.office_name}</div>
+                <div className="text-muted">{t.street}</div>
+              </div>
+            </Popup>
+          </Marker>
+      ));
+    }
+    return null;
+  }
 
   render() {
-          var e = this
-            , t = this.props
-            , n = t.searchResponse
-            , r = n.filters
-            , i = n.results
-            , o = n.metadata
-            , l = t.clickedListingId
-            , s = t.provider
-            , u = t.hoveredListingId
-            , c = t.wishlistedListingsIds
-            , d = t.extraListingMarkers
-            , f = t.extraListingMarkerType
-            , h = t.isSmMapVisible
-            , m = t.showWebcotListingCards
-            , b = this.state
-            , v = b.autoRefresh
-            , g = b.loading
-            , _ = b.readyToRefresh
-            , P = b.showTransitLayer
-            , T = b.inSmallP2Experiment
-            , k = o.geography
-            , R = o.guidebook
-            , w = {
-              ref: function() {
-                  function t(t) {
-                      e.map = t
-                  }
-                  return t
-              }(),
-              containerProps: {
-                  className: "map-canvas",
-                  role: "presentation"
-              },
-              defaultZoom: r.zoom,
-              onBoundsChange: this.onMapChangedDebounced,
-              onDragEnd: this.onMapChangedDebounced,
-              onZoomChange: this.onMapChangedDebounced,
-              clickableIcons: !h,
-              showTransitLayer: P
-          };
-          if (k) {
-              var S = k.lat
-                , O = k.lng;
-              w.defaultCenter = {
-                  lat: S,
-                  lng: O
-              }
-          }
-          var D = i.slice();
-          d.forEach(function(e) {
-              (0, be.containsListingInfo)(i, e) || D.push(e)
-          });
-          var x = !(0, me.hasDates)(r) && (0, we.inShowFromPriceTreatment)()
-            , q = y.default.get("p2_greedy_slideshow_preload_count");
-          return React.createElement("div", {
-              style: {
-                  height: "100%"
-              },
-              className: classNames("search-results-map", {
-                  loading: g && mq.matchMedia.is('sm')
-              })
-          }, React.createElement(Map, w, D.map(function(t) {
-              var n = t.listing
-                , i = n.id
-                , s = i === l
-                , d = i === u
-                , p = e.isListingMarkerViewed(i)
-                , b = c[i] === true
-                , v = f[i] === Ee.default.HOST_OWN_LISTING_MARKER
-                , g = t.pricing_quote
-                , _ = (0, he.default)({
-                  hovered: d,
-                  viewed: p,
-                  wishlisted: b
-              })
-                , P = {
-                  x: 15,
-                  y: 70
-              }
-                , T = React.createElement(B.default, {
-                  pricingQuote: g,
-                  hovered: d,
-                  viewed: p,
-                  wishlisted: b,
-                  isHostOwnListing: v
-              })
-                , k = {
-                  key: i,
-                  position: {
-                      lat: n.lat,
-                      lng: n.lng
-                  },
-                  markerType: _,
-                  icon: T,
-                  onClick: e.onMarkerClick,
-                  data: t,
-                  visible: !s
-              };
-              (s || d) && (k.zIndex = H.HIGH_Z_INDEX);
-              var R = null;
-              if (s) {
-                  var w = (0, me.roomPathWithParams)(n.id, r, o)
-                    , S = (0, ke.default)(n, y.default.get("is_mobile"));
-                  R = React.createElement(Popup, {
-                      visible: s && (!mq.matchMedia.is('sm') || h),
-                      offset: e.state.popupOffset,
-                      onMapClick: e.onMapClick,
-                      clearance: P
-                  }, React.createElement("div", {
-                      className: "listing-map-popover"
-                  }, React.createElement(N.default, {
-                      imagePreloadCount: q,
-                      listing: n,
-                      listingUrl: w,
-                      listingLinkTarget: S,
-                      pricingQuote: g,
-                      onPhotoPress: e.onCardPhotoClick,
-                      onInfoPress: e.onCardInfoClick,
-                      onWishlistButtonPress: e.onWishlistButtonPress,
-                      showCompactInfo: true,
-                      showNameSecondLine: m,
-                      useLegacySlideshow: true,
-                      useLegacyWishlistButton: true,
-                      showFromPrice: x
-                  })))
-              }
-              return React.createElement(Marker, k, R)
-          }), this.renderMapAddressPin(), this.renderOfficeLocationPins()), React.createElement(j.default, {
-              autoRefresh: v,
-              className: s,
-              onClickRefresh: this.onClickRefresh,
-              onToggleAutoRefresh: this.onToggleAutoRefresh,
-              readyToRefresh: _,
-              shouldSmallMapAutoRefresh: T
-          }), !mq.matchMedia.is('sm') && React.createElement(_e.default, {
-              guidebook: R
-          }))
+    var e = this
+      , t = this.props
+      , n = t.searchResponse
+      , r = n.filters
+      , i = n.results
+      , o = n.metadata
+      , l = t.clickedListingId
+      , s = t.provider
+      , u = t.hoveredListingId
+      , c = t.wishlistedListingsIds
+      , d = t.extraListingMarkers
+      , f = t.extraListingMarkerType
+      , h = t.isSmMapVisible
+      , m = t.showWebcotListingCards
+      , b = this.state
+      , v = b.autoRefresh
+      , g = b.loading
+      , _ = b.readyToRefresh
+      , P = b.showTransitLayer
+      , T = b.inSmallP2Experiment
+      , k = o.geography
+      , R = o.guidebook;
+
+    const w = {
+      ref: (t) => {
+        this.map = t;
+      },
+      containerProps: {
+        className: 'map-canvas',
+        role: 'presentation',
+      },
+      defaultZoom: r.zoom,
+      onBoundsChange: this.onMapChangedDebounced,
+      onDragEnd: this.onMapChangedDebounced,
+      onZoomChange: this.onMapChangedDebounced,
+      clickableIcons: !h,
+      showTransitLayer: P,
+    };
+    if (k) {
+      const lat = k.lat;
+      const lng = k.lng;
+      w.defaultCenter = { lat, lng };
+    }
+
+    const D = i.slice();
+    d.forEach((e) => {
+      if (!(0, be.containsListingInfo)(i, e)) {
+        D.push(e);
       }
+    });
+
+    var x = !(0, me.hasDates)(r) && (0, we.inShowFromPriceTreatment)();
+    var q = y.default.get('p2_greedy_slideshow_preload_count');
+
+    return (
+      <div
+        className={classNames('search-results-map', {
+          loading: g && mq.matchMedia.is('sm'),
+        })}
+        style={{ height: '100%' }}
+      >
+        <Map {...w}>
+          {D.map(function(t) {
+            const n = t.listing;
+            const i = n.id;
+            const s = i === l;
+            const d = i === u;
+            const p = e.isListingMarkerViewed(i);
+            const b = c[i] === true;
+            const v = f[i] === Ee.default.HOST_OWN_LISTING_MARKER;
+            const g = t.pricing_quote;
+            const _ = (0, he.default)({
+              hovered: d,
+              viewed: p,
+              wishlisted: b,
+            });
+            const P = { x: 15, y: 70 };
+            const T = React.createElement(B.default, {
+              pricingQuote: g,
+              hovered: d,
+              viewed: p,
+              wishlisted: b,
+              isHostOwnListing: v,
+            });
+            const k = {
+              key: i,
+              position: { lat: n.lat, lng: n.lng },
+              markerType: _,
+              icon: T,
+              onClick: e.onMarkerClick,
+              data: t,
+              visible: !s,
+            };
+            if (s || d) {
+              k.zIndex = H.HIGH_Z_INDEX;
+            }
+            var R = null;
+            if (s) {
+              const w = (0, me.roomPathWithParams)(n.id, r, o);
+              const S = (0, ke.default)(n, y.default.get('is_mobile'));
+              R = React.createElement(Popup, {
+                visible: s && (!mq.matchMedia.is('sm') || h),
+                offset: e.state.popupOffset,
+                onMapClick: e.onMapClick,
+                clearance: P,
+              },
+                React.createElement("div", {
+                  className: "listing-map-popover"
+                },
+                  React.createElement(N.default, {
+                    imagePreloadCount: q,
+                    listing: n,
+                    listingUrl: w,
+                    listingLinkTarget: S,
+                    pricingQuote: g,
+                    onPhotoPress: e.onCardPhotoClick,
+                    onInfoPress: e.onCardInfoClick,
+                    onWishlistButtonPress: e.onWishlistButtonPress,
+                    showCompactInfo: true,
+                    showNameSecondLine: m,
+                    useLegacySlideshow: true,
+                    useLegacyWishlistButton: true,
+                    showFromPrice: x,
+                  })
+                )
+              )
+            }
+            return React.createElement(Marker, k, R);
+          })}
+          {this.renderMapAddressPin()}
+          {this.renderOfficeLocationPins()}
+        </Map>
+        {React.createElement(j.default, {
+          autoRefresh: v,
+          className: s,
+          onClickRefresh: this.onClickRefresh,
+          onToggleAutoRefresh: this.onToggleAutoRefresh,
+          readyToRefresh: _,
+          shouldSmallMapAutoRefresh: T
+        })}
+        {!mq.matchMedia.is('sm') && React.createElement(_e.default, {
+          guidebook: R,
+        })}
+      </div>
+    );
+  }
 }
 
 PureSearchResultsMap.propTypes = propTypes,
@@ -811,7 +728,7 @@ PureSearchResultsMap.defaultProps = defaultProps;
 
 const Fe = connectToStores(storeConfig, PureSearchResultsMap);
 
-export PureSearchResultsMap;
+export { PureSearchResultsMap };
 export const LegacySearchResultsMap = Fe;
 
 export default (0, De.default)(Fe);

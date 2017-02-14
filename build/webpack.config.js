@@ -67,7 +67,7 @@ const webpackConfig = {
     new ExtractTextPlugin({
       filename: `${staticFilenames}.css`,
       allChunks: true,
-      disable: config.enabled.watcher,
+      // disable: config.enabled.watcher,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -81,6 +81,7 @@ const webpackConfig = {
     new webpack.LoaderOptionsPlugin({
       minimize: config.env.production,
       debug: config.enabled.watcher,
+      minimize: !!config.env.production,
       stats: { colors: true },
     }),
     new webpack.LoaderOptionsPlugin({
