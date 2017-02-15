@@ -26,7 +26,13 @@ class OverlayView extends google.maps.OverlayView {
   }
 
   onAdd() {
-    let zIndex, subLan, subLng, i, o, position, center;
+    let zIndex;
+    let subLan;
+    let subLng;
+    let i;
+    let o;
+    let position;
+    let center;
 
     let c = false;
     let d = false;

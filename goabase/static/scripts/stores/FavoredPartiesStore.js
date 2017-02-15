@@ -1,6 +1,5 @@
 import alt from '../alt';
-
-const o = babelHelpers.interopRequireDefault(n(8063));
+import FavoredPartiesActions from '../actions/FavoredPartiesActions';
 
 const defaultState = {
   wishlistedListingsIds: {},
@@ -9,9 +8,9 @@ const defaultState = {
 class FavoredPartiesStore {
   constructor() {
     this.bindListeners({
-      initialized: o.default.initialized,
-      listingAdded: o.default.listingAdded,
-      listingRemoved: o.default.listingRemoved,
+      initialized: FavoredPartiesActions.initialized,
+      listingAdded: FavoredPartiesActions.listingAdded,
+      listingRemoved: FavoredPartiesActions.listingRemoved,
     });
     this.state = Object.assign({}, defaultState);
   }

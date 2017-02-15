@@ -58,7 +58,9 @@ $(document).ready(() => {
 
   if ($('.party-location').length) {
     ReactDOM.render(
-      <CountdownTimer initialTimeRemaining={$('.countdown').data('initialTimeRemaining')} />,
+      React.createElement(CountdownTimer, {
+        initialTimeRemaining: $('.countdown').data('initialTimeRemaining'),
+      }),
       $('.countdown')[0],
     );
 

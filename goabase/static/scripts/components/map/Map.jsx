@@ -17,8 +17,6 @@ function createBounds(bounds) {
   return new MapBounds(sw, ne);
 }
 
-// const c = n(2275);
-
 const propTypes = {
   children: React.PropTypes.node,
   containerProps: React.PropTypes.object,

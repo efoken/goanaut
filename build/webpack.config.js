@@ -79,7 +79,6 @@ const webpackConfig = {
       'window.React': 'react',
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: config.env.production,
       debug: config.enabled.watcher,
       minimize: !!config.env.production,
       stats: { colors: true },

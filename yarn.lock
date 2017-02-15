@@ -5057,6 +5057,10 @@ react-redux@^5.0.2:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
 
+react-validators@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-validators/-/react-validators-0.1.4.tgz#bc09c2891cf872ddea461378480a790af29a2aa9"
+
 react@^15.3.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"

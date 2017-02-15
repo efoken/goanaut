@@ -9,30 +9,22 @@ import store from 'amplify-store';
 
 import debounce from '../debounce';
 import FavoredPartiesStore from '../stores/FavoredPartiesStore';
+import FiltersPanelStore from '../stores/FiltersPanelStore';
+import HostOwnPartyStore from '../stores/HostOwnPartyStore';
 import PartyInteractionStore from '../stores/PartyInteractionStore';
+import { HIGH_Z_INDEX } from './MapObject';
 import { Map, Marker, Popup } from './map';
 import { mq } from '../utils';
 
-// const z = babelHelpers.interopRequireDefault(n(8002))
-
-var i = n(14)
-  , o = babelHelpers.interopRequireDefault(i)
-  , b = n(15)
-  , v = babelHelpers.interopRequireDefault(b)
-  , g = n(2)
-  , y = babelHelpers.interopRequireDefault(g)
-  , T = n(30)
-  , k = babelHelpers.interopRequireDefault(T)
-  , R = n(7991)
-  , w = babelHelpers.interopRequireDefault(R)
-  , S = n(2275)
-  , O = n(2296)
-  , D = babelHelpers.interopRequireDefault(O)
-  , H = n(2305)
-  , x = n(3603)
-  , q = babelHelpers.interopRequireDefault(x)
-  , I = n(7995)
-  , N = babelHelpers.interopRequireDefault(I)
+const o = babelHelpers.interopRequireDefault(n(14));
+const v = babelHelpers.interopRequireDefault(n(15));
+const y = babelHelpers.interopRequireDefault(n(2));
+const k = babelHelpers.interopRequireDefault(n(30));
+const w = babelHelpers.interopRequireDefault(n(7991));
+const S = n(2275);
+const D = babelHelpers.interopRequireDefault(n(2296));
+const q = babelHelpers.interopRequireDefault(n(3603));
+const N = babelHelpers.interopRequireDefault(n(7995));
   , A = n(6008)
   , j = babelHelpers.interopRequireDefault(A)
   , F = n(8001)
@@ -41,18 +33,10 @@ var i = n(14)
   , V = babelHelpers.interopRequireDefault(W)
   , G = n(8008)
   , Y = babelHelpers.interopRequireDefault(G)
-  , K = n(8009)
-  , Q = babelHelpers.interopRequireDefault(K)
-  , J = n(8010)
-  , ee = babelHelpers.interopRequireDefault(J)
   , te = n(8013)
   , ne = babelHelpers.interopRequireDefault(te)
   , re = n(1886)
   , ae = babelHelpers.interopRequireDefault(re)
-  , ie = n(8016)
-  , oe = babelHelpers.interopRequireDefault(ie)
-  , ue = n(1914)
-  , ce = babelHelpers.interopRequireDefault(ue)
   , de = n(8019)
   , pe = babelHelpers.interopRequireDefault(de)
   , fe = n(8021)
@@ -84,7 +68,14 @@ const propTypes = Object.assign(Object.assign({
   provider: React.PropTypes.string,
   isSmMapVisible: React.PropTypes.bool,
   showWebcotListingCards: React.PropTypes.bool,
-}, Oe.withOptionalFiltersPropTypes), Q.default, oe.default);
+}, Oe.withOptionalFiltersPropTypes), {
+  hoveredListingId: React.PropTypes.number,
+  clickedListingId: React.PropTypes.number,
+  clickedDatelessListingId: React.PropTypes.number,
+  datelessClickCount: React.PropTypes.number,
+}, {
+  wishlistedListingsIds: React.PropTypes.objectOf(React.PropTypes.bool),
+});
 
 const defaultProps = Object.assign(Object.assign({
   p2AutoRefreshKey: 'p2AutoRefreshSetting',
@@ -92,11 +83,13 @@ const defaultProps = Object.assign(Object.assign({
   provider: 'google',
   isSmMapVisible: false,
   showWebcotListingCards: false,
-}, Oe.withFiltersDefaultProps), ie.defaultProps);
+}, Oe.withFiltersDefaultProps), {
+  wishlistedListingsIds: {},
+});
 
 export const storeConfig = {
   getStores: () => {
-    return [PartyInteractionStore, FavoredPartiesStore, ee.default, ce.default, ne.default];
+    return [PartyInteractionStore, FavoredPartiesStore, HostOwnPartyStore, FiltersPanelStore, ne.default];
   },
   getPropsFromStores: () => {
     const e = PartyInteractionStore.getState();
@@ -107,7 +100,7 @@ export const storeConfig = {
     const i = ne.default.getState();
     const businessOfficeLocations = i.businessOfficeLocations;
     const clickedOfficeLocationId = i.clickedOfficeLocationId;
-    const u = ce.default.getState();
+    const u = FiltersPanelStore.getState();
     const isSmMapVisible = u.isSmMapVisible;
 
     return {
@@ -278,10 +271,6 @@ class PureSearchResultsMap extends React.Component {
     const n = this.props.searchResponse;
     const r = n.filters;
     const a = n.metadata;
-    // z.default.trackListingCardPhotoClick({
-    //   listing: t,
-    //   section: "map",
-    // });
     (0, Y.default)({
       section: 'listing_cards_map',
       messageType: a.urgency_commitment.message_type,
@@ -293,10 +282,6 @@ class PureSearchResultsMap extends React.Component {
     const n = this.props.searchResponse;
     const r = n.filters;
     const a = n.metadata;
-    // z.default.trackListingCardInfoClick({
-    //   listing: t,
-    //   section: "map",
-    // });
     (0, Y.default)({
       section: 'listing_cards_map',
       messageType: a.urgency_commitment.message_type,
@@ -330,7 +315,6 @@ class PureSearchResultsMap extends React.Component {
       // });
       this.setListingMarkerViewed(e);
       ae.default.clickedListingCard(e);
-      // z.default.trackPricePinClick(e, o);
     });
   }
 
@@ -669,7 +653,7 @@ class PureSearchResultsMap extends React.Component {
               visible: !s,
             };
             if (s || d) {
-              k.zIndex = H.HIGH_Z_INDEX;
+              k.zIndex = HIGH_Z_INDEX;
             }
             var R = null;
             if (s) {

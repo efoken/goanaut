@@ -1,3 +1,5 @@
+/* global babelHelpers, gettext, n */
+/* eslint-disable max-len */
 import classNames from 'classnames';
 import React from 'react';
 
@@ -18,7 +20,7 @@ const defaultProps = {
   readyToRefresh: false,
   onClickRefresh: () => {},
   onToggleAutoRefresh: () => {},
-  shouldSmallMapAutoRefresh: false
+  shouldSmallMapAutoRefresh: false,
 };
 
 function RefreshControls({
@@ -31,7 +33,7 @@ function RefreshControls({
 }) {
   return (
     <div className={classNames('map-refresh-controls', className)}>
-      <a
+      <button
         className={classNames('map-manual-refresh btn btn-primary', {
           hide: autoRefresh || !readyToRefresh,
         })}
@@ -39,10 +41,10 @@ function RefreshControls({
       >
         {gettext('Redo search here')}
         <i className="icon icon-refresh icon-space-left" />
-      </a>
+      </button>
       <div
         className={classNames('map-auto-refresh panel', {
-          hide: !autoRefresh && readyToRefresh || (0, d.default)() && !shouldSmallMapAutoRefresh,
+          hide: (!autoRefresh && readyToRefresh) || ((0, d.default)() && !shouldSmallMapAutoRefresh),
         })}
       >
         <label className="checkbox" htmlFor="map-auto-refresh-checkbox">

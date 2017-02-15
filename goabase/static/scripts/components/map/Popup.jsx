@@ -1,3 +1,4 @@
+/* eslint-disable max-len, react/require-default-props */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,14 +16,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-  offset: {
-    x: 0,
-    y: 0,
-  },
-  clearance: {
-    x: 15,
-    y: 50,
-  },
+  offset: { x: 0, y: 0 },
+  clearance: { x: 15, y: 50 },
   visible: false,
 };
 
@@ -31,16 +26,17 @@ class Popup extends React.Component {
     super(props);
     this.domElement = null;
     this.popup = null;
-    this.onClose = n.onClose.bind(n);
-    this.onOpen = n.onOpen.bind(n);
-    this.onMapClick = n.onMapClick.bind(n);
+    this.onClose = this.onClose.bind(this);
+    this.onOpen = this.onOpen.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
   }
 
   componentDidMount() {
     const parent = this.props.parent;
 
     if (!this.props.map) {
-      throw new Error('<Popup /> was not properly passed a map context. Make sure you are using this inside of a <Map /> component.');
+      throw new Error('<Popup /> was not properly passed a map context. '
+        + 'Make sure you are using this inside of a <Map /> component.');
     }
     if (!parent) {
       throw new Error('The <Popup /> component must be a child of a <MapElementBase /> component');
@@ -103,7 +99,9 @@ class Popup extends React.Component {
   close() {
     const map = this.props.map;
     const parent = this.props.parent;
-    map.popup.getParent() === parent && map.popup.isOpen() && document.contains(parent.getPopupContent()) && map.popup.close();
+    if (map.popup.getParent() === parent && map.popup.isOpen() && document.contains(parent.getPopupContent())) {
+      map.popup.close();
+    }
   }
 
   open() {
