@@ -7,6 +7,7 @@ import moment from 'moment';
 import React from 'react';
 import store from 'amplify-store';
 
+import BootstrapData from './BootstrapData';
 import debounce from '../debounce';
 import FavoredPartiesStore from '../stores/FavoredPartiesStore';
 import FiltersPanelStore from '../stores/FiltersPanelStore';
@@ -25,7 +26,8 @@ const S = n(2275);
 const D = babelHelpers.interopRequireDefault(n(2296));
 const q = babelHelpers.interopRequireDefault(n(3603));
 const N = babelHelpers.interopRequireDefault(n(7995));
-  , A = n(6008)
+
+var A = n(6008)
   , j = babelHelpers.interopRequireDefault(A)
   , F = n(8001)
   , B = babelHelpers.interopRequireDefault(F)
@@ -153,27 +155,30 @@ class PureSearchResultsMap extends React.Component {
   }
 
   componentDidMount() {
-    var t = this
-      , n = store(this.props.p2AutoRefreshKey)
-      , r = this.props
-      , a = r.searchResponse.filters
-      , i = r.isSmMapVisible
-      , l = void 0 === n || n;
-    if (this.setState({
-        autoRefresh: l
-    }),
-    (0, me.hasBoundingBox)(a) && (0, me.hasZoom)(a) ? (0, S.onMapsLoad)(function() {
-        t.setMapViewFromProps(t.props),
-        t.setState({
-            loading: false
-        })
-    }) : (0, S.onMapsLoad)(function() {
-        t.setMapViewFromMarkers(t.props),
-        t.setState({
-            loading: false
-        })
-    }),
-    i) {
+    const n = store(this.props.p2AutoRefreshKey);
+    const a = this.props.searchResponse.filters;
+    const isSmMapVisible = this.props.isSmMapVisible;
+    const autoRefresh = n === undefined || n;
+
+    this.setState({ autoRefresh });
+
+    if ((0, me.hasBoundingBox)(a) && (0, me.hasZoom)(a)) {
+      (0, S.onMapsLoad)(() => {
+        this.setMapViewFromProps(this.props),
+        this.setState({
+          loading: false,
+        });
+      });
+    } else {
+      (0, S.onMapsLoad)(() => {
+        this.setMapViewFromMarkers(this.props),
+        this.setState({
+          loading: false,
+        });
+      });
+    }
+
+    if (isSmMapVisible) {
         var s = k.default.getBootstrap("small_p2_map_auto_refresh") && v.default.deliverExperiment("small_p2_map_auto_refresh", {
             control: function() {
                 function e() {
@@ -196,7 +201,7 @@ class PureSearchResultsMap extends React.Component {
         });
         this.setState({
             loading: true,
-            autoRefresh: s && l,
+            autoRefresh: s && autoRefresh,
             inSmallP2Experiment: s
         })
     }
@@ -204,7 +209,7 @@ class PureSearchResultsMap extends React.Component {
     this.setState({ popupOffset });
     (0, Re.loadBusinessLocations)();
     window.addEventListener('resize', this.handleWindowResize);
-    if (y.default.get('p2_map_transit')) {
+    if (BootstrapData.get('p2_map_transit')) {
       this.setState({
         showTransitLayer: true,
       });
@@ -471,7 +476,7 @@ class PureSearchResultsMap extends React.Component {
     const zoom = e.zoom;
     const r = this.getMapParams({ bounds, zoom });
     const a = _.pick(r, Object.keys(Se.MapDetailsPropTypes));
-    const i = !!y.default.get('webcot');
+    const i = !!BootstrapData.get('webcot');
 
     if (i) {
       const o = this.props;
@@ -506,7 +511,7 @@ class PureSearchResultsMap extends React.Component {
 
     if ((0, ge.default)(metadata)) {
       return <Marker
-        icon={{ url: y.default.get('p2_marker_image_path')['page2/address_pin.png'] }}
+        icon={{ url: BootstrapData.get('p2_marker_image_path')['page2/address_pin.png'] }}
         markerType="address"
         position={{ lat: metadata.geography.lat, lng: metadata.geography.lng }}
         title={response.filters.location}
@@ -517,7 +522,6 @@ class PureSearchResultsMap extends React.Component {
 
   renderOfficeLocationPins() {
     const n = this.props.businessOfficeLocations;
-    const r = this.props.clickedOfficeLocationId;
     if (n.length === 0) {
       return null;
     }
@@ -527,10 +531,8 @@ class PureSearchResultsMap extends React.Component {
     if (!u) {
       return null;
     }
-    const d = u.lat;
-    const p = u.lng;
     const f = n.filter((e) => {
-      return Math.abs(e.lat - d) + Math.abs(e.lng - p) < 2;
+      return Math.abs(e.lat - u.lat) + Math.abs(e.lng - u.lng) < 2;
     });
     if (f.length === 0) {
       return null;
@@ -538,21 +540,21 @@ class PureSearchResultsMap extends React.Component {
 
     if (h) {
       return f.map(t => (
-          <Marker
-            icon={{ url: y.default.get('p2_marker_image_path')['page2/address_pin.png'] }}
-            markerType="office_location"
-            position={{ lat: t.lat, lng: t.lng }}
-            onClick={() => this.onOfficeLocationPinClick(t.id)}
-            key={`office-pin-${t.id}`}
-          >
-            <Popup visible={r === t.id} offset={this.state.popupOffset} onMapClick={this.onMapClick}>
-              <div className="business-office-location-panel text-center">
-                <div>{t.business_entity_name}</div>
-                <div>{t.office_name}</div>
-                <div className="text-muted">{t.street}</div>
-              </div>
-            </Popup>
-          </Marker>
+        <Marker
+          icon={{ url: BootstrapData.get('p2_marker_image_path')['page2/address_pin.png'] }}
+          markerType="office_location"
+          position={{ lat: t.lat, lng: t.lng }}
+          onClick={() => this.onOfficeLocationPinClick(t.id)}
+          key={`office-pin-${t.id}`}
+        >
+          <Popup visible={this.props.clickedOfficeLocationId === t.id} offset={this.state.popupOffset} onMapClick={this.onMapClick}>
+            <div className="business-office-location-panel text-center">
+              <div>{t.business_entity_name}</div>
+              <div>{t.office_name}</div>
+              <div className="text-muted">{t.street}</div>
+            </div>
+          </Popup>
+        </Marker>
       ));
     }
     return null;
@@ -611,7 +613,7 @@ class PureSearchResultsMap extends React.Component {
     });
 
     var x = !(0, me.hasDates)(r) && (0, we.inShowFromPriceTreatment)();
-    var q = y.default.get('p2_greedy_slideshow_preload_count');
+    var q = BootstrapData.get('p2_greedy_slideshow_preload_count');
 
     return (
       <div
@@ -658,7 +660,7 @@ class PureSearchResultsMap extends React.Component {
             var R = null;
             if (s) {
               const w = (0, me.roomPathWithParams)(n.id, r, o);
-              const S = (0, ke.default)(n, y.default.get('is_mobile'));
+              const S = (0, ke.default)(n, BootstrapData.get('is_mobile'));
               R = React.createElement(Popup, {
                 visible: s && (!mq.matchMedia.is('sm') || h),
                 offset: e.state.popupOffset,

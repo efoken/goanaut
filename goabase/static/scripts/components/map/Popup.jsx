@@ -2,13 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as customPropTypes from '../../customPropTypes';
+import MapPropTypes from '../../types/MapPropTypes';
 
 const propTypes = {
-  map: customPropTypes.MapPropType,
+  map: MapPropTypes.MapPropType,
   parent: React.PropTypes.any,
-  offset: customPropTypes.PositionPropType,
-  clearance: customPropTypes.PositionPropType,
+  offset: MapPropTypes.PositionPropType,
+  clearance: MapPropTypes.PositionPropType,
   visible: React.PropTypes.bool,
   onClose: React.PropTypes.func,
   onOpen: React.PropTypes.func,

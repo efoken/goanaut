@@ -5,18 +5,18 @@ import React from 'react';
 import MapElementBase from './MapElementBase';
 import MapIcon from '../MapIcon';
 import MapObject from '../MapObject';
+import MapPropTypes from '../../types/MapPropTypes';
 import { check, convert } from '../../utils';
-import * as customPropTypes from '../../customPropTypes';
 
 const propTypes = Object.assign({}, MapElementBase.propTypes, {
-  position: customPropTypes.LatLngPropType.isRequired,
+  position: MapPropTypes.LatLngPropType.isRequired,
   icon: React.PropTypes.oneOfType([React.PropTypes.node, React.PropTypes.shape({
     url: React.PropTypes.string.isRequired,
-    origin: customPropTypes.PositionPropType,
-    size: customPropTypes.SizePropType,
-    spriteSize: customPropTypes.SizePropType,
+    origin: MapPropTypes.PositionPropType,
+    size: MapPropTypes.SizePropType,
+    spriteSize: MapPropTypes.SizePropType,
     isRetina: React.PropTypes.bool,
-    anchor: customPropTypes.PositionPropType,
+    anchor: MapPropTypes.PositionPropType,
   })]),
   iconAnchor: React.PropTypes.shape({
     x: React.PropTypes.number.isRequired,

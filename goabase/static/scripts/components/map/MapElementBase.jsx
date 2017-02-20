@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle, react/no-unused-prop-types, react/prop-types, react/require-default-props */
 import React from 'react';
 
+import MapPropTypes from '../../types/MapPropTypes';
 import Popup from './Popup';
-import * as customPropTypes from '../../customPropTypes';
 
 const propTypes = {
-  map: customPropTypes.MapPropType,
+  map: MapPropTypes.MapPropType,
   zIndex: React.PropTypes.number,
   clickable: React.PropTypes.bool,
   onClick: React.PropTypes.func,

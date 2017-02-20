@@ -4,8 +4,8 @@ import React from 'react';
 
 import MapBounds from '../MapBounds';
 import MapElement from '../MapElement';
+import MapPropTypes from '../../types/MapPropTypes';
 import { check, convert } from '../../utils';
-import * as customPropTypes from '../../customPropTypes';
 import * as zoomControlPositions from '../../consts/ZoomControlPositions';
 
 function createBounds(bounds) {
@@ -22,14 +22,14 @@ const propTypes = {
   containerProps: React.PropTypes.object,
   clickableIcons: React.PropTypes.bool,
   disableDefaultUI: React.PropTypes.bool,
-  defaultCenter: customPropTypes.LatLngPropType,
+  defaultCenter: MapPropTypes.LatLngPropType,
   defaultZoom: React.PropTypes.number,
   disablePOI: React.PropTypes.bool,
   disableTransit: React.PropTypes.bool,
   draggable: React.PropTypes.bool,
-  center: customPropTypes.LatLngPropType,
+  center: MapPropTypes.LatLngPropType,
   zoom: React.PropTypes.number,
-  minBounds: React.PropTypes.oneOfType([customPropTypes.MapBoundsPropType, customPropTypes.MapBoundsLiteralPropType]), // eslint-disable-line
+  minBounds: React.PropTypes.oneOfType([MapPropTypes.MapBoundsPropType, MapPropTypes.MapBoundsLiteralPropType]), // eslint-disable-line
   minZoom: React.PropTypes.number,
   maxZoom: React.PropTypes.number,
   zoomControl: React.PropTypes.bool,
