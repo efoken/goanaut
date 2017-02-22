@@ -1,7 +1,8 @@
 from allauth.account.forms import LoginForm as BaseLoginForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Field
 from django.utils.translation import ugettext_lazy as _
+
 
 class LoginForm(BaseLoginForm):
     def __init__(self, *args, **kwargs):

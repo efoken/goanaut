@@ -12,8 +12,8 @@ class Country(models.Model):
     pop2005 = models.BigIntegerField(_('population in 2005'))
     region = models.IntegerField(_('region code'))
     subregion = models.IntegerField(_('sub-region code'))
-    lon = models.FloatField()
-    lat = models.FloatField()
+    lon = models.FloatField(_('longitude'))
+    lat = models.FloatField(_('latitude'))
     geom = models.MultiPolygonField(srid=4326, null=True)
 
     objects = models.GeoManager()
@@ -24,6 +24,7 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # Auto-generated `LayerMapping` dictionary for Country model
 country_mapping = {

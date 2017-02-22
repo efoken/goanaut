@@ -4,15 +4,23 @@
     #{{ id }}_map { border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
     .aligned #{{ id }}_map label { float: inherit; }
     #{{ id }}_map + a { display: inline-block; margin: 6px 0; font-size: 11px; line-height: 20px; }
+    .olControlLayerSwitcher {
+        font-family: "Open Sans", sans-serif;
+    }
     .olControlLayerSwitcher input.olButton {
         margin-top: 0;
     }
     .olControlLayerSwitcher label.olButton {
-        display: inline;
-        padding: 0;
-        margin-left: 4px;
         color: inherit;
+        display: inline;
+        margin-left: 4px;
+        padding: 0;
         vertical-align: middle !important;
+    }
+    div.olControlZoom,
+    div.olControlTextButtonPanel {
+        background: #ccc;
+        padding: 0;
     }
 </style>
 {% endblock %}

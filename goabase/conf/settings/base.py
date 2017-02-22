@@ -1,5 +1,4 @@
 import environ
-import os
 import platform
 
 from django.utils.translation import ugettext_lazy as _
@@ -208,9 +207,10 @@ WEBPACK_LOADER = {
         'STATS_FILE': str(BASE_DIR.path('webpack-stats.json')),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
-    }
+        'IGNORE': ['.+\.hot-update.js', '.+\.map'],
+    },
 }
+
 
 # Endless pagination configuration
 # https://django-el-pagination.readthedocs.io/en/latest/

@@ -1,6 +1,6 @@
 __pycache__/
+.venv/
 bundles/
-env/
 goabase/templates/icons.svg
 node_modules/
 .env

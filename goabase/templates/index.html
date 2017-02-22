@@ -91,7 +91,7 @@
                         {% paginate 40 party_list %}
                         {% for party in party_list %}
                             <div class="card party-card" data-location='{"lat": {{ party.location.1 }}, "lng": {{ party.location.0 }}}' data-type="{{ party.type }}" itemscope itemtype="http://schema.org/Event">
-                                <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.id %}">
+                                <a class="party-card-img-wrapper" href="{% url 'parties:detail' party.slug party.id %}">
                                     <img class="card-img" src="{% placeholder_image 'images/placeholders/' %}" alt="{{ party.name }}" itemprop="image" />
                                 </a>
                                 <div class="card-img-overlay">

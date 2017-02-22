@@ -11,6 +11,7 @@ def filter_type(value):
     value = re.sub(r'[^\w]+', '_', value.lower()).replace('open_air', 'openair')
     return value.replace('in_outdoor', 'indoor_outdoor')
 
+
 def select_country(value):
     try:
         return Country.objects.get(iso2=value)

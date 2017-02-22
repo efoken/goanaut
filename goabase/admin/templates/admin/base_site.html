@@ -1,1 +1,8 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link href="{% static 'admin/css/main.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin-ext" rel="stylesheet" />
+{% endblock %}

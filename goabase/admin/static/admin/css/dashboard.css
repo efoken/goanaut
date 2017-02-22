@@ -1,39 +1,41 @@
+/* stylelint-disable selector-no-id */
+
 /* DASHBOARD */
 
 .dashboard #content-related {
-    background: none;
+  background: none;
 }
 
 .dashboard #content-related .module {
-    background: #f8f8f8;
-    padding-bottom: 16px;
+  background: #f8f8f8;
+  padding-bottom: 16px;
 }
 
 .dashboard #content-related .module > :last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .dashboard .module table th {
-    width: 100%;
+  width: 100%;
 }
 
 .dashboard .module table td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .dashboard .module table td a {
-    display: block;
-    padding-right: 0.6em;
+  display: block;
+  padding-right: 0.6em;
 }
 
 /* RECENT ACTIONS MODULE */
 
 .module ul.actionlist {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 ul.actionlist li {
-    list-style-type: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  list-style-type: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

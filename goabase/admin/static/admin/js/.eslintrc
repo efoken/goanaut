@@ -1,0 +1,14 @@
+{
+  "root": false,
+  "env": {
+    "es6": false
+  },
+  "globals": {
+    "django": false
+  },
+  "rules": {
+    "func-names": 0,
+    "prefer-arrow-callback": 0,
+    "space-before-function-paren": [2, {"anonymous": "never", "named": "never"}]
+  }
+}

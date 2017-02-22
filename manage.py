@@ -3,7 +3,7 @@ import os
 import sys
 
 base_path = os.path.abspath(os.path.dirname(__file__))
-activate_this = os.path.join(base_path, 'env', 'bin', 'activate_this.py')
+activate_this = os.path.join(base_path, '.venv', 'bin', 'activate_this.py')
 exec(compile(open(activate_this).read(), activate_this, 'exec'),
      dict(__file__=activate_this))
 

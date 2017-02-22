@@ -1,4 +1,5 @@
-from goabase.conf.settings.common import *  #noqa
+# flake8: noqa
+from goabase.conf.settings.base import *  # noqa
 
 DEBUG = env.bool('DJANGO_DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG

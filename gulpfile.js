@@ -8,6 +8,7 @@ const util = require('gulp-util');
 const webpack = require('webpack');
 
 const config = require('./build/config');
+
 let webpackConfig = require('./build/webpack.config');
 
 gulp.task('svgstore', () => {
@@ -29,7 +30,7 @@ gulp.task('build', ['svgstore'], (callback) => {
 
   webpack(webpackConfig, (err, stats) => {
     if (err) {
-      throw new util.PluginError('webpack', err);
+      throw new util.PluginError('build', err);
     }
     util.log('[webpack]', stats.toString());
     callback();

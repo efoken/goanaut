@@ -1,12 +1,17 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
-# from scrapy_djangoitem import DjangoItem
+from scrapy_djangoitem import DjangoItem
 
+from goabase.core.utils import slugify
 from goabase.modules.countries.models import Country
 
 
 class Source(models.Model):
     name = models.CharField(_('name'), max_length=50)
+
+    class Meta:
+        verbose_name = _('source')
+        verbose_name_plural = _('sources')
 
 
 class Party(models.Model):
@@ -57,10 +62,14 @@ class Party(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def slug(self):
+        return slugify(self.name)
+
     def is_multiday(self):
         td = self.end_date - self.start_date
         return td.days >= 1
 
 
-# class PartyItem(DjangoItem):
-#     django_model = Party
+class PartyItem(DjangoItem):
+    django_model = Party

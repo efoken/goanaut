@@ -78,10 +78,16 @@
 // Card set
 .party-card-deck {
   flex-wrap: wrap;
+  margin: 0 -10px;
 
   .card {
-    margin: 0 10px 20px;
     min-width: calc(50% - 20px);
     width: calc(50% - 20px);
+
+    &,
+    &:not(:last-child),
+    &:not(:first-child) {
+      margin: 0 10px 20px;
+    }
   }
 }

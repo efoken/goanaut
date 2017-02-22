@@ -1,4 +1,6 @@
 from django.contrib.staticfiles.finders import find
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponsePermanentRedirect
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 from react.render import render_component
@@ -8,6 +10,15 @@ from goabase.modules.parties.models import Party
 
 class PartyDetailView(DetailView):
     model = Party
+
+    def get(self, request, *args, **kwargs):
+        self.object = obj = self.get_object()
+        correct_url = reverse('parties:detail', args=[obj.slug, obj.pk])
+        if request.path != correct_url:
+            return HttpResponsePermanentRedirect(correct_url)
+
+        context = self.get_context_data(object=obj)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(PartyDetailView, self).get_context_data(**kwargs)
