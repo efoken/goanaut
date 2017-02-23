@@ -19,8 +19,7 @@ class GoabaseSpider(scrapy.Spider):
         party_json = json.loads(response.body.decode())
         if 'partylist' in party_json:
             for party in party_json['partylist']:
-                yield scrapy.Request(party['urlPartyJson'],
-                                     callback=self.parse_party)
+                yield scrapy.Request(party['urlPartyJson'], callback=self.parse_party)
 
     def parse_party(self, response):
         party_json = json.loads(response.body.decode())

@@ -1,0 +1,52 @@
+/* stylelint-disable selector-no-id */
+
+/* CHANGELISTS */
+
+#changelist .paginator {
+  border-bottom: 0;
+}
+
+/* FILTER COLUMN */
+
+#changelist-filter a:focus,
+#changelist-filter a:hover,
+#changelist-filter li.selected a:focus,
+#changelist-filter li.selected a:hover {
+  color: #322449;
+}
+
+/* DATE DRILLDOWN */
+
+.change-list ul.toplinks .date-back a:focus,
+.change-list ul.toplinks .date-back a:hover {
+  color: #322449;
+}
+
+/* PAGINATOR */
+
+.paginator a:link,
+.paginator a:visited {
+  background: #563d7c;
+}
+
+.paginator a:focus,
+.paginator a:hover {
+  background: #322449;
+}
+
+.paginator a.showall:link,
+.paginator a.showall:visited {
+  color: #563d7c;
+}
+
+.paginator a.showall:focus,
+.paginator a.showall:hover {
+  color: #322449;
+}
+
+/* ACTIONS */
+
+#changelist .actions.selected {
+  border-bottom: 0;
+  border-top: 0;
+}

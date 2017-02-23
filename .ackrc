@@ -1,0 +1,2 @@
+--ignore-file=match:webpack-stats.json
+--ignore-dir=goabase/static/bundles

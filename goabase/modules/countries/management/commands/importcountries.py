@@ -10,6 +10,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         with transaction.atomic():
-            lm = LayerMapping(Country, 'TM_WORLD_BORDERS-0.3.shp',
-                              country_mapping, encoding='iso-8859-1')
+            lm = LayerMapping(Country, 'TM_WORLD_BORDERS-0.3.shp', country_mapping, encoding='iso-8859-1')
             lm.save(strict=True, verbose=True)

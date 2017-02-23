@@ -1,4 +1,5 @@
 const BrowserSyncPlugin = require('browsersync-webpack-plugin');
+const path = require('path');
 const webpack = require('webpack');
 
 const config = require('./config');
@@ -18,6 +19,11 @@ module.exports = {
       target: 'http://localhost:8000',
       proxyUrl: config.proxyUrl,
       watch: config.watch,
+      advanced: {
+        browserSync: {
+          serveStatic: [config.paths.public],
+        },
+      },
     }),
   ],
 };

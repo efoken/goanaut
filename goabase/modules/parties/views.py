@@ -1,6 +1,6 @@
 from django.contrib.staticfiles.finders import find
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponsePermanentRedirect
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 from react.render import render_component
@@ -36,5 +36,4 @@ class PartyDetailView(DetailView):
 
 class PartyListView(ListView):
     def get_queryset(self):
-        return Party.objects.filter(
-            start_date__gte=timezone.now()).order_by('-start_date')
+        return Party.objects.filter(start_date__gte=timezone.now()).order_by('-start_date')

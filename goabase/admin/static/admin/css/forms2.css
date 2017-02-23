@@ -1,0 +1,13 @@
+/* FORM ROWS */
+
+.form-row:last-of-type {
+  border-bottom: 0;
+}
+
+/* SUBMIT ROW */
+
+.submit-row {
+  background: #fff;
+  border-color: #e0e0e0;
+  border-radius: 0;
+}

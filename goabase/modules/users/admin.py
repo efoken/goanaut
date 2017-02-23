@@ -38,6 +38,5 @@ class UserAdmin(BaseUserAdmin):
     def get_fieldsets(self, request, obj=None):
         fieldsets = super(UserAdmin, self).get_fieldsets(request, obj)
         if obj is not None:
-            fieldsets[1][1]['fields'] = ('first_name', 'middle_name',
-                                         'last_name', 'email')
+            fieldsets[1][1]['fields'] = ('first_name', 'middle_name', 'last_name', 'email')
         return fieldsets

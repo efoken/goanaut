@@ -24,8 +24,7 @@ class DjangoImagesPipeline(ImagesPipeline):
         if self.conf['IMAGES_STORE_FORMAT'] == 'FLAT':
             return '{ig}.jpg'.format(ig=image_guid)
         elif self.conf['IMAGES_STORE_FORMAT'] == 'THUMBS':
-            return 'thumbs/{p}/{ig}.jpg'.format(p=next(iter(list(self.thumbs.keys()))),
-                                                ig=image_guid)
+            return 'thumbs/{p}/{ig}.jpg'.format(p=next(iter(list(self.thumbs.keys()))), ig=image_guid)
         return 'full/{ig}.jpg'.format(ig=image_guid)
 
     def thumb_path(self, request, thumb_id, response=None, info=None):

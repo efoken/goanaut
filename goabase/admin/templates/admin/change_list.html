@@ -1,7 +1,12 @@
 {% extends "admin/change_list.html" %}
 {% load static %}
 
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists2.css' %}" />
+{% endblock %}
+
 {% block extrahead %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'admin/js/change_list.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/changelists.js' %}"></script>
 {% endblock %}

@@ -10,6 +10,7 @@ const config = {
   paths: {
     root: rootPath,
     bundles: path.join(rootPath, 'goabase/static/bundles'),
+    public: path.join(rootPath, 'public'),
     static: path.join(rootPath, 'goabase/static'),
   },
   enabled: {

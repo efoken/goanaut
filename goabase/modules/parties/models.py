@@ -1,5 +1,7 @@
 from django.contrib.gis.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from model_utils import Choices
 from scrapy_djangoitem import DjangoItem
 
 from goabase.core.utils import slugify
@@ -19,7 +21,7 @@ class Party(models.Model):
     start_date = models.DateTimeField(_('start date'))
     end_date = models.DateTimeField(_('end date'))
 
-    TYPE_CHOICES = (
+    TYPE_CHOICES = Choices(
         ('festival', _('Festival')),
         ('openair', _('Open Air')),
         ('indoor', _('Indoor')),
@@ -27,7 +29,7 @@ class Party(models.Model):
         ('indoor_outdoor', _('In- & Outdoor')),
     )
     type = models.CharField(_('type'), max_length=14, choices=TYPE_CHOICES,
-                            default='indoor')
+                            default=TYPE_CHOICES.indoor)
 
     town = models.CharField(_('town'), max_length=100)
     country = models.ForeignKey(Country, verbose_name=_('country'))
@@ -39,19 +41,18 @@ class Party(models.Model):
     organizer_name = models.CharField(_('organizer name'), max_length=255)
     organizer_text = models.TextField(_('organizer text'))
     organizer_url = models.TextField(_('organizer URL'))
-    image = models.ImageField(_('image'), upload_to='uploads/%Y/%m/%d/',
-                              null=True, blank=True)
+    image = models.ImageField(_('image'), upload_to='uploads/%Y/%m/%d/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
-    STATUS_CHOICES = (
+    STATUS_CHOICES = Choices(
         ('scheduled', _('Scheduled')),
         ('cancelled', _('Cancelled')),
         ('postponed', _('Postponed')),
         ('moved', _('Moved')),
     )
     status = models.CharField(_('status'), max_length=9, choices=STATUS_CHOICES,
-                              default='scheduled')
+                              default=STATUS_CHOICES.scheduled)
 
     objects = models.GeoManager()
 
@@ -61,6 +62,9 @@ class Party(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('parties:detail', args=[self.slug, self.pk])
 
     @property
     def slug(self):

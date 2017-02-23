@@ -1,9 +1,18 @@
 from django.db.models.fields import SlugField
 
-from goabase.core.utils import (slugify, get_prepopulated_value, crop_slug,
-                                generate_unique_slug)
+from goabase.core.utils import slugify, crop_slug, generate_unique_slug
 
 SLUG_INDEX_SEPARATOR = '-'
+
+
+def get_prepopulated_value(field, instance):
+    """Returns preliminary value based on `populate_from`."""
+    if hasattr(field.populate_from, '__call__'):
+        # AutoSlugField(populate_from=lambda instance: ...)
+        return field.populate_from(instance)
+    # AutoSlugField(populate_from='foo')
+    attr = getattr(instance, field.populate_from)
+    return callable(attr) and attr() or attr
 
 
 class AutoSlugField(SlugField):
@@ -96,9 +105,8 @@ class AutoSlugField(SlugField):
             value = get_prepopulated_value(self, instance)
 
             if __debug__ and not value and not self.blank:
-                print('Failed to populate slug %s.%s from %s'
-                      % (instance._meta.object_name, self.name,
-                         self.populate_from))
+                print('Failed to populate slug %s.%s from %s' % (instance._meta.object_name, self.name,
+                                                                 self.populate_from))
 
         if value:
             slug = self.slugify(value)
