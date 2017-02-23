@@ -7,7 +7,7 @@
   "scripts": {
     "build": "gulp webpack",
     "build:production": "npm run build -s -- -p",
-    "eslint": "eslint --ext .js --ext .jsx build goabase/static/scripts goabase/admin/static/admin/js gulpfile.js",
+    "eslint": "eslint --ext .js --ext .jsx build goabase/static/scripts gulpfile.js",
     "start": "gulp watch",
     "stylelint": "stylelint -c .stylelintrc goabase/static/styles/**/*.scss goabase/admin/static/admin/**/*.css",
     "test": "npm run stylelint && npm run eslint"
