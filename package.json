@@ -48,7 +48,7 @@
     "minimist": "^1.2.0",
     "node-sass": "^4.5.0",
     "optimize-css-assets-webpack-plugin": "^1.3.0",
-    "postcss-loader": "^1.3.1",
+    "postcss-loader": "^1.3.2",
     "qs": "^6.3.1",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.1",
@@ -60,7 +60,7 @@
     "webpack": "^2.2.1",
     "webpack-bundle-tracker": "^0.2.0",
     "webpack-dev-middleware": "^1.10.1",
-    "webpack-hot-middleware": "^2.17.0",
+    "webpack-hot-middleware": "^2.17.1",
     "webpack-merge": "^3.0.0"
   },
   "dependencies": {
@@ -83,10 +83,7 @@
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-controllables": "^0.6.0",
     "react-dom": "^15.3.2",
-    "react-redux": "^5.0.2",
     "react-validators": "^0.1.4",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0",
-    "tether": "^1.3.7"
+    "tether": "^1.4.0"
   }
 }

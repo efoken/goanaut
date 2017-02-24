@@ -43,7 +43,7 @@ const webpackConfig = {
         }),
       },
       {
-        test: /\.(png|jpe?g|gif|ico)$/,
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         include: config.paths.static,
         use: `file-loader?${qs.stringify({
           name: `[path]${staticFilenames}.[ext]`,

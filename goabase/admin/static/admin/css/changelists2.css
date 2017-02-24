@@ -6,6 +6,17 @@
   border-bottom: 0;
 }
 
+/* TOOLBAR */
+
+#changelist #toolbar {
+  background: #fff;
+  border-top: 0;
+}
+
+#changelist #toolbar form input {
+  border-radius: 0;
+}
+
 /* FILTER COLUMN */
 
 #changelist-filter a:focus,
@@ -49,4 +60,12 @@
 #changelist .actions.selected {
   border-bottom: 0;
   border-top: 0;
+}
+
+#changelist .actions select {
+  border-radius: 0;
+}
+
+#changelist .actions .button {
+  border-radius: 0;
 }

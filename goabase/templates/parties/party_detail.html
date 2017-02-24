@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load icon_helpers i18n placeholder_helpers %}
+{% load i18n placeholder_helpers %}
 
 {% block title %}{% trans "Party" %}: {{ object.name }}{% endblock %}
 
@@ -50,19 +50,25 @@
                     <div class="action-group row">
                         <div class="col-sm-4">
                             <a class="action action-review" href="#">
-                                <span class="action-icon">{% icon 'star-filled' %}</span>
+                                <span class="action-icon">
+                                    <svg class="icon icon-star-filled" width="16" height="16" aria-hidden="true"><use xlink:href="#icon-star-filled" /></svg>
+                                </span>
                                 <span class="action-text">{% trans "Write a review" %}</span>
                             </a>
                         </div>
                         <div class="col-sm-4">
                             <a class="action action-favorite" href="#">
-                                <span class="action-icon">{% icon 'heart-filled' %}</span>
+                                <span class="action-icon">
+                                    <svg class="icon icon-heart-filled" width="16" height="16" aria-hidden="true"><use xlink:href="#icon-heart-filled" /></svg>
+                                </span>
                                 <span class="action-text">{% trans "Add to favorites" %}</span>
                             </a>
                         </div>
                         <div class="col-sm-4">
                             <a class="action action-share" href="#">
-                                <span class="action-icon">{% icon 'share-filled' %}</span>
+                                <span class="action-icon">
+                                    <svg class="icon icon-share-filled" width="16" height="16" aria-hidden="true"><use xlink:href="#icon-share-filled" /></svg>
+                                </span>
                                 <span class="action-text">{% trans "Share" %}</span>
                             </a>
                         </div>
