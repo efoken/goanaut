@@ -6,22 +6,13 @@
   ],
   "rules": {
     "at-rule-blacklist": ["extend"],
-    "at-rule-empty-line-before": [
-      "always",
-      {
-        "except": ["first-nested"],
-        "ignore": ["after-comment"],
-      }
-    ],
     "declaration-empty-line-before": "never",
     "declaration-property-value-blacklist": {
-      "/^border/": [
-        "none"
-      ]
+      "/^border/": ["none"]
     },
     "max-empty-lines": 2,
     "max-nesting-depth": 3,
-    "order/declaration-block-properties-alphabetical-order": true,
+    "order/properties-alphabetical-order": true,
     "scss/dollar-variable-colon-newline-after": "always-multi-line",
     "scss/dollar-variable-colon-space-after": "always-single-line",
     "scss/dollar-variable-colon-space-before": "never",
@@ -38,6 +29,7 @@
         "message": "Selector should be written in lowercase with hyphens (selector-class-pattern)"
       }
     ],
+    "selector-list-comma-newline-after": "always",
     "selector-no-id": true,
     "string-quotes": "double"
   }

@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, react/no-unused-prop-types, react/prop-types, react/require-default-props */
+/* eslint-disable max-len, no-underscore-dangle, react/no-unused-prop-types, react/prop-types, react/require-default-props */
 import React from 'react';
 
 import MapPropTypes from '../../types/MapPropTypes';

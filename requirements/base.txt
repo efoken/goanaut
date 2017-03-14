@@ -1,19 +1,19 @@
-cryptography==1.7.2
-Django==1.10.5
-django-allauth==0.30.0
+cryptography==1.8.1
+Django==1.10.6
+django-allauth==0.31.0
 django-braces==1.11.0
 django-crispy-forms==1.6.1
 django-el-pagination==3.0.1
 django-environ==0.4.1
 django-flat-responsive==1.3.0
 django-model-utils==2.6.1
--e git+https://github.com/django-tastypie/django-tastypie.git@29eae9123152cd9e96090b63916fa501b2ef37a3#egg=django_tastypie
+-e git+https://github.com/django-tastypie/django-tastypie.git@72ff598eb654e0fb61ae525f8804808ff35aafdd#egg=django_tastypie
 django-webpack-loader==0.4.1
 feedparser==5.2.1
 Pillow==4.0.0
 pycountry==17.1.8
 python-dateutil==2.6.0
 pytz==2016.10
-react==3.0.1
-Scrapy==1.3.2
+react==4.1.0
+Scrapy==1.3.3
 scrapy-djangoitem==1.1.1

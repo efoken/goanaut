@@ -75,21 +75,27 @@ class Popup extends React.Component {
   }
 
   onClose() {
-    this.props.onClose && this.props.onClose({
-      map: this.props.map,
-      parent: this.props.parent,
-    })
+    if (this.props.onClose) {
+      this.props.onClose({
+        map: this.props.map,
+        parent: this.props.parent,
+      });
+    }
   }
 
   onOpen() {
-    this.props.onOpen && this.props.onOpen({
-      map: this.props.map,
-      parent: this.props.parent,
-    })
+    if (this.props.onOpen) {
+      this.props.onOpen({
+        map: this.props.map,
+        parent: this.props.parent,
+      });
+    }
   }
 
   onMapClick() {
-    this.props.onMapClick && this.props.onMapClick();
+    if (this.props.onMapClick) {
+      this.props.onMapClick();
+    }
   }
 
   actualRender() {

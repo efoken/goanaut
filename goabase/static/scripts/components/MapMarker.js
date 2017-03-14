@@ -71,7 +71,7 @@ class OverlayView extends google.maps.OverlayView {
         }
       }),
       google.maps.event.addDomListener(this.eventDiv_, 'mouseout', function mouseout(ev) {
-        if (!(!that.marker_.getDraggable() && !that.marker_.getClickable() || d)) {
+        if (!((!that.marker_.getDraggable() && !that.marker_.getClickable()) || d)) {
           this.style.cursor = that.marker_.getCursor();
           google.maps.event.trigger(that.marker_, 'mouseout', ev);
         }
@@ -180,18 +180,18 @@ class OverlayView extends google.maps.OverlayView {
           h(ev);
         }
       }),
-      google.maps.event.addListener(this.marker_, 'dragstart', function dragstart(ev) {
+      google.maps.event.addListener(this.marker_, 'dragstart', function dragstart() {
         if (!d) {
           o = this.get('raiseOnDrag');
         }
       }),
-      google.maps.event.addListener(this.marker_, 'drag', function drag(ev) {
+      google.maps.event.addListener(this.marker_, 'drag', function drag() {
         if (d || o) {
           that.setPosition(p);
           that.labelDiv_.style.zIndex = 1e6 + (this.get('labelInBackground') ? -1 : 1);
         }
       }),
-      google.maps.event.addListener(this.marker_, 'dragend', (ev) => {
+      google.maps.event.addListener(this.marker_, 'dragend', () => {
         if (d || o) {
           this.setPosition(0);
         }
@@ -266,8 +266,8 @@ class OverlayView extends google.maps.OverlayView {
     this.eventDiv_.style.cssText = '';
     const styles = this.marker_.get('labelStyle');
 
-    for (let key in styles) {
-      if (styles.hasOwnProperty(key)) {
+    for (let key in styles) { // eslint-disable-line
+      if (Object.prototype.hasOwnProperty.call(styles, key)) {
         this.labelDiv_.style[key] = styles[key];
         this.eventDiv_.style[key] = styles[key];
       }

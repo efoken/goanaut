@@ -2,7 +2,7 @@ import alt from '../alt';
 import FavoredPartiesActions from '../actions/FavoredPartiesActions';
 
 const defaultState = {
-  wishlistedListingsIds: {},
+  favoredPartiesIds: {},
 };
 
 class FavoredPartiesStore {
@@ -17,28 +17,28 @@ class FavoredPartiesStore {
 
   initialized(e) {
     const t = e.wishlists;
-    const wishlistedListingsIds = this.state.wishlistedListingsIds;
+    const favoredPartiesIds = this.state.favoredPartiesIds;
     const r = t.listingIds;
     Object.keys(r).filter(a => r[a] === true).forEach((a) => {
-      wishlistedListingsIds[a] = true;
+      favoredPartiesIds[a] = true;
     });
-    this.setState({ wishlistedListingsIds });
+    this.setState({ favoredPartiesIds });
   }
 
   listingAdded(party) {
     const t = party.id;
-    const wishlistedListingsIds = this.state.wishlistedListingsIds;
-    wishlistedListingsIds[t] = true;
-    this.setState({ wishlistedListingsIds });
+    const favoredPartiesIds = this.state.favoredPartiesIds;
+    favoredPartiesIds[t] = true;
+    this.setState({ favoredPartiesIds });
   }
 
   listingRemoved(party) {
     const t = party.id;
     const n = party.selectedIds;
     if (n.length === 0) {
-      const wishlistedListingsIds = this.state.wishlistedListingsIds;
-      delete wishlistedListingsIds[t];
-      this.setState({ wishlistedListingsIds });
+      const favoredPartiesIds = this.state.favoredPartiesIds;
+      delete favoredPartiesIds[t];
+      this.setState({ favoredPartiesIds });
     }
   }
 }

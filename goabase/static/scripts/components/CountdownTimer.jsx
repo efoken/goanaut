@@ -47,19 +47,19 @@ class CountdownTimer extends React.Component {
     clearTimeout(this.state.timeoutId);
   }
 
-  getDays() {
+  getDays(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).asDays());
   }
 
-  getHours() {
+  getHours(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).hours());
   }
 
-  getMinutes() {
+  getMinutes(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).minutes());
   }
 
-  getSeconds() {
+  getSeconds(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).seconds());
   }
 

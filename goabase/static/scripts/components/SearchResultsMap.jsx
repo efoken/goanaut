@@ -76,7 +76,7 @@ const propTypes = Object.assign(Object.assign({
   clickedDatelessListingId: React.PropTypes.number,
   datelessClickCount: React.PropTypes.number,
 }, {
-  wishlistedListingsIds: React.PropTypes.objectOf(React.PropTypes.bool),
+  favoredPartiesIds: React.PropTypes.objectOf(React.PropTypes.bool),
 });
 
 const defaultProps = Object.assign(Object.assign({
@@ -86,7 +86,7 @@ const defaultProps = Object.assign(Object.assign({
   isSmMapVisible: false,
   showWebcotListingCards: false,
 }, Oe.withFiltersDefaultProps), {
-  wishlistedListingsIds: {},
+  favoredPartiesIds: {},
 });
 
 export const storeConfig = {
@@ -98,7 +98,7 @@ export const storeConfig = {
     const hoveredListingId = e.hoveredListingId;
     const clickedListingId = e.clickedListingId;
     const r = FavoredPartiesStore.getState();
-    const wishlistedListingsIds = r.wishlistedListingsIds;
+    const favoredPartiesIds = r.favoredPartiesIds;
     const i = ne.default.getState();
     const businessOfficeLocations = i.businessOfficeLocations;
     const clickedOfficeLocationId = i.clickedOfficeLocationId;
@@ -107,7 +107,7 @@ export const storeConfig = {
 
     return {
       hoveredListingId,
-      wishlistedListingsIds,
+      favoredPartiesIds,
       extraListingMarkers: [],
       clickedListingId,
       extraListingMarkerType: {},
@@ -217,41 +217,37 @@ class PureSearchResultsMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    var t = this.props
-      , n = t.searchResponse
-      , r = n.filters
-      , a = n.results
-      , i = t.hoveredListingId
-      , o = nextProps.searchResponse
-      , l = o.filters
-      , s = o.results
-      , u = o.metadata
-      , c = nextProps.hoveredListingId;
-    if (i === c) {
-        var d = (0, me.changedZoom)(r, l)
-          , p = (0, me.changedBoundingBox)(r, l)
-          , f = (0, me.changedLocation)(r, l)
-          , h = (0, be.changedListingIds)(a, s)
-          , m = (0, me.hasBoundingBox)(l) && (0, me.hasZoom)(l)
-          , b = (0, me.changedSearchFilters)(r, l);
-        if ((d || p || f || h) && (this.setState({
-            loading: false,
-            readyToRefresh: false
-        }),
-        m || this.setMapViewFromMarkers(nextProps)),
-        f && this.setState({
-            bounds: null,
-            zoom: null
-        }),
-        b && !f) {
-            var v = this.state
-              , g = v.bounds
-              , y = v.zoom;
-            if (g && y) {
-                var _ = l.page
-                  , P = u.search.mobile_session_id;
-            }
+    const searchFilters = this.props.searchResponse.filters;
+    const searchResults = this.props.searchResponse.results;
+    const nextFilters = nextProps.searchResponse.filters;
+
+    if (this.props.hoveredListingId === nextProps.hoveredListingId) {
+      const changedZoom = (0, me.changedZoom)(searchFilters, nextFilters);
+      const changedBoundingBox = (0, me.changedBoundingBox)(searchFilters, nextFilters);
+      const changedLocation = (0, me.changedLocation)(searchFilters, nextFilters);
+      const changedListingIds = (0, be.changedListingIds)(searchResults, nextProps.searchResponse.results);
+      const changedSearchFilters = (0, me.changedSearchFilters)(searchFilters, nextFilters);
+      const hasBoundingBox = (0, me.hasBoundingBox)(nextFilters) && (0, me.hasZoom)(nextFilters);
+
+      if (changedZoom || changedBoundingBox || changedLocation || changedListingIds) {
+        this.setState({ loading: false, readyToRefresh: false });
+        if (!hasBoundingBox) {
+          this.setMapViewFromMarkers(nextProps);
         }
+      }
+
+      if (changedLocation) {
+        this.setState({ bounds: null, zoom: null });
+      }
+
+      // if (changedSearchFilters && !changedLocation) {
+      //   const bounds = this.state.bounds;
+      //   const zoom = this.state.zoom;
+      //   if (bounds && zoom) {
+      //     const _ = nextFilters.page;
+      //     const P = nextProps.searchResponse.metadata.search.mobile_session_id;
+      //   }
+      // }
     }
   }
 
@@ -312,11 +308,11 @@ class PureSearchResultsMap extends React.Component {
       const e = n.listing.id;
       const r = this.props;
       const a = r.hoveredListingId;
-      const i = r.wishlistedListingsIds;
+      const i = r.favoredPartiesIds;
       // const o = (0, he.default)({
       //   hovered: e === a,
       //   viewed: this.isListingMarkerViewed(e),
-      //   wishlisted: i[e] === true,
+      //   favored: i[e] === true,
       // });
       this.setListingMarkerViewed(e);
       ae.default.clickedListingCard(e);
@@ -332,39 +328,34 @@ class PureSearchResultsMap extends React.Component {
     (0, Re.closedOfficeLocationCard)();
   }
 
-  onMapChanged(e) {
-          var t = e.bounds
-            , n = e.zoom
-            , r = this.props.searchResponse
-            , a = r.filters
-            , i = r.metadata;
-          if (this.state.loaded || this.setState({
-              loaded: true
-          }),
-          this.isProgrammaticBoundsChange) {
-              var o = a.page
-                , l = i.search.mobile_session_id;
-          }
-          if (!this.isProgrammaticBoundsChange && !this.windowResizing) {
-              var s = t.toJSON();
-              this.setState({
-                  bounds: t,
-                  zoom: n
-              }),
-              this.checkMapMovedEnough({
-                  jsonBounds: s,
-                  zoom: n
-              }) && (this.setState({
-                  readyToRefresh: true
-              }),
-              this.state.autoRefresh && this.refreshMap({
-                  bounds: t,
-                  zoom: n
-              }),
-              this.zoom = n,
-              this.sw = s.sw)
-          }
+  onMapChanged(ev) {
+    const bounds = ev.bounds;
+    const zoom = ev.zoom;
+    // const searchFilters = this.props.searchResponse.filters;
+    // const searchMetadata = this.props.searchResponse.metadata;
+
+    if (!this.state.loaded) {
+      this.setState({ loaded: true });
+    }
+
+    // if (this.isProgrammaticBoundsChange) {
+    //   const o = searchFilters.page;
+    //   const l = searchMetadata.search.mobile_session_id;
+    // }
+
+    if (!this.isProgrammaticBoundsChange && !this.windowResizing) {
+      const jsonBounds = bounds.toJSON();
+      this.setState({ bounds, zoom });
+      if (this.checkMapMovedEnough({ jsonBounds, zoom })) {
+        this.setState({ readyToRefresh: true });
+        if (this.state.autoRefresh) {
+          this.refreshMap({ bounds, zoom });
+        }
+        this.zoom = zoom;
+        this.sw = jsonBounds.sw;
       }
+    }
+  }
 
   setMapViewFromProps(e) {
     const n = e.searchResponse.filters;
@@ -561,8 +552,7 @@ class PureSearchResultsMap extends React.Component {
   }
 
   render() {
-    var e = this
-      , t = this.props
+    var t = this.props
       , n = t.searchResponse
       , r = n.filters
       , i = n.results
@@ -570,21 +560,21 @@ class PureSearchResultsMap extends React.Component {
       , l = t.clickedListingId
       , s = t.provider
       , u = t.hoveredListingId
-      , c = t.wishlistedListingsIds
+      , c = t.favoredPartiesIds
       , d = t.extraListingMarkers
       , f = t.extraListingMarkerType
       , h = t.isSmMapVisible
       , m = t.showWebcotListingCards
-      , b = this.state
-      , v = b.autoRefresh
-      , g = b.loading
-      , _ = b.readyToRefresh
-      , P = b.showTransitLayer
-      , T = b.inSmallP2Experiment
       , k = o.geography
       , R = o.guidebook;
 
-    const w = {
+    const v = this.state.autoRefresh;
+    const g = this.state.loading;
+    const _ = this.state.readyToRefresh;
+    const P = this.state.showTransitLayer;
+    const T = this.state.inSmallP2Experiment;
+
+    const mapProps = {
       ref: (t) => {
         this.map = t;
       },
@@ -600,9 +590,7 @@ class PureSearchResultsMap extends React.Component {
       showTransitLayer: P,
     };
     if (k) {
-      const lat = k.lat;
-      const lng = k.lng;
-      w.defaultCenter = { lat, lng };
+      mapProps.defaultCenter = { lat: k.lat, lng: k.lng };
     }
 
     const D = i.slice();
@@ -622,73 +610,70 @@ class PureSearchResultsMap extends React.Component {
         })}
         style={{ height: '100%' }}
       >
-        <Map {...w}>
-          {D.map(function(t) {
-            const n = t.listing;
-            const i = n.id;
-            const s = i === l;
-            const d = i === u;
-            const p = e.isListingMarkerViewed(i);
-            const b = c[i] === true;
-            const v = f[i] === Ee.default.HOST_OWN_LISTING_MARKER;
-            const g = t.pricing_quote;
+        <Map {...mapProps}>
+          {D.map((t) => {
+            const party = t.listing;
+            const s = party.id === l;
+            const d = party.id === u;
+            const p = this.isListingMarkerViewed(party.id);
+            const b = c[party.id] === true;
+            const v = f[party.id] === Ee.default.HOST_OWN_LISTING_MARKER;
             const _ = (0, he.default)({
               hovered: d,
               viewed: p,
-              wishlisted: b,
+              favored: b,
             });
-            const P = { x: 15, y: 70 };
             const T = React.createElement(B.default, {
-              pricingQuote: g,
+              pricingQuote: t.pricing_quote,
               hovered: d,
               viewed: p,
-              wishlisted: b,
+              favored: b,
               isHostOwnListing: v,
             });
-            const k = {
-              key: i,
-              position: { lat: n.lat, lng: n.lng },
+            const markerProps = {
+              key: party.id,
+              position: { lat: party.lat, lng: party.lng },
               markerType: _,
               icon: T,
-              onClick: e.onMarkerClick,
+              onClick: this.onMarkerClick,
               data: t,
               visible: !s,
             };
             if (s || d) {
-              k.zIndex = HIGH_Z_INDEX;
+              markerProps.zIndex = HIGH_Z_INDEX;
             }
-            var R = null;
+            let R = null;
             if (s) {
-              const w = (0, me.roomPathWithParams)(n.id, r, o);
-              const S = (0, ke.default)(n, BootstrapData.get('is_mobile'));
-              R = React.createElement(Popup, {
-                visible: s && (!mq.matchMedia.is('sm') || h),
-                offset: e.state.popupOffset,
-                onMapClick: e.onMapClick,
-                clearance: P,
-              },
-                React.createElement("div", {
-                  className: "listing-map-popover"
-                },
-                  React.createElement(N.default, {
-                    imagePreloadCount: q,
-                    listing: n,
-                    listingUrl: w,
-                    listingLinkTarget: S,
-                    pricingQuote: g,
-                    onPhotoPress: e.onCardPhotoClick,
-                    onInfoPress: e.onCardInfoClick,
-                    onWishlistButtonPress: e.onWishlistButtonPress,
-                    showCompactInfo: true,
-                    showNameSecondLine: m,
-                    useLegacySlideshow: true,
-                    useLegacyWishlistButton: true,
-                    showFromPrice: x,
-                  })
-                )
-              )
+              const partyUrl = (0, me.roomPathWithParams)(party.id, r, o);
+              const partyLinkTarget = (0, ke.default)(party, BootstrapData.get('is_mobile'));
+              R = (
+                <Popup
+                  visible={s && (!mq.matchMedia.is('sm') || h)}
+                  offset={this.state.popupOffset}
+                  onMapClick={this.onMapClick}
+                  clearance={{ x: 15, y: 70 }}
+                >
+                  <div className="listing-map-popover">
+                    {React.createElement(N.default, {
+                      imagePreloadCount: q,
+                      listing: party,
+                      listingUrl: partyUrl,
+                      listingLinkTarget: partyLinkTarget,
+                      pricingQuote: t.pricing_quote,
+                      onPhotoPress: this.onCardPhotoClick,
+                      onInfoPress: this.onCardInfoClick,
+                      onWishlistButtonPress: this.onWishlistButtonPress,
+                      showCompactInfo: true,
+                      showNameSecondLine: m,
+                      useLegacySlideshow: true,
+                      useLegacyWishlistButton: true,
+                      showFromPrice: x,
+                    })}
+                  </div>
+                </Popup>
+              );
             }
-            return React.createElement(Marker, k, R);
+            return <Marker {...markerProps}>{R}</Marker>;
           })}
           {this.renderMapAddressPin()}
           {this.renderOfficeLocationPins()}
@@ -699,7 +684,7 @@ class PureSearchResultsMap extends React.Component {
           onClickRefresh: this.onClickRefresh,
           onToggleAutoRefresh: this.onToggleAutoRefresh,
           readyToRefresh: _,
-          shouldSmallMapAutoRefresh: T
+          shouldSmallMapAutoRefresh: T,
         })}
         {!mq.matchMedia.is('sm') && React.createElement(_e.default, {
           guidebook: R,
