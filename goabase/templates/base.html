@@ -86,7 +86,13 @@
         </div>
 
         <script src="{% url 'jsi18n' %}"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ" async defer></script>
         {% render_bundle "main" "js" %}
+
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
     </body>
 </html>

@@ -3,7 +3,6 @@ const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const qs = require('qs');
 const webpack = require('webpack');
 
 const config = require('./config');
@@ -11,7 +10,7 @@ const config = require('./config');
 const sourceMapQueryStr = config.enabled.sourceMaps ? '+sourceMap' : '-sourceMap';
 const staticFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
 
-const webpackConfig = {
+let webpackConfig = {
   context: config.paths.static,
   entry: {
     main: [
@@ -29,10 +28,16 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules(?![/|\\]bootstrap)/],
-        use: `babel-loader?${qs.stringify({
-          plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash'],
-          presets: [path.resolve('./node_modules/babel-preset-airbnb')],
-        }, { arrayFormat: 'brackets', encode: false })}`,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [path.resolve('./node_modules/babel-preset-airbnb')],
+              plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash', 'flow-runtime'],
+            },
+          },
+          'gettext-loader',
+        ],
       },
       {
         test: /\.scss$/,
@@ -45,9 +50,7 @@ const webpackConfig = {
       {
         test: /\.(png|jpe?g|gif|svg|ico)$/,
         include: config.paths.static,
-        use: `file-loader?${qs.stringify({
-          name: `[path]${staticFilenames}.[ext]`,
-        })}`,
+        use: `file-loader?name=[path]${staticFilenames}.[ext]`,
       },
     ],
   },
@@ -67,7 +70,6 @@ const webpackConfig = {
     new ExtractTextPlugin({
       filename: `${staticFilenames}.css`,
       allChunks: true,
-      // disable: config.enabled.watcher,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

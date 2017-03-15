@@ -1,0 +1,30 @@
+"Project-Id-Version : "
+"Report-Msgid-Bugs-To : "
+"Language : en"
+"MIME-Version : 1.0"
+"Content-Type : text/plain; charset=UTF-8"
+"Content-Transfer-Encoding : 8bit"
+"Plural-Forms : nplurals=2; plural=(n != 1);"
+"Last-Translator : Eike Foken <kontakt@eikefoken.de>"
+"Language-Team : Squad Everywhere"
+
+#: goabase/static/scripts/components/CountdownTimer.jsx 97:57
+msgid "Time left to event:"
+msgtr ""
+
+#: goabase/static/scripts/components/CountdownTimer.jsx 100:11
+msgid "Days"
+msgtr ""
+
+#: goabase/static/scripts/components/CountdownTimer.jsx 104:11
+msgid "Hours"
+msgtr ""
+
+#: goabase/static/scripts/components/CountdownTimer.jsx 108:11
+msgid "Minutes"
+msgtr ""
+
+#: goabase/static/scripts/components/CountdownTimer.jsx 112:11
+msgid "Seconds"
+msgtr ""
+
