@@ -2,6 +2,7 @@
 import React from 'react';
 import { css, withStyles } from 'react-with-styles';
 import eventEmitter from '../eventEmitter';
+import i18n from '../i18n';
 
 const propTypes = {
   action: React.PropTypes.string,
@@ -140,7 +141,7 @@ class HeaderSearch extends React.Component {
     const c = (
       <input
         type="text"
-        placeholder="Search"
+        placeholder={i18n.gettext('Search')}
         autoComplete="off"
         name="location"
         id="header-search-form-input-type"

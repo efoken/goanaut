@@ -2,7 +2,7 @@
 // @flow
 import moment from 'moment';
 import React from 'react';
-import { __ } from 'i18n';
+import i18n from '../i18n';
 
 const propTypes = {
   initialTimeRemaining: React.PropTypes.number.isRequired,
@@ -47,22 +47,41 @@ class CountdownTimer extends React.Component {
     clearTimeout(this.state.timeoutId);
   }
 
+  /**
+   * Gets the number of remaining days.
+   * @returns {number}
+   */
   getDays(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).asDays());
   }
 
+  /**
+   * Gets the number of remaining hours.
+   * @returns {number}
+   */
   getHours(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).hours());
   }
 
+  /**
+   * Gets the number of remaining minutes.
+   * @returns {number}
+   */
   getMinutes(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).minutes());
   }
 
+  /**
+   * Gets the number of remaining seconds.
+   * @returns {number}
+   */
   getSeconds(): number {
     return Math.floor(moment.duration(this.state.timeRemaining).seconds());
   }
 
+  /**
+   * Tick, tock, tick, tock.
+   */
   tick(): void {
     const currentTime = moment.now();
     const dt = this.state.prevTime ? (currentTime - this.state.prevTime) : 0;
@@ -94,22 +113,22 @@ class CountdownTimer extends React.Component {
   render(): string {
     return (
       <ul className="countdown-inner list-group list-group-horizontal">
-        <li className="countdown-label list-group-item">{__('Time left to event:')}</li>
+        <li className="countdown-label list-group-item">{i18n.gettext('Time left to event:')}</li>
         <li className="countdown-days list-group-item">
           <em>{this.getDays()}</em>
-          {__('Days')}
+          {i18n.gettext('Days')}
         </li>
         <li className="countdown-hours list-group-item">
           <em>{this.getHours()}</em>
-          {__('Hours')}
+          {i18n.gettext('Hours')}
         </li>
         <li className="countdown-minutes list-group-item">
           <em>{this.getMinutes()}</em>
-          {__('Minutes')}
+          {i18n.gettext('Minutes')}
         </li>
         <li className="countdown-seconds list-group-item">
           <em>{this.getSeconds()}</em>
-          {__('Seconds')}
+          {i18n.gettext('Seconds')}
         </li>
       </ul>
     );

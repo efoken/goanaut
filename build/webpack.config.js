@@ -10,7 +10,7 @@ const config = require('./config');
 const sourceMapQueryStr = config.enabled.sourceMaps ? '+sourceMap' : '-sourceMap';
 const staticFilenames = config.enabled.cacheBusting ? '[name]-[hash]' : '[name]';
 
-let webpackConfig = {
+const webpackConfig = {
   context: config.paths.static,
   entry: {
     main: [
@@ -28,16 +28,13 @@ let webpackConfig = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules(?![/|\\]bootstrap)/],
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [path.resolve('./node_modules/babel-preset-airbnb')],
-              plugins: ['transform-decorators-legacy', 'transform-async-to-generator', 'lodash', 'flow-runtime'],
-            },
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [path.resolve('./node_modules/babel-preset-airbnb')],
+            plugins: ['lodash'],
           },
-          'gettext-loader',
-        ],
+        },
       },
       {
         test: /\.scss$/,

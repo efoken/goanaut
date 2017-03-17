@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-03-17 11:49+0100\n"
+"PO-Revision-Date: 2017-03-17 11:49+0100\n"
+"Last-Translator: Eike Foken <e.foken@abian.de>\n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: t\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: components/SignupLoginForm.js\n"
+"X-Poedit-SearchPathExcluded-1: components/MapOverlayView.js\n"
+
+#: i18n.js:33
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/CountdownTimer.jsx:97
+msgid "Time left to event:"
+msgstr ""
+
+#: components/CountdownTimer.jsx:100
+msgid "Days"
+msgstr ""
+
+#: components/CountdownTimer.jsx:104
+msgid "Hours"
+msgstr ""
+
+#: components/CountdownTimer.jsx:108
+msgid "Minutes"
+msgstr ""
+
+#: components/CountdownTimer.jsx:112
+msgid "Seconds"
+msgstr ""
+
+#: components/HeaderSearch.jsx:138
+msgid "shared.Search"
+msgstr ""
+
+#: components/map/RefreshControls.jsx:42
+msgid "Redo search here"
+msgstr ""
+
+#: components/map/RefreshControls.jsx:59
+msgid "Search when I move the map"
+msgstr ""

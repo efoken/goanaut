@@ -1,4 +1,4 @@
-import 'jquery';
+import $ from 'jquery';
 import 'tether';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap-slider';

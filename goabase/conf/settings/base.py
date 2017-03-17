@@ -109,6 +109,18 @@ else:
     SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 
 
+# Password storage settings
+# https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+]
+
+
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 

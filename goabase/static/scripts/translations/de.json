@@ -1,0 +1,57 @@
+{
+   "": {
+      "project-id-version": "",
+      "pot-creation-date": "2017-03-17 11:49+0100",
+      "po-revision-date": "2017-03-17 11:56+0100",
+      "last-translator": "Eike Foken <e.foken@abian.de>",
+      "language-team": "",
+      "language": "de_DE",
+      "mime-version": "1.0",
+      "content-type": "text/plain; charset=UTF-8",
+      "content-transfer-encoding": "8bit",
+      "x-generator": "Poedit 1.8.11",
+      "x-poedit-basepath": "..",
+      "plural-forms": "nplurals=2; plural=(n != 1);",
+      "x-poedit-keywordslist": "t",
+      "x-poedit-searchpath-0": ".",
+      "x-poedit-searchpathexcluded-0": "components/SignupLoginForm.js",
+      "x-poedit-searchpathexcluded-1": "components/MapOverlayView.js"
+   },
+   "Day": [
+      "Days",
+      "Tag",
+      "Tage"
+   ],
+   "Time left to event:": [
+      null,
+      "Verbleibende Zeit zum Event:"
+   ],
+   "Days": [
+      null,
+      "Tage"
+   ],
+   "Hours": [
+      null,
+      "Stunden"
+   ],
+   "Minutes": [
+      null,
+      "Minuten"
+   ],
+   "Seconds": [
+      null,
+      "Sekunden"
+   ],
+   "shared.Search": [
+      null,
+      ""
+   ],
+   "Redo search here": [
+      null,
+      ""
+   ],
+   "Search when I move the map": [
+      null,
+      "Suchen, während ich die Karte bewege"
+   ]
+}

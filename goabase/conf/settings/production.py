@@ -8,8 +8,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 # Email
 # https://docs.djangoproject.com/en/dev/topics/email/
 
-DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-                         default='GoaBase <noreply@goaba.se>')
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL', default='GoaBase <noreply@goaba.se>')
 EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[GoaBase] ')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 

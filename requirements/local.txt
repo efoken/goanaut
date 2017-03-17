@@ -3,4 +3,4 @@
 django-extensions==1.7.7
 flake8==3.3.0
 ipdb==0.10.2
-Werkzeug==0.12
+Werkzeug==0.12.1

@@ -22,7 +22,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': '',
-    }
+    },
 }
 
 INSTALLED_APPS += ['django_extensions']

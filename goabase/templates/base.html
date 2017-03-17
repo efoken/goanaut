@@ -2,12 +2,12 @@
 {% load webpack_static from webpack_loader %}
 {% load i18n %}
 <!doctype html>
-<html>
+<html lang="{{ LANGUAGE_CODE|slice:':2' }}">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Goanaut</title>
-        <meta name="description" content="Platform for Goa and Psytrance parties and festivals" />
+        <title>{% block meta_title %}Goanaut{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}{% trans 'Platform for Goa and Psytrance parties and festivals' %}{% endblock %}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -64,7 +64,7 @@
                         </ul>
                         <form class="form-inline navbar-search">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" />
+                                <input type="text" class="form-control" placeholder="{% trans 'Search' %}" />
                                 <span class="input-group-btn">
                                     <button class="btn btn-outline-primary" type="submit">
                                         <svg class="icon icon-magnifier" width="20" height="20" aria-hidden="true"><use xlink:href="#icon-magnifier" /></svg>
@@ -85,8 +85,7 @@
             {% include "icons.svg" %}
         </div>
 
-        <script src="{% url 'jsi18n' %}"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBiuQK_xDqFZ99YahdloDMQMbnRAiGovsQ"></script>
         {% render_bundle "main" "js" %}
 
         <script>

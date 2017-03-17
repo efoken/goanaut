@@ -1,6 +1,8 @@
 /* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
 const gulp = require('gulp');
 const merge = require('webpack-merge');
+const path = require('path');
+const po2json = require('gulp-po2json');
 const rename = require('gulp-rename');
 const svgmin = require('gulp-svgmin');
 const svgstore = require('gulp-svgstore');
@@ -12,7 +14,7 @@ const config = require('./build/config');
 let webpackConfig = require('./build/webpack.config');
 
 gulp.task('svgstore', () => {
-  gulp.src('goabase/static/icons/**/*.svg')
+  gulp.src(path.join(config.paths.static, 'icons/**/*.svg'))
     .pipe(rename({ prefix: 'icon-' }))
     .pipe(svgmin({
       plugins: [
@@ -21,6 +23,12 @@ gulp.task('svgstore', () => {
     }))
     .pipe(svgstore({ inlineSvg: true }))
     .pipe(gulp.dest('goabase/templates'));
+});
+
+gulp.task('po2json', () => {
+  gulp.src(path.join(config.paths.static, 'scripts/translations/*.po'))
+    .pipe(po2json({ pretty: true }))
+    .pipe(gulp.dest(path.join(config.paths.static, 'scripts/translations')));
 });
 
 gulp.task('build', ['svgstore'], (callback) => {

@@ -8,7 +8,6 @@
     "amd": true,
     "browser": true,
     "es6": true,
-    "jquery": true,
     "node": true
   },
   "parser": "babel-eslint",
