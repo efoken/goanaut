@@ -2,7 +2,6 @@ const autoprefixer = require('autoprefixer');
 const BundleTracker = require('webpack-bundle-tracker');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const path = require('path');
 const webpack = require('webpack');
 
 const config = require('./config');
@@ -31,7 +30,7 @@ const webpackConfig = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [path.resolve('./node_modules/babel-preset-airbnb')],
+            presets: ['airbnb', 'flow'],
             plugins: ['lodash'],
           },
         },

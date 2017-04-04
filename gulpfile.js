@@ -1,5 +1,6 @@
 /* eslint-disable global-require, import/no-extraneous-dependencies, max-len */
 const gulp = require('gulp');
+const hypernova = require('hypernova/server');
 const merge = require('webpack-merge');
 const path = require('path');
 const po2json = require('gulp-po2json');
@@ -42,6 +43,19 @@ gulp.task('build', ['svgstore'], (callback) => {
     }
     util.log('[webpack]', stats.toString());
     callback();
+  });
+});
+
+gulp.task('hypernova', () => {
+  require('babel-register')({ presets: ['airbnb'] });
+
+  hypernova({
+    devMode: true,
+    port: 8001,
+    getComponent: (name) => {
+      const componentPath = path.join(config.paths.static, `scripts/components/${name}.jsx`);
+      return require(componentPath).default; // eslint-disable-line import/no-dynamic-require
+    },
   });
 });
 

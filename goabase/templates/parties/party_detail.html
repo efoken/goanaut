@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n placeholder_helpers %}
+{% load i18n placeholder_helpers react_helpers %}
 
 {% block title %}{% trans "Party" %}: {{ object.name }}{% endblock %}
 
@@ -37,7 +37,7 @@
             </div>
             <div class="party-jumbotron-countdown">
                 <div class="container">
-                    <div class="countdown" data-initial-time-remaining="{{ react_countdown_milliseconds }}">{{ react_countdown|safe }}</div>
+                    {% render_react_component 'CountdownTimer' initial_time_remaining=react_countdown_milliseconds %}
                 </div>
             </div>
         </div>

@@ -12,6 +12,6 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "no-console": 0
+    "react/sort-comp": 0
   }
 }

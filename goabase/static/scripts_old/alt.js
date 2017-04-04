@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import env from './env';
 
-const p2Alt = cache.setIfMissingThenGet('p2 alt', () => new Alt({
+const alt = cache.setIfMissingThenGet('alt', () => new Alt({
   deserialize: (e) => {
     if (typeof e === 'string') {
       return JSON.parse(e);
@@ -15,7 +15,7 @@ const p2Alt = cache.setIfMissingThenGet('p2 alt', () => new Alt({
 }));
 
 if (env.isDev) {
-  Alt.debug('p2 alt', p2Alt);
+  Alt.debug('alt', alt);
 }
 
-export default p2Alt;
+export default alt;

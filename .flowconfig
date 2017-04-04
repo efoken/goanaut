@@ -1,0 +1,6 @@
+[include]
+./goabase/static/scripts
+
+[ignore]
+.*/node_modules/.*
+.*/scripts_old/.*
